@@ -2,8 +2,9 @@ import mongoose from 'mongoose';
 
 const postSchema = new mongoose.Schema({
     title: String,
-    message: String,
-    creator: String,
+    desc: String,
+    userId: String,
+    photo: String,
     selectedFile: String,
     likeCount: {
         type: Number,
@@ -15,7 +16,8 @@ const postSchema = new mongoose.Schema({
     }, 
     room: String,
     comments: Array,
-    Reactors: Array,
+    roomers: Number,
+    vote: Number,
 });
 
 const PostMessage = mongoose.model('PostMessage', postSchema);

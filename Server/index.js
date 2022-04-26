@@ -10,8 +10,9 @@ app.use(bodyParser.json({limit: "30mb", extended: true}));
 app.use(bodyParser.urlencoded({limit: "30mb", extended: true}));
 app.use(cors());
 
-app.use("/api/posts", postRoutes);
+
 app.use("/api/user", userRoutes);
+app.use("/api/posts", postRoutes);
 
 const CONNECTION_URL= 'mongodb://localhost:27017/myapp';
 const PORT = process.env.PORT || 5000;
