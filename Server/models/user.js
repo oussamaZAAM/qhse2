@@ -1,15 +1,22 @@
 import mongoose from 'mongoose';
-
+//Creation du tableau de User
 const userSchema = new mongoose.Schema({
-    username: String,
-    email: String,
-    firstName: String,
-    lastName: String,
-    password: String,
-    birthYear: Number,
-    picture: String,
-    followers: Array,
-    following: Array,
+  name: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  date: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 const User = mongoose.model('User', userSchema);
