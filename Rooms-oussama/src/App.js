@@ -3,7 +3,7 @@ import Login from "./components/Login"
 import Register from "./components/Register"
 import Navbar from "./components/Navbar"
 import NewOrganism from "./components/NewOrganism"
-import Organism from "./components/Organism"
+import Organism from "./screens/Organism/Organism"
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthContext } from "./Context/authContext";
 import OrganismPage from "./screens/OrganismPage/OrganismPage";

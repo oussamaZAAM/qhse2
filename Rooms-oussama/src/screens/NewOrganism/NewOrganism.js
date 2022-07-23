@@ -1,11 +1,11 @@
-import React, { useRef, useContext, useState, useEffect } from "react";
+import React, { useRef, useContext } from "react";
 import {Link, useNavigate} from "react-router-dom"
 import axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.css';
 import {Button} from 'react-bootstrap';
-import { AuthContext } from "../Context/authContext";
+import { AuthContext } from "../../Context/authContext";
 
-export default function Organism(props) {
+export default function NewOrganism() {
     const name = useRef();
     const site_num = useRef();
     const creation_time = useRef();
@@ -13,8 +13,6 @@ export default function Organism(props) {
     const tel = useRef();
     const adresse = useRef();
     const carte = useRef();
-
-    const [org, setOrg] = useState();
     const { user } = useContext(AuthContext);
 
     const navigate = useNavigate();
@@ -32,21 +30,15 @@ export default function Organism(props) {
             }
         
     }
-    useEffect(() => {
-    
-        const fetchOrg = async () => {
-          const res = await axios.get("http://localhost:5000/api/organism/" + props.orgId);
-          setOrg(
-            res.data
-          );
-        };
-        fetchOrg();
-      }, [user._id]);
-     
+   
     return(
         <main className="jumbotron vertical-center" >
             <div className="container p-5 rounded">
             <div className=" row">
+                <div className=" col-5 d-flex b justify-content-center align-items-center row">
+                    <img className="col-12" src="https://media.istockphoto.com/photos/imge-of-mint-picture-id619514634?k=20&m=619514634&s=612x612&w=0&h=0qd6aFtslmii-nfCiBxxIBQmAOqVVwm_iRq_vwYLAWw=" height="328" width="189"></img>
+                    <h1 className="text-prime">Improve Your Efficiency and Productivity</h1>
+                </div>
                 <div className="col-4 register-a"> 
                     <h1 className="text-prime pb-5">Add New Company</h1>
                     <form className="form-group ">
