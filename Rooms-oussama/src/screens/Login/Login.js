@@ -1,8 +1,9 @@
 import React, { useContext, useRef } from "react";
-import { loginCall } from "../apiCalls";
-import { AuthContext } from "../Context/authContext";
+import { loginCall } from "../../apiCalls";
+import { AuthContext } from "../../Context/authContext";
 import {Link} from "react-router-dom"
 import { Button } from "react-bootstrap";
+
 
 export default function Login() {
     const email= useRef();
