@@ -1,11 +1,11 @@
 import { Router as _Router } from 'express';
-const Router = _Router();
+import Organism from '../models/Organism.js';
 
 
+const OrganismRouter = _Router();
 
-import Organism from '../../models/Organism';
 
-Router.post('/create', (req, res) => {
+OrganismRouter.post('/create', async (req, res) => {
     
                 const newOrganism = new Organism({
                     name: req.body.name,
@@ -24,7 +24,7 @@ Router.post('/create', (req, res) => {
 });
 
 
-Router.get('/organism/:userId', (req, res) => {
+OrganismRouter.get('/:userId', async (req, res) => {
     try {
         const orgs = await Organism.findOne({user:req.params.userId});
         res.status(200).json(orgs);
@@ -33,4 +33,4 @@ Router.get('/organism/:userId', (req, res) => {
       }
 });
 
-export default Router;
+export default OrganismRouter;
