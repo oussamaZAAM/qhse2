@@ -2,6 +2,7 @@ import React, { useContext } from "react"
 import Login from "./components/Login"
 import Register from "./components/Register"
 import Navbar from "./components/Navbar"
+import Organism from "./components/NewOrganism"
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthContext } from "./Context/authContext";
 
@@ -17,6 +18,7 @@ export default function App() {
           <Route path="/login" element={user?<Navbar />:<Login />} />
           <Route path="/register" element={user?<Navbar />:<Register />} />
           <Route path="/" element={<Login />} />
+          <Route path="/new-organism" element={<Organism />} />
         {/* </Route> */}
       </Routes>
     </BrowserRouter>
