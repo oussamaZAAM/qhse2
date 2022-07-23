@@ -19,12 +19,11 @@ export default function Organism(props) {
 
     const navigate = useNavigate();
 
-    const userOrganism= async (e)=>{
+    const delOrg= async (e)=>{
         e.preventDefault();
         
-            const organism = {user:"user._id",name:name.current.value, site_num:site_num.current.value,creation_time:creation_time.current.value,domaines:domaines.current.value,tel:parseInt(tel.current.value),Adresse:adresse.current.value,Carte:carte.current.value}
             try{
-                await axios.post("http://localhost:5000/api/organism/create",organism);
+                await axios.delete("http://localhost:5000/api/organism/" + props.orgId);
                 navigate("/main");
 
             }catch(err){
@@ -39,32 +38,35 @@ export default function Organism(props) {
           setOrg(
             res.data
           );
+          console.log(res.data)
+
         };
         fetchOrg();
       }, [user._id]);
-     
+     if(org!==undefined){
     return(
-        <main className="jumbotron vertical-center" >
-            <div className="container p-5 rounded">
+        <main className="bg-white" >
+            <div className="container">
             <div className=" row">
-                <div className="col-4 register-a"> 
-                    <h1 className="text-prime pb-5">Add New Company</h1>
-                    <form className="form-group ">
-                        <input className="form-control m-2" placeholder="Company Name" ref={name}/>
-                        <input className="form-control m-2" placeholder="Sites" ref={site_num} />
-                        <input className="form-control m-2" type="date" placeholder="Creation Time" ref={creation_time} />
-                        <input className="form-control m-2" placeholder="Domaine" ref={domaines} />
-                        <input className="form-control m-2" placeholder="Tel" ref={tel} />
-                        <input className="form-control m-2" placeholder="Adresse" ref={adresse} />
-                        <input className="form-control m-2" placeholder="Location" ref={carte} />
+                <div className="col-12"> 
+                    <h1 className="text-prime pb-5">{org.name}</h1>
+                        <div className="m-2" >Sites : {org.site_num}</div>
+                        <div className=" m-2" >Creation Time : {org.creation_time}</div>
+                        <div className=" m-2">Domaine : {org.domaine}</div>
+                        <div className=" m-2" >Tel : {org.tel}</div>
+                        <div className=" m-2" >Adresse : {org.Adresse}</div>
+                        <div className=" m-2">Location : {org.Carte}</div>
                         <div className="d-flex justify-content-end m-2">
-                        <Button className="bg-prime" onClick={userOrganism} >Enregister</Button>
+                        <Button className="bg-prime"  >Modifier</Button>
+                        <Button className="bg-danger" onClick={delOrg} >Supprimer</Button>
                         </div>
-                    </form>
                     
                 </div>
             </div>
             </div>
         </main>
     )
+     }else{
+        return null
+     }
 }

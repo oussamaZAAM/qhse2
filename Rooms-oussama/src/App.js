@@ -1,10 +1,10 @@
-import React, { useContext, useParams } from "react"
+import React, { useContext } from "react"
 import Login from "./components/Login"
 import Register from "./components/Register"
 import Navbar from "./components/Navbar"
 import NewOrganism from "./components/NewOrganism"
 import Organism from "./components/Organism"
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route,useParams } from "react-router-dom";
 import { AuthContext } from "./Context/authContext";
 
 
