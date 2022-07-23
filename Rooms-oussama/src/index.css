@@ -10,14 +10,24 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #B2FFDA;
 }
-
+.register-a{
+  margin-left: 25%;
+}
+.text-prime{
+  color: #73A9AD !important;
+}
+.bg-prime{
+  background-color: #73A9AD !important;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
+body {
+  height: 100%;
+  background: linear-gradient(90deg, #F5F0BB 50%, #FFFFFF 50%);
+}
 .body{
   background: url("../src/images/login-background.jpg");
   background-repeat: no-repeat;
