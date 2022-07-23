@@ -3,7 +3,7 @@ import {Link, useNavigate} from "react-router-dom"
 import axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.css';
 import {Button} from 'react-bootstrap';
-import { AuthContext } from "../Context/authContext";
+import { AuthContext } from "../../Context/authContext";
 
 export default function Organism(props) {
     const name = useRef();

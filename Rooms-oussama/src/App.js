@@ -6,6 +6,7 @@ import NewOrganism from "./components/NewOrganism"
 import Organism from "./components/Organism"
 import { BrowserRouter, Routes, Route,useParams } from "react-router-dom";
 import { AuthContext } from "./Context/authContext";
+import OrganismPage from "./screens/OrganismPage/OrganismPage";
 
 
 export default function App() {
