@@ -20,11 +20,14 @@ export default function App() {
 
     return(
     <BrowserRouter>
+    <div style={{backgroundColor:"#F5F0BB"}}>
+    <img style={{maxHeight:"70px", marginTop:"20px", marginLeft:"20px"}} src="https://bit.ly/3b1DwND" />
+    </div>
       <Routes>
         {/* <Route path="/" element={<Layout />}> */}
-          <Route path="/login" element={user?<Navbar />:<Login />} />
-          <Route path="/register" element={user?<Navbar />:<Register />} />
-          <Route path="/" element={user ? <OrganismPage /> :<Login />} />
+          <Route path="/login" element={user?<OrganismPage />:<Login />} />
+          <Route path="/register" element={user?<OrganismPage />:<Register />} />
+          <Route path="/main" element={<OrganismPage />} />
           <Route path="/new-organism" element={<NewOrganism />} />
           <Route path="/organism/:id" element={<HandleOrganism />} />
           <Route path="/main" element={<OrganismPage />} />

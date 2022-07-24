@@ -6,33 +6,65 @@ import './OrganismPage.css'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../../Context/authContext';
+import 'bootstrap/dist/css/bootstrap.css';
 
 export default function OrganismPage() {
-    const {user} = useContext(AuthContext);
-    const [Organisms, setOrganisms] = useState();
-    useEffect(()=>{
-        const fetchOrganisms = () => {
-            const res = axios.get("https://localhost:5000/api/organism/"+user._id)
-            setOrganisms(res.data);
-        }
-        fetchOrganisms();
-    }, [])
-    console.log(Organisms);
+    const [orgs, setOrgs] = useState();
+
+    const { user } = useContext(AuthContext);
+
+    useEffect(() => {
+    
+        const fetchOrgs = async () => {
+          const res = await axios.get("http://localhost:5000/api/organism/a/" + user._id);
+          setOrgs(
+            res.data
+          );
+        };
+        fetchOrgs();
+      }, [user._id]);
+    console.log(orgs)
+
+    const organisms = orgs!==undefined && orgs.map(x=>{
+        return(
+            <Organism 
+            orgId={x}
+            
+            />
+           
+        )
+    })
+
+    if(orgs!==undefined){
     return(
-        <div className='container-fluid'>
-            <div className='row'>
-                <div className="col-sm-4 col-md-6 col-lg-12 p-4">
-                    <img className='logo-img' src="https://i.ibb.co/FHB2LVk/Whats-App-Image-2022-07-23-at-12-35-53-PM.jpg" width="250px"/>
-                </div>
-            </div>
-            <div className='vertical-center justify-content-center'>
+        <div className='container-fluid logo'>
+            <div className=' justify-content-center pb-10 pt-7'>
                 <div className='row organisms-grid'>
-                    
+                
+                <div className='col-4'>
+                <table className="table table-striped table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">Name</th>
+                      <th scope="col">Domaine</th>
+                      <th scope="col">Tel</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {organisms}
+                  </tbody>
+                </table>
+                </div>
                     <div className='col-auto col-sm-auto col-md-auto col-lg-auto mt-2'>
-                        <Link to="/new-organism"><AiOutlinePlus size={50} style={{borderRadius: "9px", border: "3px solid"}}/></Link>
+                   <Link to="../new-organism">
+                        <AiOutlinePlus size={50} style={{borderRadius: "9px", border: "3px solid"}}/>
+                    </Link>
                     </div>
                 </div>
             </div>
         </div>
     )
+}else{
+    return null
+}
 }

@@ -1,9 +1,10 @@
 import { Router as _Router } from 'express';
-import Organism from '../models/Organism.js';
+const organismRouter = _Router();
 
 
 const OrganismRouter = _Router();
 
+import Organism from '../models/Organism.js';
 
 OrganismRouter.post('/create', async (req, res) => {
     
@@ -16,8 +17,8 @@ OrganismRouter.post('/create', async (req, res) => {
                     tel: req.body.tel,
                     Adresse: req.body.Adresse,
                     Carte: req.body.Carte,
-                    date: req.body.date,                    
                 });
+                
                 const cuser = await newOrganism.save(function(){});  
                 res.status(201).json(cuser);
         
@@ -43,8 +44,26 @@ OrganismRouter.put("/:orgId", async (req, res) => {
 
 OrganismRouter.get('/:orgId', async (req, res) => {
     try {
-        const orgs = await Organism.findOne({_id:req.params.orgId});
+        const orgs = await Organism.findOne({_Id:req.params.orgId});
         res.status(200).json(orgs);
+      } catch (err) {
+        res.status(500).json(err);
+      }
+});
+OrganismRouter.get('/a/:userId', async (req, res) => {
+    try {
+        const orgs = await Organism.find({user:req.params.userId});
+        res.status(200).json(orgs);
+      } catch (err) {
+        res.status(500).json(err);
+      }
+});
+
+OrganismRouter.delete('/:orgId', async (req, res) => {
+    try {
+        const orgs = await Organism.findOne({_Id:req.params.orgId});
+        await orgs.deleteOne();
+        res.status(200).json("The organism has been deleted");
       } catch (err) {
         res.status(500).json(err);
       }

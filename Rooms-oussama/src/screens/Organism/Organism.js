@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import {Button} from 'react-bootstrap';
 import { AuthContext } from "../../Context/authContext";
 import "./Organism.css"
+import Menu from "../../components/Menu/Menu"
 
 export default function Organism(props) {
     const name = useRef();
