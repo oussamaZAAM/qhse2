@@ -26,3 +26,6 @@
     white-space: nowrap;
     display: inline-block;
   }
+  .sortable {
+    cursor: pointer;
+}

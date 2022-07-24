@@ -6,6 +6,7 @@ import './OrganismPage.css'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../../Context/authContext';
+import 'bootstrap/dist/css/bootstrap.css';
 
 export default function OrganismPage() {
     const [orgs, setOrgs] = useState();
@@ -26,11 +27,11 @@ export default function OrganismPage() {
 
     const organisms = orgs!==undefined && orgs.map(x=>{
         return(
-            <div className="col-auto col-sm-auto col-md-auto col-lg-auto mt-2 ">
             <Organism 
             orgId={x}
+            
             />
-            </div>
+           
         )
     })
 
@@ -39,7 +40,21 @@ export default function OrganismPage() {
         <div className='container-fluid logo'>
             <div className=' justify-content-center pb-10 pt-7'>
                 <div className='row organisms-grid'>
-                   {organisms}
+                
+                <div className='col-4'>
+                <table className="table table-striped table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">Name</th>
+                      <th scope="col">Domaine</th>
+                      <th scope="col">Tel</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {organisms}
+                  </tbody>
+                </table>
+                </div>
                     <div className='col-auto col-sm-auto col-md-auto col-lg-auto mt-2'>
                    <Link to="../new-organism">
                         <AiOutlinePlus size={50} style={{borderRadius: "9px", border: "3px solid"}}/>

@@ -2,6 +2,7 @@ import React, { useRef, useContext, useState, useEffect } from "react";
 import './Organism.css'
 import {useNavigate} from "react-router-dom"
 import { AuthContext } from "../../Context/authContext";
+import { Button } from 'react-bootstrap';
 
 
 export default function Organism(props) {
@@ -21,9 +22,10 @@ export default function Organism(props) {
 
     
     return(
-        <div className='organism-component'>
-            <img onClick={handleOrg} src='https://i.ibb.co/sFHsVVL/589195.png' className='organism-img'/>
-            <h3 className="organism-title">Organism</h3>
-        </div>
+            <tr onClick={handleOrg} className="sortable">
+      <td>{props.orgId.name}</td>
+      <td>{props.orgId.domaines}</td>
+      <td>{props.orgId.tel}</td>
+    </tr>
     )
 }
