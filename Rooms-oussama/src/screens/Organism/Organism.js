@@ -16,7 +16,7 @@ export default function Organism(props) {
     const adresse = useRef();
     const carte = useRef();
     
-    const { user } = useContext(AuthContext);
+    const { user, dispatch } = useContext(AuthContext);
     const [org, setOrg] = useState();
     const [isEdit, setIsEdit] = useState(false);
     const [editValues, setEditValues] = useState({
@@ -53,7 +53,10 @@ export default function Organism(props) {
         e.preventDefault();
         try{
             await axios.delete("http://localhost:5000/api/organism/" + props.orgId);
-            navigate("/main");
+            dispatch({ type: "SELECT_SUCCESS", payload: [user,undefined]});
+            localStorage.removeItem("org");
+            navigate("../../main")
+        
         }catch(err){
             console.log(err)        
         }
@@ -84,6 +87,7 @@ export default function Organism(props) {
                             <div className="d-flex justify-content-end m-2">
                             <Button className="bg-prime" onClick={editOrg}>Modifier</Button>
                             <Button className="bg-danger" onClick={delOrg} >Supprimer</Button>
+                            <Button  onClick={delOrg} >Liste des </Button>
                             </div>
                         
                     </div>

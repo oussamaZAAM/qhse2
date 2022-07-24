@@ -29,7 +29,9 @@ export default function Navbar() {
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
+
     {user!==undefined && 
+
     <ul class="navbar-nav">
         {org!==undefined &&
       <li class="nav-item">
@@ -40,6 +42,7 @@ export default function Navbar() {
         <a className="nav-link sortable" onClick={handleLogout}>Deconnecter</a>
       </li>
     </ul>
+    
     }
   
 </nav>
