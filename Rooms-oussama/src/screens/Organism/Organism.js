@@ -4,18 +4,14 @@ import axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.css';
 import {Button} from 'react-bootstrap';
 import { AuthContext } from "../../Context/authContext";
+import Menu from "../../components/Menu/Menu"
+import Organism1 from "./Organism.css"
 
 export default function Organism(props) {
-    const name = useRef();
-    const site_num = useRef();
-    const creation_time = useRef();
-    const domaines = useRef();
-    const tel = useRef();
-    const adresse = useRef();
-    const carte = useRef();
+    const { user } = useContext(AuthContext);
+
 
     const [org, setOrg] = useState();
-    const { user } = useContext(AuthContext);
 
     const navigate = useNavigate();
 
@@ -38,7 +34,6 @@ export default function Organism(props) {
           setOrg(
             res.data
           );
-          console.log(res.data)
 
         };
         fetchOrg();
@@ -48,11 +43,15 @@ export default function Organism(props) {
         <main className="bg-white" >
             <div className="container">
             <div className=" row">
-                <div className="col-12"> 
-                    <h1 className="text-prime pb-5">{org.name}</h1>
+                <div className="col-3">
+                    <Menu />
+                </div>
+                <div className="col-3"></div>
+                <div className="col-4 vertical" > 
+                    <h1 className="text-prime pb-1">{org.name}</h1>
                         <div className="m-2" >Sites : {org.site_num}</div>
                         <div className=" m-2" >Creation Time : {org.creation_time}</div>
-                        <div className=" m-2">Domaine : {org.domaine}</div>
+                        <div className=" m-2">Domaine : {org.domaines}</div>
                         <div className=" m-2" >Tel : {org.tel}</div>
                         <div className=" m-2" >Adresse : {org.Adresse}</div>
                         <div className=" m-2">Location : {org.Carte}</div>

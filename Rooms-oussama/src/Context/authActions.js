@@ -13,19 +13,9 @@ export const LoginFailure = (error) => ({
     payload: error,
 });
 
-// export const RegisterStart = (userCredentials) => ({
-//     type: "REGISTER_START",
-//     // payload: userCredentials,
-// });
-
-// export const RegisterSuccess = (user) => ({
-//     type: "REGISTER_SUCCESS",
-//     payload: user,
-// });
-
-// export const RegisterFailure = (error) => ({
-//     type: "REGISTER_FAILURE",
-//     payload: error,
-// });
+export const AddOrg = (org) => ({
+    type: "SELECT_SUCCESS",
+    payload: org,
+});
 
 

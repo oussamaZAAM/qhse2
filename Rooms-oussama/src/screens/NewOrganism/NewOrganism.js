@@ -20,7 +20,7 @@ export default function NewOrganism() {
     const userOrganism= async (e)=>{
         e.preventDefault();
         
-            const organism = {user:"user._id",name:name.current.value, site_num:site_num.current.value,creation_time:creation_time.current.value,domaines:domaines.current.value,tel:parseInt(tel.current.value),Adresse:adresse.current.value,Carte:carte.current.value}
+            const organism = {user:user._id,name:name.current.value, site_num:site_num.current.value,creation_time:creation_time.current.value,domaines:domaines.current.value,tel:parseInt(tel.current.value),Adresse:adresse.current.value,Carte:carte.current.value}
             try{
                 await axios.post("http://localhost:5000/api/organism/create",organism);
                 navigate("/main");
