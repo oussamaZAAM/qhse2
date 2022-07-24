@@ -37,11 +37,6 @@ export default function OrganismPage() {
     if(orgs!==undefined){
     return(
         <div className='container-fluid logo'>
-            <div className='row '>
-                <div className="col-sm-4 col-md-6 col-lg-12 p-4">
-                    <img className='logo-img' src="https://i.ibb.co/FHB2LVk/Whats-App-Image-2022-07-23-at-12-35-53-PM.jpg" width="250px"/>
-                </div>
-            </div>
             <div className=' justify-content-center pb-10 pt-7'>
                 <div className='row organisms-grid'>
                    {organisms}

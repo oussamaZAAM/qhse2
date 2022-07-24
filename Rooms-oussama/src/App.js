@@ -20,6 +20,9 @@ export default function App() {
 
     return(
     <BrowserRouter>
+    <div style={{backgroundColor:"#F5F0BB"}}>
+    <img style={{maxHeight:"70px", marginTop:"20px", marginLeft:"20px"}} src="https://bit.ly/3b1DwND" />
+    </div>
       <Routes>
         {/* <Route path="/" element={<Layout />}> */}
           <Route path="/login" element={user?<OrganismPage />:<Login />} />
