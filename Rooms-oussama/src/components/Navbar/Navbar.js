@@ -14,7 +14,6 @@ export default function Navbar() {
         localStorage.removeItem("org");
         navigate("./login")
       }
-      console.log(org)
     function handleFinish() {
         dispatch({ type: "SELECT_SUCCESS", payload: [user,undefined]});
         localStorage.removeItem("org");

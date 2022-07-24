@@ -64,6 +64,7 @@ export default function Organism(props) {
     }
     const submitEditOrg = async () => {
         try{
+            console.log(props)
             await axios.put("http://localhost:5000/api/organism/" + props.orgId, editValues);
         } catch (err) {
             console.log(err);
