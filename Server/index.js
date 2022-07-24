@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import userRouter from './routes/users.js';
+import organismRouter from './routes/organisms.js';
 
 const app = express();
 app.use(bodyParser.json({limit: "30mb", extended: true}));
@@ -11,6 +12,7 @@ app.use(cors());
 
 
 app.use("/api/user", userRouter);
+app.use("/api/organism", organismRouter);
 
 const CONNECTION_URL= 'mongodb://localhost:27017/ayoub';
 const PORT = process.env.PORT || 5000;

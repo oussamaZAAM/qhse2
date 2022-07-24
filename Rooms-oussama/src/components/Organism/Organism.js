@@ -10,7 +10,6 @@ export default function Organism(props) {
     const { dispatch } = useContext(AuthContext);
 
     const handleOrg = (e) => {
-        e.preventDefault();
     
         dispatch({ type: "SELECT_SUCCESS", payload: props.orgId});
         localStorage.setItem("org", JSON.stringify(props.orgId))

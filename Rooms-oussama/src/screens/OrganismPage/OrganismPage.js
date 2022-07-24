@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap';
 import {AiOutlinePlus} from "react-icons/ai"
 import './OrganismPage.css'
 import axios from 'axios'
+import {Link} from "react-router-dom"
 
 import { AuthContext } from "../../Context/authContext";
 export default function OrganismPage() {
@@ -22,6 +23,17 @@ export default function OrganismPage() {
         fetchOrgs();
       }, [user._id]);
     console.log(orgs)
+
+    const organisms = orgs!==undefined && orgs.map(x=>{
+        return(
+            <div className="col-auto col-sm-auto col-md-auto col-lg-auto mt-2 ">
+            <Organism 
+            orgId={x}
+            />
+            </div>
+        )
+    })
+
     if(orgs!==undefined){
     return(
         <div className='container-fluid logo'>
@@ -32,20 +44,11 @@ export default function OrganismPage() {
             </div>
             <div className=' justify-content-center pb-10 pt-7'>
                 <div className='row organisms-grid'>
-                    <div className="col-auto col-sm-auto col-md-auto col-lg-auto mt-2 ">
-                        <Organism orgId={orgs[0]}/>
-                    </div>
-                    {/* <div className="col-auto col-sm-auto col-md-auto col-lg-auto mt-2">
-                        <Organism />
-                    </div>
-                    <div className="col-auto col-sm-auto col-md-auto col-lg-auto mt-2">
-                        <Organism />
-                    </div>
-                    <div className="col-auto col-sm-auto col-md-auto col-lg-auto mt-2">
-                        <Organism />
-                    </div> */}
+                   {organisms}
                     <div className='col-auto col-sm-auto col-md-auto col-lg-auto mt-2'>
+                   <Link to="../new-organism">
                         <AiOutlinePlus size={50} style={{borderRadius: "9px", border: "3px solid"}}/>
+                    </Link>
                     </div>
                 </div>
             </div>

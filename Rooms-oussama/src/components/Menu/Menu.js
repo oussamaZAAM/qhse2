@@ -10,7 +10,7 @@ if(org!==undefined){
     return(
         <>
         <h1 className="mt-3">
-               organism name
+               {org.name}
         </h1>
 <div class="list-group">
   <a href="#" class="list-group-item list-group-item-action p-3 mt-10">Tableaux de bord</a>
