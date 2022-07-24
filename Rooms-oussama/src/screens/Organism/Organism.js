@@ -22,11 +22,20 @@ export default function Organism(props) {
     const [editValues, setEditValues] = useState({
         name: "",
         site_num: "",
-        creation_date: "",
-        domaines: "",
-        tel: "",
-        Adresse: "",
-        Carte: "",
+        creation_date:"",
+        domaines:"",
+        tel:"",
+        Adresse:"",
+        Carte:"",
+    })
+    const [lastValues, setLastValues] = useState({
+        name: "",
+        site_num: "",
+        creation_date:"",
+        domaines:"",
+        tel:"",
+        Adresse:"",
+        Carte:"",
     })
 
     const navigate = useNavigate();
@@ -40,14 +49,28 @@ export default function Organism(props) {
     function editValuesFunc(e) {
         setEditValues({...editValues, [e.target.name]: e.target.value})
     }
-    console.log(editValues)
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+    
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
+    
+        return [year, month, day].join('-');
+    }
     const submitEditOrg = async () => {
         try{
+            console.log(props)
             await axios.put("http://localhost:5000/api/organism/" + props.orgId, editValues);
         } catch (err) {
             console.log(err);
         }
         setIsEdit(false)
+        setLastValues(editValues)
     }
     const delOrg= async (e)=>{
         e.preventDefault();
@@ -68,26 +91,44 @@ export default function Organism(props) {
           setOrg(
             res.data
           );
+          setEditValues({
+            name: res.data.name,
+            site_num: res.data.site_num,
+            creation_date:res.data.creation_time,
+            domaines:res.data.domaines,
+            tel:res.data.tel,
+            Adresse:res.data.Adresse,
+            Carte:res.data.Carte,
+          })
+          setLastValues({
+            name: res.data.name,
+            site_num: res.data.site_num,
+            creation_date:res.data.creation_time,
+            domaines:res.data.domaines,
+            tel:res.data.tel,
+            Adresse:res.data.Adresse,
+            Carte:res.data.Carte,
+          })
         };
         fetchOrg();
-    }, [props.orgId]);
+    }, [props.orgId, setOrg]);
     if(org!==undefined){
         return(
             !isEdit ? <main className="bg-white" >
                 <div className="container">
                 <div className=" row">
                     <div className="col-12"> 
-                        <h1 className="text-prime pb-5">{org.name}</h1>
-                            <div className="m-2" >Sites : {org.site_num}</div>
-                            <div className=" m-2">Creation Time : {org.creation_time}</div>
-                            <div className=" m-2">Domaine : {org.domaines}</div>
-                            <div className=" m-2">Tel : {org.tel}</div>
-                            <div className=" m-2">Adresse : {org.Adresse}</div>
-                            <div className=" m-2">Location : {org.Carte}</div>
+                        <h1 className="text-prime pb-5">{!lastValues.name ? editValues.name : lastValues.name}</h1>
+                            <div className="m-2" >Sites : <b>{!lastValues.site_num ? editValues.site_num : lastValues.site_num}</b></div>
+                            <div className=" m-2">Creation Time : <b>{!lastValues.creation_date ? formatDate(editValues.creation_date) : formatDate(lastValues.creation_date)}</b></div>
+                            <div className=" m-2">Domaine : <b>{!lastValues.domaines ? editValues.domaines : lastValues.domaines}</b></div>
+                            <div className=" m-2">Tel : <b>{!lastValues.tel ? editValues.tel : lastValues.tel}</b></div>
+                            <div className=" m-2">Adresse : <b>{!lastValues.Adresse ? editValues.Adresse : lastValues.Adresse}</b></div>
+                            <div className=" m-2">Location : <b>{!lastValues.Carte ? editValues.Carte : lastValues.Carte}</b></div>
                             <div className="d-flex justify-content-end m-2">
                             <Button className="bg-prime" onClick={editOrg}>Modifier</Button>
                             <Button className="bg-danger" onClick={delOrg} >Supprimer</Button>
-                            <Button  onClick={delOrg} >Liste des </Button>
+                            <Button href="../products" >Liste des produits</Button>
                             </div>
                         
                     </div>
@@ -100,31 +141,66 @@ export default function Organism(props) {
                 <div className="row mediaquery-770">
                     <div className="col-12 org-edit-label">
                         <label>Name :</label>
-                        <input className="org-name" name="name" type="text" value={org.name} onChange={editValuesFunc}></input>
+                        <input 
+                            className="org-name" 
+                            name="name" 
+                            type="text" 
+                            placeholder={!lastValues.name ? editValues.name : lastValues.name} 
+                            onChange={editValuesFunc}></input>
                     </div>
                     <div className="col-12 org-edit-label">
                         <label>Sites :</label>
-                        <input className="org-name" name="site_num" type="text" value={org.site_num} onChange={editValuesFunc}></input>
+                        <input 
+                            className="org-name" 
+                            name="site_num" 
+                            type="text" 
+                            placeholder={!lastValues.site_num ? editValues.site_num : lastValues.site_num} 
+                            onChange={editValuesFunc}></input>
                     </div>
                     <div className="col-12 org-edit-label">
                         <label className="org-label">Creation Time :</label>
-                        <input className="org-name" name="creation_date" type="date" value={org.creation_time} onChange={editValuesFunc}></input>
+                        <input 
+                            className="org-name" 
+                            name="creation_date" 
+                            type="date" 
+                            value={!lastValues.creation_date ? formatDate(editValues.creation_date) : formatDate(lastValues.creation_date)}
+                            onChange={editValuesFunc}></input>
                     </div>
                     <div className="col-12 org-edit-label">
                         <label>Domaine :</label>
-                        <input className="org-name" name="domaines" type="text" value={org.domaines} onChange={editValuesFunc}></input>
+                        <input 
+                            className="org-name" 
+                            name="domaines" 
+                            type="text" 
+                            placeholder={!lastValues.domaines ? editValues.domaines : lastValues.domaines} 
+                            onChange={editValuesFunc}></input>
                     </div>
                     <div className="col-12 org-edit-label">
                         <label>Tel :</label>
-                        <input className="org-name" name="tel" type="tel" value={org.tel} onChange={editValuesFunc}></input>
+                        <input 
+                            className="org-name" 
+                            name="tel" 
+                            type="tel" 
+                            placeholder={!lastValues.tel ? editValues.tel : lastValues.tel} 
+                            onChange={editValuesFunc}></input>
                     </div>
                     <div className="col-12 org-edit-label">
                         <label>Adresse :</label>
-                        <input className="org-name" name="Adresse" type="text" value={org.Adresse} onChange={editValuesFunc}></input>
+                        <input 
+                            className="org-name" 
+                            name="Adresse" 
+                            type="text" 
+                            placeholder={!lastValues.Adresse ? editValues.Adresse : lastValues.Adresse} 
+                            onChange={editValuesFunc}></input>
                     </div>
                     <div className="col-12 org-edit-label">
                         <label>Location :</label>
-                        <input className="org-name" name="Carte" type="text" value={org.Carte} onChange={editValuesFunc}></input>
+                        <input 
+                            className="org-name" 
+                            name="Carte" 
+                            type="text" 
+                            placeholder={!lastValues.Carte ? editValues.Carte : lastValues.Carte} 
+                            onChange={editValuesFunc}></input>
                     </div>
                 </div>
                 <div className="row p-5">

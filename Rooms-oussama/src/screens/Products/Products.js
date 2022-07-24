@@ -1,44 +1,43 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Organism from '../../components/Organism/Organism';
+import Product from '../../components/Product/Product';
 import { Button } from 'react-bootstrap';
 import {AiOutlinePlus} from "react-icons/ai"
-import './OrganismPage.css'
+import './Products.css'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../../Context/authContext';
 import 'bootstrap/dist/css/bootstrap.css';
 
-export default function OrganismPage() {
-    const [orgs, setOrgs] = useState();
+export default function Products() {
+    const [prods, setProds] = useState();
 
-    const { user } = useContext(AuthContext);
+    const { user, org } = useContext(AuthContext);
     useEffect(() => {
-        const fetchOrgs = async () => {
+        const fetchProds = async () => {
           if (user) {
-            const res = await axios.get("http://localhost:5000/api/organism/a/" + user._id);
-            setOrgs(
+            const res = await axios.get("http://localhost:5000/api/product/a/" + org._id);
+            setProds(
               res.data
             );
           }
         };
-        fetchOrgs();
+        fetchProds();
       }, [user._id]);
-    console.log(orgs)
 
-    const organisms = orgs!==undefined && orgs.map(x=>{
+    const products = prods!==undefined && prods.map(x=>{
         return(
-            <Organism 
-              orgId={x}
+            <Product 
+              prod={x}
             />
            
         )
     })
-    if(orgs!==undefined){
+    if(prods!==undefined){
     return(
         <div className='container-fluid logo'>
             <div className=' justify-content-center pb-10 pt-7'>
                 <div className='row organisms-grid'>
-                  {organisms.length!==0 && (
+                  {products.length!==0 && (
                   <div className='col-auto col-sm-auto col-md-auto'>
                   <table className="table table-striped table-hover">
                     <thead>
@@ -49,7 +48,7 @@ export default function OrganismPage() {
                       </tr>
                     </thead>
                     <tbody>
-                      {organisms}
+                      {products}
                     </tbody>
                   </table>
                   </div>)}

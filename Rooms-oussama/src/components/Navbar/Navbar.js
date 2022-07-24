@@ -14,7 +14,6 @@ export default function Navbar() {
         localStorage.removeItem("org");
         navigate("./login")
       }
-      console.log(org)
     function handleFinish() {
         dispatch({ type: "SELECT_SUCCESS", payload: [user,undefined]});
         localStorage.removeItem("org");
@@ -26,9 +25,7 @@ export default function Navbar() {
 
         <nav class="navbar navbar-expand-lg navbar-light justify-content-between">
   <a class="navbar-brand" href="../main"><img src="https://bit.ly/3b1DwND" style={{maxHeight:"70px", marginTop:"20px", marginLeft:"20px", paddingBottom:"20px"}}/></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+  
 
     {user!==undefined && 
 
