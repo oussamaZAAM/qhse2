@@ -8,7 +8,7 @@ const AuthReducer = (state, action) => {
             }
         case "LOGIN_SUCCESS":
             return{
-                user: action.payload,
+                user: action.payload[0],
                 isFetching: false,
                 error: false,
             }
@@ -20,7 +20,8 @@ const AuthReducer = (state, action) => {
             }
         case "SELECT_SUCCESS":
             return{
-                org: action.payload,
+                org: action.payload[1],
+                user: action.payload[0]
             }
         default:
             return state

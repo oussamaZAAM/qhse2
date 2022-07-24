@@ -8,11 +8,11 @@ import { Button } from 'react-bootstrap';
 export default function Organism(props) {
     const navigate = useNavigate();
 
-    const { dispatch } = useContext(AuthContext);
+    const { user, dispatch } = useContext(AuthContext);
 
     const handleOrg = (e) => {
     
-        dispatch({ type: "SELECT_SUCCESS", payload: props.orgId});
+        dispatch({ type: "SELECT_SUCCESS", payload: [user,props.orgId]});
         localStorage.setItem("org", JSON.stringify(props.orgId))
         navigate("/organism/"+props.orgId._id);
 

@@ -8,14 +8,13 @@ import { Button } from "react-bootstrap";
 export default function Login() {
     const email= useRef();
     const password = useRef();
-    const {user, isFetching, error, dispatch} = useContext(AuthContext)
+    const {user, org, error, dispatch} = useContext(AuthContext)
 
     const handleLogin = (e) => {
         e.preventDefault();
         loginCall({email: email.current.value, password: password.current.value}, dispatch);
 
     }
-    console.log(user)
 
     return(
         <main className="jumbotron vertical-center">

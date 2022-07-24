@@ -9,11 +9,11 @@ export default function Menu() {
 if(org!==undefined){
     return(
         <>
-        <h1 className="mt-3">
+        <h1 className="mt-1">
                {org.name}
         </h1>
 <div class="list-group">
-  <a href="#" class="list-group-item list-group-item-action p-3 mt-10">Tableaux de bord</a>
+  <a href="#" class="list-group-item list-group-item-action p-3 mt-4">Tableaux de bord</a>
   <a href={"../../organism/"+org._id} class="list-group-item list-group-item-action list-group-item-primary p-3">SITE</a>
   <a href="#" class="list-group-item list-group-item-action list-group-item-secondary p-3">Ressources Humains</a>
   <a href="#" class="list-group-item list-group-item-action list-group-item-success p-3">PROCESSUS</a>

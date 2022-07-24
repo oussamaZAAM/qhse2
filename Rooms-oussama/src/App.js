@@ -9,7 +9,7 @@ import { AuthContext } from "./Context/authContext";
 import OrganismPage from "./screens/OrganismPage/OrganismPage";
 import "./App.css"
 export default function App() {
-  const {user} = useContext(AuthContext);
+  const {user, org} = useContext(AuthContext);
   function HandleOrganism() {
     let {id} = useParams();
     return (
@@ -19,17 +19,16 @@ export default function App() {
 
     return(
     <BrowserRouter>
-    <div style={{backgroundColor:"#F5F0BB"}} className="navbarCss">
-    <Link style={{display: "flex", alignItems: "center"}} to="/"> <img style={{padding: "2vh"}} src="https://bit.ly/3b1DwND" /></Link>
-    </div>
+
+      <Navbar />
       <Routes>
         {/* <Route path="/" element={<Layout />}> */}
-          <Route path="/login" element={user?<OrganismPage />:<Login />} />
-          <Route path="/register" element={user?<OrganismPage />:<Register />} />
-          <Route path="/main" element={<OrganismPage />} />
-          <Route path="/" element={<OrganismPage />} />
-          <Route path="/new-organism" element={<NewOrganism />} />
-          <Route path="/organism/:id" element={<HandleOrganism />} />
+          <Route path="/login" element={org?<Organism />:(user?<OrganismPage />:<Login />)} />
+          <Route path="/register" element={org?<Organism />:(user?<OrganismPage />:<Register />)} />
+          <Route path="/main" element={org?<Organism />:(user?<OrganismPage />:<Login />)} />
+          <Route path="/" element={org?<Organism />:(user?<OrganismPage />:<Login />)} />
+          <Route path="/new-organism" element={org?<Organism />:(user?<NewOrganism />:<Login />)} />
+          <Route path="/organism/:id" element={org?<Organism />:(user?<HandleOrganism />:<Login />)} />
         {/* </Route> */}
       </Routes>
     </BrowserRouter>
