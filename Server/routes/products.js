@@ -20,13 +20,13 @@ ProductRouter.post('/create', async (req, res) => {
                     creation_date: req.body.creation_date,                   
                     agrement: req.body.agrement,                   
                     autorisation: req.body.autorisation,                   
-                    site: req.body.site,                   
+                    site: req.body.site,
+                    org: req.body.org,                  
                     energie: req.body.energie,                   
                     proteine: req.body.proteine,                   
                     carbs: req.body.carbs,                   
                     lipide: req.body.lipide,                   
-                    calcium: req.body.calcium,                   
-                    date: req.body.date,                   
+                    calcium: req.body.calcium,                
                 });
                 const cuser = await newProduct.save(function(){});
                 res.status(200).json(cuser);
