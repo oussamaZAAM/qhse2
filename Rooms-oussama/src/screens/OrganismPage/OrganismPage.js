@@ -1,12 +1,12 @@
-import React, { useRef, useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect, useState } from 'react';
 import Organism from '../../components/Organism/Organism';
 import { Button } from 'react-bootstrap';
 import {AiOutlinePlus} from "react-icons/ai"
 import './OrganismPage.css'
-import axios from 'axios'
-import {Link} from "react-router-dom"
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { AuthContext } from '../../Context/authContext';
 
-import { AuthContext } from "../../Context/authContext";
 export default function OrganismPage() {
     const [orgs, setOrgs] = useState();
 

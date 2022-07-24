@@ -2,10 +2,11 @@ import { Router as _Router } from 'express';
 const organismRouter = _Router();
 
 
+const OrganismRouter = _Router();
 
 import Organism from '../models/Organism.js';
 
-organismRouter.post('/create', async (req, res) => {
+OrganismRouter.post('/create', async (req, res) => {
     
                 const newOrganism = new Organism({
                     name: req.body.name,
@@ -24,7 +25,7 @@ organismRouter.post('/create', async (req, res) => {
 });
 
 
-organismRouter.get('/:orgId', async (req, res) => {
+OrganismRouter.get('/:orgId', async (req, res) => {
     try {
         const orgs = await Organism.findOne({_Id:req.params.orgId});
         res.status(200).json(orgs);
@@ -32,7 +33,7 @@ organismRouter.get('/:orgId', async (req, res) => {
         res.status(500).json(err);
       }
 });
-organismRouter.get('/a/:userId', async (req, res) => {
+OrganismRouter.get('/a/:userId', async (req, res) => {
     try {
         const orgs = await Organism.find({user:req.params.userId});
         res.status(200).json(orgs);
@@ -41,7 +42,7 @@ organismRouter.get('/a/:userId', async (req, res) => {
       }
 });
 
-organismRouter.delete('/:orgId', async (req, res) => {
+OrganismRouter.delete('/:orgId', async (req, res) => {
     try {
         const orgs = await Organism.findOne({_Id:req.params.orgId});
         await orgs.deleteOne();
@@ -51,4 +52,4 @@ organismRouter.delete('/:orgId', async (req, res) => {
       }
 });
 
-export default organismRouter;
+export default OrganismRouter;
