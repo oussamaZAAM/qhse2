@@ -52,10 +52,6 @@ const ProductSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  org: {
-    type: String,
-    required: true
-  },
   energie: {
     type: Number,
     required: true
