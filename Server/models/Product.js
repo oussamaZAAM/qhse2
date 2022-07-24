@@ -40,7 +40,7 @@ const ProductSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  agreement: {
+  agrement: {
     type: String,
     required: true
   },

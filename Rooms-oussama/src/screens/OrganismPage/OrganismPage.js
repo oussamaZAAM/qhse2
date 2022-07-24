@@ -23,7 +23,6 @@ export default function OrganismPage() {
         };
         fetchOrgs();
       }, [user._id]);
-    console.log(orgs)
 
     const organisms = orgs!==undefined && orgs.map(x=>{
         return(
