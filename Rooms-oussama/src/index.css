@@ -28,6 +28,11 @@ code {
   height: 100%;
   background: linear-gradient(90deg, #F5F0BB 50%, #FFFFFF 50%);
 }
+@media screen and (max-width: 768px) {
+  .jumbotron{
+    background: #F5F0BB;
+  }
+}
 .body{
   background: url("../src/images/login-background.jpg");
   background-repeat: no-repeat;
