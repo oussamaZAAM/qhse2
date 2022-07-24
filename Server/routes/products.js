@@ -27,8 +27,7 @@ ProductRouter.post('/create', async (req, res) => {
                     calcium: req.body.calcium,                   
                     date: req.body.date,                   
                 });
-                const cuser = await newProduct.save(function(){});  
-                console.log("here")
+                const cuser = await newProduct.save(function(){});
                 res.status(200).json(cuser);
 });
 
