@@ -25,10 +25,10 @@ export default function Navbar() {
 
         <nav class="navbar navbar-expand-lg navbar-light justify-content-between">
   <a class="navbar-brand" href="../main"><img src="https://bit.ly/3b1DwND" style={{maxHeight:"70px", marginTop:"20px", marginLeft:"20px", paddingBottom:"20px"}}/></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+  
+
     {user!==undefined && 
+
     <ul class="navbar-nav">
         {org!==undefined &&
       <li class="nav-item">
@@ -39,6 +39,7 @@ export default function Navbar() {
         <a className="nav-link sortable" onClick={handleLogout}>Deconnecter</a>
       </li>
     </ul>
+    
     }
   
 </nav>

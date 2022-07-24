@@ -7,6 +7,7 @@ import Organism from "./screens/Organism/Organism"
 import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import { AuthContext } from "./Context/authContext";
 import OrganismPage from "./screens/OrganismPage/OrganismPage";
+import Products from "./screens/Products/Products";
 import "./App.css"
 import NewProduct from "./screens/NewProduct/NewProduct"
 export default function App() {
@@ -24,13 +25,14 @@ export default function App() {
       <Navbar />
       <Routes>
         {/* <Route path="/" element={<Layout />}> */}
-          <Route path="/login" element={(user?<OrganismPage />:<Login />)} />
-          <Route path="/register" element={(user?<OrganismPage />:<Register />)} />
-          <Route path="/main" element={(user?<OrganismPage />:<Login />)} />
+          <Route path="/login" element={org?<Organism/>:(user?<OrganismPage />:<Login />)} />
+          <Route path="/register" element={org?<Organism/>:(user?<OrganismPage />:<Register />)} />
+          <Route path="/main" element={org?<Organism/>:(user?<OrganismPage />:<Login />)} />
           <Route path="/" element={(user?<OrganismPage />:<Login />)} />
           <Route path="/new-organism" element={(user?<NewOrganism />:<Login />)} />
-          <Route path="/new-product" element={(user?<NewProduct />:<Login />)} />
           <Route path="/organism/:id" element={(user?<HandleOrganism />:<Login />)} />
+          <Route path="/new-product" element={(user?<NewProduct />:<Login />)} />
+          <Route path="/products" element={org?<Products />:(user?<OrganismPage />:<Login />)} />
         {/* </Route> */}
       </Routes>
     </BrowserRouter>
