@@ -21,7 +21,7 @@ export default function NewProduct() {
     autorisation: "",
     site: "",
     energie: "",
-    energie: "",
+    proteine: "",
     carbs: "",
     lipide: "",
     calcium: "",

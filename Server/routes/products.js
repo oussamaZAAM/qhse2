@@ -6,6 +6,7 @@ const ProductRouter = _Router();
 import Product from '../models/Product.js';
 
 ProductRouter.post('/create', async (req, res) => {
+  
                 const newProduct = new Product({
                     name: req.body.name,                   
                     shifelife: req.body.shifelife,                   
