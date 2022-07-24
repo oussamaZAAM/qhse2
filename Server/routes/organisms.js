@@ -23,10 +23,27 @@ OrganismRouter.post('/create', async (req, res) => {
         
 });
 
+OrganismRouter.put("/:orgId", async (req, res) => {
+  try{
+    const updatedorganism = await Organism.findByIdAndUpdate({_id: req.params.orgId},{
+          name: req.body.name,
+          site_num: req.body.site_num,
+          creation_time: req.body.creation_time,
+          domaines: req.body.domaines,
+          tel: req.body.tel,
+          Adresse: req.body.Adresse,
+          Carte: req.body.Carte,
+          date: req.body.date, 
+    });
+    res.status(200).json("Organism had been updated");
+  } catch (err) {
+    res.status(500).json(err);
+  }
+})
 
-OrganismRouter.get('/:userId', async (req, res) => {
+OrganismRouter.get('/:orgId', async (req, res) => {
     try {
-        const orgs = await Organism.findOne({user:req.params.userId});
+        const orgs = await Organism.findOne({_id:req.params.orgId});
         res.status(200).json(orgs);
       } catch (err) {
         res.status(500).json(err);
