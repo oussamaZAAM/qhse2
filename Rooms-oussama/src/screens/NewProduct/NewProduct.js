@@ -5,8 +5,12 @@ import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
 import { AiFillCamera } from 'react-icons/ai'
 import axios from 'axios';
+import {Link, useNavigate} from "react-router-dom"
 
 export default function NewProduct() {
+    const navigate = useNavigate();
+    const [picture, setPicture] = useState('');
+
   const [product, setProduct] = useState({
     name: "",
     shifelife: "",
@@ -37,7 +41,24 @@ export default function NewProduct() {
     } catch(err){
         console.log(err)
     }
+    navigate("/products");
+
   }
+  const handleUpload = async (e) => {
+    const pic=e.target.files[0]; //Initialiser "pic" avec l'image telecharger depuis la machine
+    // setFile(e.target.files[0])
+    const data = new FormData(); //Initialiser "data" par une Forme de donnes
+    const fileName = Date.now() + pic.name; //Initialiser "fileName" par le nom de fichier telecharge
+    data.append("name", fileName);
+    data.append("file", pic);
+    //Ajouter les informations de fichier telecharge a notre "data"
+    try {
+        await axios.post("http://localhost:5000/api/upload", data);
+        //envoyer la donnee vers le "backend" avec "axios" dans le champs "upload"
+      } catch (err) {}
+      setPicture(fileName)
+      setProduct({...product, photos: fileName});
+}
   return (
     <main className="container">
         <div className="row text-center"><h1 className='text-center'>New Product</h1></div>
@@ -99,11 +120,11 @@ export default function NewProduct() {
                 label="Photos"
                 value={product.photos}
                 name='photos'
-                onChange={handleChange}
+                
             />
             <Button className="col-4" variant="contained" component="label">
                 <AiFillCamera />
-                <input hidden accept="image/*" multiple type="file" />
+                <input hidden accept="image/*" multiple type="file" onChange={(e) => handleUpload(e)}/>
             </Button>
             </div>
             <TextField

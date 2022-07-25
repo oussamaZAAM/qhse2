@@ -29,9 +29,9 @@ export default function App() {
           <Route path="/register" element={org?<Organism/>:(user?<OrganismPage />:<Register />)} />
           <Route path="/main" element={org?<Organism/>:(user?<OrganismPage />:<Login />)} />
           <Route path="/" element={(user?<OrganismPage />:<Login />)} />
-          <Route path="/new-organism" element={(user?<NewOrganism />:<Login />)} />
-          <Route path="/organism/:id" element={(user?<HandleOrganism />:<Login />)} />
-          <Route path="/new-product" element={(user?<NewProduct />:<Login />)} />
+          <Route path="/new-organism" element={org?<Organism />:(user?<NewOrganism />:<Login />)} />
+          <Route path="/organism/:id" element={org?<HandleOrganism />:(user?<OrganismPage/>:<Login />)} />
+          <Route path="/new-product" element={org?<NewProduct />:(user?<OrganismPage/>:<Login />)} />
           <Route path="/products" element={org?<Products />:(user?<OrganismPage />:<Login />)} />
         {/* </Route> */}
       </Routes>

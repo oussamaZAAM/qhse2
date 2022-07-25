@@ -27,6 +27,7 @@ export default function Products() {
     const products = prods!==undefined && prods.map(x=>{
         return(
             <Product 
+              key={x._id}
               prod={x}
             />
            
@@ -43,8 +44,8 @@ export default function Products() {
                     <thead>
                       <tr>
                         <th scope="col-4">Name</th>
-                        <th scope="col-4">Domaine</th>
-                        <th scope="col-4">Tel</th>
+                        <th scope="col-4">Photos</th>
+                        <th scope="col-4">Date</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -53,7 +54,7 @@ export default function Products() {
                   </table>
                   </div>)}
                   <div className='col-auto col-sm-auto col-md-auto col-lg-auto mt-2'>
-                  <Link to="../new-organism">
+                  <Link to="../new-product">
                       <AiOutlinePlus size={50} style={{borderRadius: "9px", border: "3px solid"}}/>
                   </Link>
                   </div>
