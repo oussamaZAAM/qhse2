@@ -20,10 +20,10 @@ export default function Product(props) {
 
     
     return(
-            <tr onClick={handleOrg} className="sortable">
-      <td>{props.prod.name}</td>
-      <td><img src={"../../../../Server/public/images/"+props.prod.photos}/></td>
-      <td>{props.prod.creation_date}</td>
-    </tr>
+        <tr onClick={handleOrg} className="sortable">
+            <td>{props.prod.name}</td>
+            <td><img src={"../../../../Server/public/images/"+props.prod.photos}/></td>
+            <td>{props.prod.creation_date}</td>
+        </tr>
     )
 }

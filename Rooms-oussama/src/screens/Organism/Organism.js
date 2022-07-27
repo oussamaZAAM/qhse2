@@ -81,7 +81,7 @@ export default function Organism(props) {
             navigate("../../main")
         
         }catch(err){
-            console.log(err)        
+            console.log(err)      
         }
         
     }

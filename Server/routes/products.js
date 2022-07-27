@@ -51,4 +51,14 @@ ProductRouter.get('/:prodId', async (req, res) => {
       }
 });
 
+ProductRouter.delete('/:prodId', async (req, res) => {
+  try {
+      const products = await Product.findOne({_Id:req.params.orgId});
+      await products.deleteOne();
+      res.status(200).json("The product has been deleted");
+    } catch (err) {
+      res.status(500).json(err);
+    }
+});
+
 export default ProductRouter;

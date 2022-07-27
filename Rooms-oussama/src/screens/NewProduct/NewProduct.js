@@ -64,7 +64,7 @@ export default function NewProduct() {
         <div className="row text-center"><h1 className='text-center'>New Product</h1></div>
         <div className='d-flex flex-column align-items-center'>
             <Box
-                className='row d-flex'
+                className='row d-flex justify-content-center'
                 style={{maxWidth: '50%'}}
                 component="form"
                 sx={{
@@ -74,7 +74,7 @@ export default function NewProduct() {
                 autoComplete="off"
             >
             <TextField
-                className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4"
+                className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
                 label="Name"
                 value={product.name}
@@ -82,23 +82,23 @@ export default function NewProduct() {
                 onChange={handleChange}
             />
             <TextField
-                className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4"
+                className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
-                label="Shife Life"
+                label="Shelf Life"
                 value={product.shifelife}
                 name='shifelife'
                 onChange={handleChange}
             />
             <TextField
-                className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4"
+                className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
-                label="Duree Shife Life"
+                label="Duree Shelf Life"
                 value={product.time_shife}
                 name='time_shife'
                 onChange={handleChange}
             />
             <TextField
-                className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4"
+                className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
                 label="Fiche Technique"
                 value={product.fiche_technique}
@@ -106,14 +106,14 @@ export default function NewProduct() {
                 onChange={handleChange}
             />
             <TextField
-                className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4"
+                className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
                 label="FDS"
                 value={product.fds}
                 name='fds'
                 onChange={handleChange}
             />
-            <div className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4 d-flex justify-content-center" >
+            <div className="col-12 col-sm-6 col-md-4 col-lg-4 d-flex justify-content-center" >
             <TextField
                 className="col-7 m-0"
                 id="outlined-name"
@@ -128,7 +128,7 @@ export default function NewProduct() {
             </Button>
             </div>
             <TextField
-                className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4"
+                className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
                 label="Emballage"
                 value={product.emballage}
@@ -136,7 +136,7 @@ export default function NewProduct() {
                 onChange={handleChange}
             />
             <TextField
-                className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4"
+                className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
                 label="Grammage"
                 value={product.grammage}
@@ -144,7 +144,7 @@ export default function NewProduct() {
                 onChange={handleChange}
             />
             <TextField
-                className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4"
+                className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
                 label="Type de Client"
                 value={product.type_client}
@@ -152,7 +152,7 @@ export default function NewProduct() {
                 onChange={handleChange}
             />
             <TextField
-                className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4"
+                className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
                 label="Date de creation"
                 value={product.creation_date}
@@ -160,7 +160,7 @@ export default function NewProduct() {
                 onChange={handleChange}
             />
             <TextField
-                className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4"
+                className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-textarea"
                 label="Agrement Sanitaire"
                 value={product.agrement}
@@ -169,7 +169,7 @@ export default function NewProduct() {
                 multiline
             />
             <TextField
-                className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4"
+                className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-textarea"
                 label="Autorisation Sanitaire"
                 value={product.autorisation}
@@ -178,7 +178,7 @@ export default function NewProduct() {
                 multiline
             />
             <TextField
-                className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4"
+                className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
                 label="Site de production"
                 value={product.site}
@@ -186,18 +186,18 @@ export default function NewProduct() {
                 onChange={handleChange}
             />
             <TextField
-                className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4"
+                className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
-                label="Organism"
-                value={product.org}
+                label="Organisme"
+                value={product.org.name}
                 name='org'
                 onChange={handleChange}
             />
             </Box>
             <hr/>
-            <label>Etiquettes</label>
+            <div className='text-center col-12 col-sm-6 col-md-4 col-lg-4'>Etiquettes</div>
             <Box
-                className='row d-flex'
+                className='row d-flex justify-content-center'
                 style={{maxWidth: '50%'}}
                 component="form"
                 sx={{
@@ -208,7 +208,7 @@ export default function NewProduct() {
             >
             {product.energie==="" || Number.isInteger(+product.energie)!==false ?
             (<TextField
-                className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4"
+                className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
                 label="Valeur Energetique"
                 value={product.energie}
@@ -226,7 +226,7 @@ export default function NewProduct() {
                 />)}
             {product.proteine==="" || Number.isInteger(+product.proteine)!==false ?
             (<TextField
-                className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4"
+                className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
                 label="Proteines"
                 value={product.proteine}
@@ -244,7 +244,7 @@ export default function NewProduct() {
             />)}
             {product.carbs==="" || Number.isInteger(+product.carbs)!==false ?
             (<TextField
-                className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4"
+                className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
                 label="Carbohydrates"
                 value={product.carbs}
@@ -262,7 +262,7 @@ export default function NewProduct() {
                 />)}
             {product.lipide==="" || Number.isInteger(+product.lipide)!==false ?
             (<TextField
-                className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4"
+                className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
                 label="Lipides"
                 value={product.lipide}
@@ -280,7 +280,7 @@ export default function NewProduct() {
                 />)}
             {product.calcium==="" || Number.isInteger(+product.calcium)!==false ?
             (<TextField
-                className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4"
+                className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
                 label="Calcium"
                 value={product.calcium}

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import Organism from '../../components/Organism/Organism';
 import { Button } from 'react-bootstrap';
 import {AiOutlinePlus} from "react-icons/ai"
-import './OrganismPage.css'
+import './Organisms.css'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../../Context/authContext';

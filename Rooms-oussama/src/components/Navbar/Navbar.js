@@ -27,19 +27,17 @@ export default function Navbar() {
   <a class="navbar-brand" href="../main"><img src="https://bit.ly/3b1DwND" style={{maxHeight:"70px", marginTop:"20px", marginLeft:"20px", paddingBottom:"20px"}}/></a>
   
 
-    {user!==undefined && 
-
-    <ul class="navbar-nav">
-        {org!==undefined &&
-      <li class="nav-item">
-        <a className="nav-link sortable" onClick={handleFinish}>Terminer</a>
-      </li>
-      }
-      <li class="nav-item">
-        <a className="nav-link sortable" onClick={handleLogout}>Deconnecter</a>
-      </li>
-    </ul>
-    
+    {(user!==null && user!==undefined) && 
+        <ul class="navbar-nav">
+          {org!==null && org!==undefined &&
+            <li class="nav-item">
+              <a className="nav-link sortable" onClick={handleFinish}>Terminer</a>
+            </li>
+          }
+          <li class="nav-item">
+            <a className="nav-link sortable" onClick={handleLogout}>Deconnecter</a>
+          </li>
+        </ul>
     }
   
 </nav>
