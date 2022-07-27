@@ -10,7 +10,7 @@ ProductRouter.post('/create', async (req, res) => {
                 const newProduct = new Product({
                     name: req.body.name,                   
                     shifelife: req.body.shifelife,                   
-                    time_shife: req.body.time_shife,                   
+                    shife_time: req.body.shife_time,                   
                     fiche_technique: req.body.fiche_technique,                   
                     fds: req.body.fds,                 
                     photos: req.body.photos,                   
@@ -21,7 +21,7 @@ ProductRouter.post('/create', async (req, res) => {
                     agrement: req.body.agrement,                   
                     autorisation: req.body.autorisation,                   
                     site: req.body.site,
-                    org: req.body.org,                  
+                    organism: req.body.organism,                  
                     energie: req.body.energie,                   
                     proteine: req.body.proteine,                   
                     carbs: req.body.carbs,                   
@@ -49,6 +49,33 @@ ProductRouter.get('/:prodId', async (req, res) => {
       } catch (err) {
         res.status(500).json(err);
       }
+});
+
+ProductRouter.put('/:prodId', async (req, res) => {
+  try {
+      const updatedProduct = await Product.findByIdAndUpdate({_id:req.params.prodId}, {
+        name: req.body.name,
+        shifelife: req.body.shifelife,
+        shife_time: req.body.shife_time,
+        fiche_technique: req.body.fiche_technique,
+        fds: req.body.fds,
+        emballage: req.body.emballage,
+        grammage: req.body.grammage,
+        type_client: req.body.type_client,
+        creation_date: req.body.creation_date,
+        agrement: req.body.agrement,
+        autorisation: req.body.autorisation,
+        site: req.body.site,
+        energie: req.body.energie,
+        proteine: req.body.proteine,
+        carbs: req.body.carbs,
+        lipide: req.body.lipide,
+        calcium: req.body.calcium,
+      });
+      res.status(200).json("Product has been updated");
+    } catch (err) {
+      res.status(500).json(err);
+    }
 });
 
 ProductRouter.delete('/:prodId', async (req, res) => {

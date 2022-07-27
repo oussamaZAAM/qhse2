@@ -1,20 +1,22 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import "./NewProduct.css";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
 import { AiFillCamera } from 'react-icons/ai'
+import { AuthContext } from "../../Context/authContext";
 import axios from 'axios';
 import {Link, useNavigate} from "react-router-dom"
 
 export default function NewProduct() {
     const navigate = useNavigate();
     const [picture, setPicture] = useState('');
+    const { org } = useContext(AuthContext);
 
   const [product, setProduct] = useState({
     name: "",
     shifelife: "",
-    time_shife: "",
+    shife_time: "",
     fiche_technique: "",
     fds: "",
     photos: "",
@@ -36,8 +38,29 @@ export default function NewProduct() {
     setProduct({...product, [event.target.name]: event.target.value});
   };
   const submitProduct = async () => {
+    const newProduct = {
+        name: product.name,
+        shifelife: product.shifelife,
+        shife_time: product.shife_time,
+        fiche_technique: product.fiche_technique,
+        fds: product.fds,
+        photos: product.photos,
+        emballage: product.emballage,
+        grammage: product.grammage,
+        type_client: product.type_client,
+        creation_date: product.creation_date,
+        agrement: product.agrement,
+        autorisation: product.autorisation,
+        site: product.site,
+        organism: org.name,
+        energie: product.energie,
+        proteine: product.proteine,
+        carbs: product.carbs,
+        lipide: product.lipide,
+        calcium: product.calcium,
+    }
     try{
-        await axios.post("http://localhost:5000/api/product/create", product)
+        await axios.post("http://localhost:5000/api/product/create", newProduct)
     } catch(err){
         console.log(err)
     }
@@ -93,8 +116,8 @@ export default function NewProduct() {
                 className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
                 label="Duree Shelf Life"
-                value={product.time_shife}
-                name='time_shife'
+                value={product.shife_time}
+                name='shife_time'
                 onChange={handleChange}
             />
             <TextField

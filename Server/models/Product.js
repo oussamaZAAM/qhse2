@@ -8,7 +8,7 @@ const ProductSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  time_shife: {
+  shife_time: {
     type: String,
     required: true
   },
@@ -71,6 +71,9 @@ const ProductSchema = new mongoose.Schema({
   calcium: {
     type: Number,
     required: true
+  },
+  organism: {
+    type: String,
   },
   date: {
     type: Date,
