@@ -13,7 +13,7 @@ export default function Product(props) {
         navigate("/product/"+props.prod._id);
     }
     const handleEdit = async() => {
-        navigate("/product/"+props.prod._id);
+        navigate("/product/"+props.prod._id+"/isEdit");
     }
     const handleDelete= async (e)=>{
         e.preventDefault();
@@ -48,7 +48,7 @@ export default function Product(props) {
 
 
                  <div class="buttons d-flex flex-row">
-                    <div class="cart"><i class="fa fa-shopping-cart"></i></div> <button onClick={handleEdit} class="btn btn-success cart-button btn-block mx-3"><span class="dot">1</span>Modifier </button>
+                    <button onClick={handleEdit} class="btn btn-primary cart-button btn-block mx-3"><span class="dot">1</span>Modifier </button>
                     <button onClick={handleDelete} class="btn btn-danger cart-button btn-block"><span class="dot">1</span>Supprimer </button>
                 </div>
 

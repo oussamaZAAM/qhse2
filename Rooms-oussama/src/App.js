@@ -22,8 +22,9 @@ export default function App() {
   }
   function HandleProduct() {
     let {id} = useParams();
+    let {isEdit} = useParams();
     return (
-      <Product productId={id} /> 
+      <Product productId={id} isEdit={isEdit} /> 
     )
   }
 
@@ -40,7 +41,7 @@ export default function App() {
           <Route path="/organism/:id" element={org?<HandleOrganism />:(user?<Organisms/>:<Login />)} />
           <Route path="/new-product" element={org?<NewProduct />:(user?<Organisms/>:<Login />)} />
           <Route path="/products" element={org?<Products />:(user?<Organisms />:<Login />)} />
-          <Route path="/product/:id" element={org?<HandleProduct />:(user?<Organisms />:<Login />)} />
+          <Route path="/product/:id/:isEdit" element={org?<HandleProduct />:(user?<Organisms />:<Login />)} />
           <Route path="/pagination" element={<AppPagination />} />
         {/* </Route> */}
       </Routes>
