@@ -64,6 +64,7 @@ const Product = (props) => {
             setProduct(res.data);
             setEditValues({
                 name: res.data.name,
+                photos: res.data.photos,
                 shifelife: res.data.shifelife,
                 shife_time: res.data.shife_time,
                 fiche_technique: res.data.fiche_technique,
@@ -90,7 +91,9 @@ const Product = (props) => {
     <div className="container">
         <h3 className="p-5 text-center">{editValues.name}</h3>
         <div className="row">
-            <div className="col-sm-12 col-md-6 col-lg-6"></div>
+            <div className="col-sm-12 col-md-6 col-lg-6 text-center center-image">
+                <img src={"http://localhost:5000/images/"+editValues.photos} width="400px"/>
+            </div>
             <div className="row col-sm-12 col-md-6 col-lg-6">
                 <div className="container">
                     {page === 1 ?

@@ -6,3 +6,8 @@
 .enregistrer{
     margin-left: -100px !important;
 }
+.center-image{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
