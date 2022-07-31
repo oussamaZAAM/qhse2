@@ -35,7 +35,7 @@ export default function Navbar() {
             </li>
           }
           <li class="nav-item">
-            <a className="nav-link sortable" onClick={handleLogout}>Deconnecter</a>
+            <a className="nav-link sortable" onClick={handleLogout}>Déconnecter</a>
           </li>
         </ul>
     }

@@ -23,19 +23,19 @@ export default function Login() {
                 <div className="row d-flex justify-content-center align-items-center">
                     <div className="row col-12 col-sm-12 col-md-5 col-lg-5 d-flex b justify-content-center align-items-center">
                         <img className="col-12" src="https://media.istockphoto.com/photos/imge-of-mint-picture-id619514634?k=20&m=619514634&s=612x612&w=0&h=0qd6aFtslmii-nfCiBxxIBQmAOqVVwm_iRq_vwYLAWw=" height="328" width="189"></img>
-                        <h1 className="col-12 text-center text-prime">Improve Your Efficiency and Productivity</h1>
+                        <h1 className="col-12 text-center text-prime">Améliorez votre Efficacité et Productivité</h1>
                     </div>
                 
                     <div className="col-12 col-sm-12 col-md-4 col-lg-4 register-a"> 
-                        <h1 className="text-prime pb-5 pt-5">Login</h1>
+                        <h1 className="text-prime pb-5 pt-5">Connexion</h1>
                             <form className="form-group ">
                                 <input className="form-control m-2" placeholder="Email Address" ref={email} />
                                 <input className="form-control m-2" type="password" placeholder="Password" ref={password} />
                                 <div className="d-flex justify-content-end m-2">
-                                <Button className="bg-prime" onClick={handleLogin} >Login</Button>
+                                <Button className="bg-prime" onClick={handleLogin} >Connexion</Button>
                                 </div>
                             </form>
-                            <h5 className="login-suggest text-dark mx-4 mt-3">Don't have an account? <span className=""><Link to="../Register">Register</Link></span></h5>
+                            <h5 className="login-suggest text-dark mx-4 mt-3">Avez vous déjà un compte ? <span className=""><Link className="text-decoration-none" to="../Register">S'inscrire</Link></span></h5>
                     </div>
                 </div>
             </div>

@@ -195,7 +195,7 @@ const Product = (props) => {
                                     />
                                 </div>
                                 <div className='d-flex justify-content-start'>
-                                    <h5 className='p-3'>Date de creation: </h5>
+                                    <h5 className='p-3'>Date de création: </h5>
                                     <TextField
                                         hiddenLabel
                                         className="col-12 col-sm-6 col-md-4 col-lg-4"
@@ -207,7 +207,7 @@ const Product = (props) => {
                                     />
                                 </div>
                                 <div className='d-flex justify-content-start'>
-                                    <h5 className='p-3'>Agrement Sanitaire: </h5>
+                                    <h5 className='p-3'>Agrément Sanitaire: </h5>
                                     <TextField
                                         hiddenLabel
                                         className="col-12 col-sm-6 col-md-4 col-lg-4"
@@ -258,8 +258,8 @@ const Product = (props) => {
                             </>)
                             : (<>
                                 <h5 className='p-3'>Type de client: <b>{editValues.type_client}</b></h5>
-                                <h5 className='p-3'>Date de creation: <b>{editValues.creation_date}</b></h5>
-                                <h5 className='p-3'>Agrement Sanitaire: <b>{editValues.agrement}</b></h5>
+                                <h5 className='p-3'>Date de création: <b>{editValues.creation_date}</b></h5>
+                                <h5 className='p-3'>Agrément Sanitaire: <b>{editValues.agrement}</b></h5>
                                 <h5 className='p-3'>Autorisation Sanitaire: <b>{editValues.autorisation}</b></h5>
                                 <h5 className='p-3'>Site de production: <b>{editValues.site}</b></h5>
                                 <h5 className='p-3'>Organisme: <b>{org.name}</b></h5>
@@ -270,7 +270,7 @@ const Product = (props) => {
                             (<>
                                 <h4 className='text-center col-12 col-sm-6 col-md-4 col-lg-4 etiquettes'>Etiquettes</h4>
                                 <div className='d-flex justify-content-start'>
-                                    <h5 className='p-3'>Valeur Energetique: </h5>
+                                    <h5 className='p-3'>Valeur Energétique: </h5>
                                     {console.log(editValues)}
                                     <TextField
                                         hiddenLabel
@@ -284,7 +284,7 @@ const Product = (props) => {
                                     />
                                 </div>
                                 <div className='d-flex justify-content-start'>
-                                    <h5 className='p-3'>Proteines: </h5>
+                                    <h5 className='p-3'>Protéines: </h5>
                                     <TextField
                                         hiddenLabel
                                         className="col-12 col-sm-6 col-md-4 col-lg-4"
@@ -339,8 +339,8 @@ const Product = (props) => {
                             :
                             (<>
                                 <h4 className='text-center col-12 col-sm-6 col-md-4 col-lg-4 etiquettes'>Etiquettes</h4>
-                                <h5 className='p-3'>Valeur Energetique: <b>{editValues.energie}</b></h5>
-                                <h5 className='p-3'>Proteines: <b>{editValues.proteine}</b></h5>
+                                <h5 className='p-3'>Valeur Energétique: <b>{editValues.energie}</b></h5>
+                                <h5 className='p-3'>Protéines: <b>{editValues.proteine}</b></h5>
                                 <h5 className='p-3'>Carbohydrates: <b>{editValues.carbs}</b></h5>
                                 <h5 className='p-3'>Lipides: <b>{editValues.lipide}</b></h5>
                                 <h5 className='p-3'>Calcium: <b>{editValues.calcium}</b></h5>
@@ -356,7 +356,7 @@ const Product = (props) => {
             <Button className='btn btn-danger m-2' onClick={handleDelete}>Supprimer</Button>
         </div>)
         :(<div className="container text-center products-btn">
-            <Button className='btn btn-primary m-2' onClick={handleEdit}>Enregistrer</Button>
+            <Button className='btn btn-primary m-2 enregistrer' onClick={handleEdit}>Enregistrer</Button>
         </div>)}
     </div>
   )

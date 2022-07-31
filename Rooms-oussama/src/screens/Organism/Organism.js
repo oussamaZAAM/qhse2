@@ -120,9 +120,9 @@ export default function Organism(props) {
                     <div className="col-12"> 
                         <h1 className="text-prime pb-5">{!lastValues.name ? editValues.name : lastValues.name}</h1>
                             <div className="m-2" >Sites : <b>{!lastValues.site_num ? editValues.site_num : lastValues.site_num}</b></div>
-                            <div className=" m-2">Creation Time : <b>{!lastValues.creation_date ? formatDate(editValues.creation_date) : formatDate(lastValues.creation_date)}</b></div>
+                            <div className=" m-2">Date de création : <b>{!lastValues.creation_date ? formatDate(editValues.creation_date) : formatDate(lastValues.creation_date)}</b></div>
                             <div className=" m-2">Domaine : <b>{!lastValues.domaines ? editValues.domaines : lastValues.domaines}</b></div>
-                            <div className=" m-2">Tel : <b>{!lastValues.tel ? editValues.tel : lastValues.tel}</b></div>
+                            <div className=" m-2">Téléphone : <b>{!lastValues.tel ? editValues.tel : lastValues.tel}</b></div>
                             <div className=" m-2">Adresse : <b>{!lastValues.Adresse ? editValues.Adresse : lastValues.Adresse}</b></div>
                             <div className=" m-2">Location : <b>{!lastValues.Carte ? editValues.Carte : lastValues.Carte}</b></div>
                             <div className="d-flex justify-content-end m-2">
@@ -158,7 +158,7 @@ export default function Organism(props) {
                             onChange={editValuesFunc}></input>
                     </div>
                     <div className="col-12 org-edit-label">
-                        <label className="org-label">Creation Time :</label>
+                        <label className="org-label">Date de création :</label>
                         <input 
                             className="org-name" 
                             name="creation_date" 
@@ -176,7 +176,7 @@ export default function Organism(props) {
                             onChange={editValuesFunc}></input>
                     </div>
                     <div className="col-12 org-edit-label">
-                        <label>Tel :</label>
+                        <label>Téléphone :</label>
                         <input 
                             className="org-name" 
                             name="tel" 
@@ -205,7 +205,7 @@ export default function Organism(props) {
                 </div>
                 <div className="row p-5">
                     <Button type="submit" className="col-3 btn btn-warning m-1" onClick={endEditOrg} >Annuler</Button>
-                    <Button type="submit" className="col-3 btn btn-success m-1" onClick={submitEditOrg}>Verifier</Button>
+                    <Button type="submit" className="col-3 btn btn-success m-1" onClick={submitEditOrg}>Vérifier</Button>
                 </div>
             </div>
         )
