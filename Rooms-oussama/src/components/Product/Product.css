@@ -59,7 +59,7 @@ body{
 }
 
 .buttons {
-      padding: 10px;
+  padding: 10px;
   background-color: #d6d4d44f;
   border-radius: 4px;
   position: relative;
@@ -84,7 +84,7 @@ body{
 }
 
 .cart-button {
-  height: 48px
+  height: 48px;
 }
 
 .cart-button:focus {
@@ -158,8 +158,14 @@ body{
 }
 
 .card:hover{
-
   transform: scale(1.04);
   z-index: 2;
   overflow: hidden;
+}
+.card{
+  min-width: fit-content;
+}
+.img-height{
+  height: 100px;
+  object-fit: contain;
 }

@@ -31,23 +31,21 @@ export default function Product(props) {
         //     <td><img src={"../../../../../Server/public/images/"+props.prod.photos}/></td>
         //     <td>{props.prod.creation_date}</td>
         // </tr>
-        <div class="col-md-3">
+        <div class="col-md-6 col-lg-4 col-xl-3">
 
-        <div class="card p-3">
+          <div class="card p-3">
 
             <div onClick={handleOrg}  class="text-center">
 
-                <img src={"http://localhost:5000/images/"+props.prod.photos} width="200"/>
+                <img src={"http://localhost:5000/images/"+props.prod.photos[0]} className="img-height" width="200"/>
                 
             </div>
 
             <div class="product-details">
 
-
                  <span onClick={handleOrg} >{props.prod.name}</span>
 
-
-                 <div class="buttons d-flex flex-row">
+                 <div class="buttons d-flex flex-row justify-content-center">
                     <button onClick={handleEdit} class="btn btn-primary cart-button btn-block mx-3"><span class="dot">1</span>Modifier </button>
                     <button onClick={handleDelete} class="btn btn-danger cart-button btn-block"><span class="dot">1</span>Supprimer </button>
                 </div>
@@ -60,11 +58,8 @@ export default function Product(props) {
 
             </div>
 
+          </div>
 
-            
         </div>
-        
-
-    </div>
     )
 }

@@ -5,15 +5,19 @@ import { Button } from 'react-bootstrap';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import AppPagination from '../../components/Pagination/AppPagination';
 import { AuthContext } from "../../Context/authContext";
-import "./Product.css"
+import "./Product.css";
+import { AiFillCamera } from 'react-icons/ai'
 
 const Product = (props) => {
     const [product, setProduct] = useState();
     const [page, setPage] = useState(1);
+    const [imagePage, setImagePage] = useState(1);
+    const [picture, setPicture] = useState('');
     const [isEdit, setIsEdit] = useState(props.isEdit==="isEdit");
     const { org } = useContext(AuthContext)
     const [editValues, setEditValues] = useState({
         name: "",
+        photos: "",
         shifelife: "",
         shife_time:"",
         fiche_technique:"",
@@ -34,6 +38,9 @@ const Product = (props) => {
     const navigate = useNavigate();
     function handlePage(event, value) {
         setPage(value);
+    }
+    function handleImagePage(event, value) {
+        setImagePage(value);
     }
     function enableEdit() {
         setIsEdit(true);
@@ -58,6 +65,21 @@ const Product = (props) => {
             console.log(err)      
         }
     }
+    const handleUpload = async (e) => {
+        const pic=e.target.files[0]; //Initialiser "pic" avec l'image telecharger depuis la machine
+        // setFile(e.target.files[0])
+        const data = new FormData(); //Initialiser "data" par une Forme de donnes
+        const fileName = Date.now() + pic.name; //Initialiser "fileName" par le nom de fichier telecharge
+        data.append("name", fileName);
+        data.append("file", pic);
+        //Ajouter les informations de fichier telecharge a notre "data"
+        try {
+            await axios.post("http://localhost:5000/api/upload", data);
+            //envoyer la donnee vers le "backend" avec "axios" dans le champs "upload"
+          } catch (err) {}
+          setPicture(fileName)
+          setEditValues({...editValues, photos: fileName});
+    }
     useEffect(() => {
         const fetchProducts = async() => {
             const res = await axios.get("http://localhost:5000/api/product/"+props.productId);
@@ -81,7 +103,8 @@ const Product = (props) => {
                 carbs:res.data.carbs,
                 lipide:res.data.lipide,
                 calcium:res.data.calcium,
-              })
+            })
+            setPicture(res.data.photos)
         }
         fetchProducts();
     },[props.productId])
@@ -91,8 +114,14 @@ const Product = (props) => {
     <div className="container">
         <h3 className="p-5 text-center">{editValues.name}</h3>
         <div className="row">
-            <div className="col-sm-12 col-md-6 col-lg-6 text-center center-image">
-                <img src={"http://localhost:5000/images/"+editValues.photos} width="400px"/>
+            <div className="col-sm-12 col-md-6 col-lg-6 text-center center-image d-flex flex-column">
+                {isEdit && (   
+                    <Button className="bg-primary" variant="contained" component="label">
+                        <AiFillCamera />
+                        <input hidden accept="image/*" multiple type="file" onChange={(e) => handleUpload(e)}/>
+                    </Button>)}
+                <img src={"http://localhost:5000/images/"+picture[imagePage-1]} width="400px"/>
+                <Pagination count={picture.length} page={imagePage} onChange={handleImagePage}/>
             </div>
             <div className="row col-sm-12 col-md-6 col-lg-6">
                 <div className="container">

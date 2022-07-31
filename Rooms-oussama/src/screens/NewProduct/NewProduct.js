@@ -81,7 +81,7 @@ export default function NewProduct() {
       } catch (err) {}
       setPicture(fileName)
       setProduct({...product, photos: fileName});
-}
+  }
   return (
     <main className="container">
         <div className="row text-center"><h1 className='text-center'>New Product</h1></div>
@@ -185,7 +185,7 @@ export default function NewProduct() {
             <TextField
                 className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-textarea"
-                label="Agrement Sanitaire"
+                label="Agrément Sanitaire"
                 value={product.agrement}
                 name='agrement'
                 onChange={handleChange}
