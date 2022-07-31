@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import "./NewProduct.css";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { Button } from '@mui/material';
+import { Button, Pagination } from '@mui/material';
 import { AiFillCamera } from 'react-icons/ai'
 import { AuthContext } from "../../Context/authContext";
 import axios from 'axios';
@@ -10,7 +10,8 @@ import {Link, useNavigate} from "react-router-dom"
 
 export default function NewProduct() {
     const navigate = useNavigate();
-    const [picture, setPicture] = useState('');
+    const [picture, setPicture] = useState([]);
+    const [imagePage, setImagePage] = useState(1);
     const { org } = useContext(AuthContext);
 
   const [product, setProduct] = useState({
@@ -79,9 +80,13 @@ export default function NewProduct() {
         await axios.post("http://localhost:5000/api/upload", data);
         //envoyer la donnee vers le "backend" avec "axios" dans le champs "upload"
       } catch (err) {}
-      setPicture(fileName)
-      setProduct({...product, photos: fileName});
+    //   setPicture(fileName)
+      setPicture(prev=>[...prev, fileName])
+      setProduct({...product, photos: picture});
   }
+  function handleImagePage(event, value) {
+    setImagePage(value);
+}
   return (
     <main className="container">
         <div className="row text-center"><h1 className='text-center'>New Product</h1></div>
@@ -137,18 +142,16 @@ export default function NewProduct() {
                 onChange={handleChange}
             />
             <div className="col-12 col-sm-6 col-md-4 col-lg-4 d-flex justify-content-center" >
-            <TextField
-                className="col-7 m-0"
-                id="outlined-name"
-                label="Photos"
-                value={product.photos}
-                name='photos'
-                
-            />
-            <Button className="col-4" variant="contained" component="label">
-                <AiFillCamera />
-                <input hidden accept="image/*" multiple type="file" onChange={(e) => handleUpload(e)}/>
-            </Button>
+                {picture.length!==0 && 
+                (<div className="d-flex flex-column align-items-center">
+                    <img className="col-9" id="outlined-name" src={"http://localhost:5000/images/"+picture[imagePage-1]} name="photos" />
+                    <Pagination count={picture.length} page={imagePage} size="small" onChange={handleImagePage}/>
+                </div>
+                )}
+                <Button className="col-4" variant="contained" component="label">
+                    <AiFillCamera />
+                    <input hidden accept="image/*" multiple type="file" onChange={(e) => handleUpload(e)}/>
+                </Button>
             </div>
             <TextField
                 className="col-12 col-sm-6 col-md-4 col-lg-4"

@@ -65,7 +65,7 @@ export default function Products() {
             <div class="container">
               <div class="row g-1">
                 {products}
-                <Link className="text-center" to="../new-product">
+                <Link className="text-center m-2" to="../new-product">
                       <AiOutlinePlus size={50} style={{borderRadius: "9px", border: "3px solid"}}/>
                 </Link>
               </div>
