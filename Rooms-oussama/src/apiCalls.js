@@ -9,5 +9,6 @@ export const loginCall = async (userCred, dispatch) => {
         
     }catch(err){
         dispatch({ type: "LOGIN_FAILURE", payload: err});
+        window.alert("Your data is incorrect!")
     }
 }

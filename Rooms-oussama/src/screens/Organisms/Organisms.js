@@ -44,7 +44,7 @@ export default function OrganismPage() {
                       <tr>
                         <th scope="col-4">Name</th>
                         <th scope="col-4">Domaine</th>
-                        <th scope="col-4">Tel</th>
+                        <th scope="col-4">Téléphone</th>
                       </tr>
                     </thead>
                     <tbody>

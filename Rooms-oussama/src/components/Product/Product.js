@@ -1,8 +1,8 @@
 import React, { useRef, useContext, useState, useEffect } from "react";
 import './Product.css'
 import {useNavigate} from "react-router-dom"
-import { AuthContext } from "../../Context/authContext";
-import { Button } from 'react-bootstrap';
+
+import axios from 'axios';
 
 
 export default function Product(props) {
@@ -10,12 +10,19 @@ export default function Product(props) {
 
 
     const handleOrg = (e) => {
-    
-       
         navigate("/product/"+props.prod._id);
-
-    
-
+    }
+    const handleEdit = async() => {
+        navigate("/product/"+props.prod._id);
+    }
+    const handleDelete= async (e)=>{
+        e.preventDefault();
+        try{
+            await axios.delete("http://localhost:5000/api/product/" + props.prod._id);
+            navigate("../../main")
+        }catch(err){
+            console.log(err)      
+        }
     }
 
     return(
@@ -30,7 +37,7 @@ export default function Product(props) {
 
             <div onClick={handleOrg}  class="text-center">
 
-                <img src={"../../../../../Server/public/images/"+props.prod.photos} width="200"/>
+                <img src={"http://localhost:5000/images/"+props.prod.photos} width="200"/>
                 
             </div>
 
@@ -41,7 +48,8 @@ export default function Product(props) {
 
 
                  <div class="buttons d-flex flex-row">
-                    <div class="cart"><i class="fa fa-shopping-cart"></i></div> <button class="btn btn-success cart-button btn-block"><span class="dot">1</span>Add to cart </button>
+                    <div class="cart"><i class="fa fa-shopping-cart"></i></div> <button onClick={handleEdit} class="btn btn-success cart-button btn-block mx-3"><span class="dot">1</span>Modifier </button>
+                    <button onClick={handleDelete} class="btn btn-danger cart-button btn-block"><span class="dot">1</span>Supprimer </button>
                 </div>
 
                  <div class="weight">

@@ -70,7 +70,9 @@ export default function Products() {
 
       {products}
         
-        
+      <Link to="../new-product">
+                       <AiOutlinePlus size={50} style={{borderRadius: "9px", border: "3px solid"}}/>
+                 </Link>
     </div>
             
         </div>

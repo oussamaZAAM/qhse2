@@ -33,6 +33,7 @@ const storage = multer.diskStorage({
       console.error(error);
     }
   });
+app.use("/images", express.static(path.join(__dirname, "public/images")));//pour donner l'acces aux images apartir du backend.
 app.use("/api/user", userRouter);
 app.use("/api/organism", OrganismRouter);
 app.use("/api/product", ProductRouter);
