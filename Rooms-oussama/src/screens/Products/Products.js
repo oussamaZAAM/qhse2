@@ -35,33 +35,51 @@ export default function Products() {
     })
     if(prods!==undefined){
     return(
-        <div className='container-fluid logo'>
-            <div className=' justify-content-center pb-10 pt-7'>
-                <div className='row organisms-grid'>
-                  {products.length!==0 && (
-                  <div className='col-auto col-sm-auto col-md-auto'>
-                  <table className="table table-striped table-hover">
-                    <thead>
-                      <tr>
-                        <th scope="col-4">Name</th>
-                        <th scope="col-4">Photos</th>
-                        <th scope="col-4">Date</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {products}
-                    </tbody>
-                  </table>
-                  </div>)}
-                  <div className='col-auto col-sm-auto col-md-auto col-lg-auto mt-2'>
-                  <Link to="../new-product">
-                      <AiOutlinePlus size={50} style={{borderRadius: "9px", border: "3px solid"}}/>
-                  </Link>
-                  </div>
-                </div>
-            </div>
+        // <div className='container-fluid logo'>
+        //     <div className=' justify-content-center pb-10 pt-7'>
+        //         <div className='row organisms-grid'>
+        //           {products.length!==0 && (
+        //           <div className='col-auto col-sm-auto col-md-auto'>
+        //           <table className="table table-striped table-hover">
+        //             <thead>
+        //               <tr>
+        //                 <th scope="col-4">Name</th>
+        //                 <th scope="col-4">Photos</th>
+        //                 <th scope="col-4">Date</th>
+        //               </tr>
+        //             </thead>
+        //             <tbody>
+        //               {products}
+        //             </tbody>
+        //           </table>
+        //           </div>)}
+        //           <div className='col-auto col-sm-auto col-md-auto col-lg-auto mt-2'>
+        //           <Link to="../new-product">
+        //               <AiOutlinePlus size={50} style={{borderRadius: "9px", border: "3px solid"}}/>
+        //           </Link>
+        //           </div>
+        //         </div>
+        //     </div>
+        // </div>
+        <div class="wrapper">
+            
+
+        <div class="container">
+
+            <div class="row g-1">
+
+      {products}
+        
+      <Link to="../new-product">
+                       <AiOutlinePlus size={50} style={{borderRadius: "9px", border: "3px solid"}}/>
+                 </Link>
+    </div>
+            
         </div>
-    )
+
+
+    </div>
+        )
 }else{
     return null
 }

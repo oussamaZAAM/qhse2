@@ -10,7 +10,7 @@ import "./Product.css"
 const Product = (props) => {
     const [product, setProduct] = useState();
     const [page, setPage] = useState(1);
-    const [isEdit, setIsEdit] = useState(false);
+    const [isEdit, setIsEdit] = useState(props.isEdit==="isEdit");
     const { org } = useContext(AuthContext)
     const [editValues, setEditValues] = useState({
         name: "",
