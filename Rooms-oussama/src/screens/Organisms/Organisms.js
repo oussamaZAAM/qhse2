@@ -27,6 +27,7 @@ export default function OrganismPage() {
     const organisms = orgs!==undefined && orgs.map(x=>{
         return(
             <Organism 
+              key={x._id}
               orgId={x}
             />
            

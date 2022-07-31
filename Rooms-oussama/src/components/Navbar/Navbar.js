@@ -23,18 +23,18 @@ export default function Navbar() {
         <div style={{backgroundColor:"#F5F0BB"}}>
 
 
-        <nav class="navbar navbar-expand-lg navbar-light justify-content-between">
-  <a class="navbar-brand" href="../main"><img src="https://bit.ly/3b1DwND" style={{maxHeight:"70px", marginTop:"20px", marginLeft:"20px", paddingBottom:"20px"}}/></a>
+        <nav className="navbar navbar-expand-lg navbar-light justify-content-between">
+  <a className="navbar-brand" href="../main"><img src="http://localhost:5000/images/logo1.png" style={{maxHeight:"70px", marginTop:"20px", marginLeft:"20px", paddingBottom:"20px"}}/></a>
   
 
     {(user!==null && user!==undefined) && 
-        <ul class="navbar-nav">
+        <ul className="navbar-nav">
           {org!==null && org!==undefined &&
-            <li class="nav-item">
+            <li className="nav-item">
               <a className="nav-link sortable" onClick={handleFinish}>Terminer</a>
             </li>
           }
-          <li class="nav-item">
+          <li className="nav-item">
             <a className="nav-link sortable" onClick={handleLogout}>Déconnecter</a>
           </li>
         </ul>

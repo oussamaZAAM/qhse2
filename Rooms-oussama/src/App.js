@@ -42,6 +42,7 @@ export default function App() {
           <Route path="/new-product" element={org?<NewProduct />:(user?<Organisms/>:<Login />)} />
           <Route path="/products" element={org?<Products />:(user?<Organisms />:<Login />)} />
           <Route path="/product/:id/:isEdit" element={org?<HandleProduct />:(user?<Organisms />:<Login />)} />
+          <Route path="/product/:id" element={org?<HandleProduct />:(user?<Organisms />:<Login />)} />
           <Route path="/pagination" element={<AppPagination />} />
         {/* </Route> */}
       </Routes>
