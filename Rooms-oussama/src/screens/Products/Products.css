@@ -10,4 +10,9 @@
 .logo{
   height: 90vh;
 }
-
+.filter-div:hover{
+  cursor: pointer;
+  background-color: #0d6efd;
+  color: white;
+  border-radius: 10px;
+}

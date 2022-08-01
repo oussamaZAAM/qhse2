@@ -4,9 +4,10 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Button, Pagination } from '@mui/material';
 import { AiFillCamera } from 'react-icons/ai'
+import { FaTimes } from 'react-icons/fa'
 import { AuthContext } from "../../Context/authContext";
 import axios from 'axios';
-import {Link, useNavigate} from "react-router-dom"
+import {useNavigate} from "react-router-dom"
 
 export default function NewProduct() {
     const navigate = useNavigate();
@@ -68,7 +69,7 @@ export default function NewProduct() {
     navigate("/products");
 
   }
-  const handleUpload = async (e) => {
+    const handleUpload = async (e) => {
     const pic=e.target.files[0]; //Initialiser "pic" avec l'image telecharger depuis la machine
     // setFile(e.target.files[0])
     const data = new FormData(); //Initialiser "data" par une Forme de donnes
@@ -83,10 +84,18 @@ export default function NewProduct() {
     //   setPicture(fileName)
       setPicture(prev=>[...prev, fileName])
       setProduct({...product, photos: picture});
-  }
-  function handleImagePage(event, value) {
-    setImagePage(value);
-}
+    }
+    function handleImagePage(event, value) {
+        setImagePage(value);
+    }
+    function deleteImage(imageId) {
+        setPicture(prev=>prev.filter(picture=>prev.indexOf(picture)!==imageId))
+        setImagePage(prev=>{
+            if (prev!==1){
+                return prev-1;
+            }
+        });
+    }
   return (
     <main className="container">
         <div className="row text-center"><h1 className='text-center'>New Product</h1></div>
@@ -144,8 +153,11 @@ export default function NewProduct() {
             <div className="col-12 col-sm-6 col-md-4 col-lg-4 d-flex justify-content-center" >
                 {picture.length!==0 && 
                 (<div className="d-flex flex-column align-items-center">
-                    <img className="col-9" id="outlined-name" src={"http://localhost:5000/images/"+picture[imagePage-1]} name="photos" />
-                    <Pagination count={picture.length} page={imagePage} size="small" onChange={handleImagePage}/>
+                    <div className="image-wrap">
+                        <img className="col-9" id="outlined-name" src={"http://localhost:5000/images/"+picture[imagePage-1]} name="photos" />
+                        <FaTimes className='close' onClick={()=>deleteImage(imagePage-1)} />
+                    </div>
+                    {picture.length!==1 && <Pagination count={picture.length} page={imagePage} size="small" onChange={handleImagePage}/>}
                 </div>
                 )}
                 <Button className="col-4" variant="contained" component="label">

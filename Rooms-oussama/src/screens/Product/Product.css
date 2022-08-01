@@ -11,3 +11,16 @@
     justify-content: center;
     align-items: center;
 }
+.wrapped-btn{
+    position: absolute;
+    display: none;
+}
+.wrapping-image:hover + .wrapped-btn{
+    display: block;
+}
+.wrapped-btn:hover{
+    display: block;
+}
+.wrapping-image:hover{
+    filter: brightness(75%)
+}

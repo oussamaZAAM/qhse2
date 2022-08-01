@@ -3,7 +3,6 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import AppPagination from '../../components/Pagination/AppPagination';
 import { AuthContext } from "../../Context/authContext";
 import "./Product.css";
 import { AiFillCamera } from 'react-icons/ai'
@@ -76,9 +75,9 @@ const Product = (props) => {
         try {
             await axios.post("http://localhost:5000/api/upload", data);
             //envoyer la donnee vers le "backend" avec "axios" dans le champs "upload"
-          } catch (err) {}
-          setPicture(fileName)
-          setEditValues({...editValues, photos: fileName});
+        } catch (err) {}
+        setPicture(fileName)
+        setEditValues({...editValues, photos: fileName});
     }
     useEffect(() => {
         const fetchProducts = async() => {
@@ -115,13 +114,13 @@ const Product = (props) => {
         <h3 className="p-5 text-center">{editValues.name}</h3>
         <div className="row">
             <div className="col-sm-12 col-md-6 col-lg-6 text-center center-image d-flex flex-column">
+                <img className='wrapping-image' src={"http://localhost:5000/images/"+picture[imagePage-1]} width="400px"/>
                 {isEdit && (   
-                    <Button className="bg-primary" variant="contained" component="label">
-                        <AiFillCamera />
+                    <Button className="wrapped-btn" variant="contained" component="label">
+                        <AiFillCamera size={30}/>
                         <input hidden accept="image/*" multiple type="file" onChange={(e) => handleUpload(e)}/>
                     </Button>)}
-                <img src={"http://localhost:5000/images/"+picture[imagePage-1]} width="400px"/>
-                <Pagination count={picture.length} page={imagePage} onChange={handleImagePage}/>
+                {picture.length!==1 && <Pagination count={picture.length} page={imagePage} onChange={handleImagePage}/>}
             </div>
             <div className="row col-sm-12 col-md-6 col-lg-6">
                 <div className="container">
@@ -129,7 +128,7 @@ const Product = (props) => {
                     !isEdit ?
                         (<>
                             <h5 className='p-3'>Shelf Life: <b>{editValues.shifelife}</b></h5>
-                            <h5 className='p-3'>Duree de Shelf Life: <b>{editValues.shife_time}</b></h5>
+                            <h5 className='p-3'>Durée de Shelf Life: <b>{editValues.shife_time}</b></h5>
                             <h5 className='p-3'>Fiche Technique: <b>{editValues.fiche_technique}</b></h5>
                             <h5 className='p-3'>FDS: <b>{editValues.fds}</b></h5>
                             <h5 className='p-3'>Emballage: <b>{editValues.emballage}</b></h5>
@@ -150,7 +149,7 @@ const Product = (props) => {
                                 />
                             </div>
                             <div className='d-flex justify-content-start'>
-                                <h5 className='p-3'>Duree de Shelf Life: </h5>
+                                <h5 className='p-3'>Durée de Shelf Life: </h5>
                                 <TextField
                                     hiddenLabel
                                     className="col-12 col-sm-6 col-md-4 col-lg-4"

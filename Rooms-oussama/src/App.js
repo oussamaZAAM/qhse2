@@ -11,7 +11,6 @@ import Products from "./screens/Products/Products";
 import "./App.css"
 import NewProduct from "./screens/NewProduct/NewProduct"
 import Product from "./screens/Product/Product"
-import AppPagination from "./components/Pagination/AppPagination"
 export default function App() {
   const {user, org} = useContext(AuthContext);
   function HandleOrganism() {
@@ -43,7 +42,6 @@ export default function App() {
           <Route path="/products" element={org?<Products />:(user?<Organisms />:<Login />)} />
           <Route path="/product/:id/:isEdit" element={org?<HandleProduct />:(user?<Organisms />:<Login />)} />
           <Route path="/product/:id" element={org?<HandleProduct />:(user?<Organisms />:<Login />)} />
-          <Route path="/pagination" element={<AppPagination />} />
         {/* </Route> */}
       </Routes>
     </BrowserRouter>

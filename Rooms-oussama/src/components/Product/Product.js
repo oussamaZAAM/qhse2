@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useState, useEffect } from "react";
+import React from "react";
 import './Product.css'
 import {useNavigate} from "react-router-dom"
 
@@ -52,7 +52,7 @@ export default function Product(props) {
 
                  <div class="weight">
 
-                    <small>1 piece 2.5kg</small>
+                    <small>Energie : {props.prod.energie}</small>
                                                  
                  </div>
 
