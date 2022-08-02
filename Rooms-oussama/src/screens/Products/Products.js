@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Product from '../../components/Product/Product';
-import { Button } from 'react-bootstrap';
 import {AiOutlinePlus} from "react-icons/ai"
 import './Products.css'
 import { Link } from 'react-router-dom';
@@ -8,20 +7,50 @@ import axios from 'axios';
 import { AuthContext } from '../../Context/authContext';
 import 'bootstrap/dist/css/bootstrap.css';
 import { FaFilter, FaSort } from 'react-icons/fa';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
+import { IoMdArrowDropupCircle, IoMdArrowDropdownCircle, IoMdArrowDropup, IoMdArrowDropdown } from 'react-icons/io';
+import { Chip } from '@mui/material';
 
 export default function Products() {
     const [prods, setProds] = useState();
-    const [age, setAge] = useState('');
+    const [sortBar, setSortBar] = useState(false);
+    const [filterBar, setFilterBar] = useState(false);
+    const [isIncreasing, setIsIncreasing] = useState(true);
+    const initialSortList = {
+      name: false,
+      shife_time: false,
+      creation_date: false,
+      energie: false,
+      proteine: false,
+      carbs: false,
+      lipide: false,
+      calcium: false,
+    }
+    const [sortList, setSortList] = useState(initialSortList);
 
     const { user, org } = useContext(AuthContext);
-    
-    const handleChange = (event) => {
-      setAge(event.target.value);
+
+    function toggleSort() {
+      setFilterBar(false);
+      setSortBar(prev=>!prev)
+    }
+    function toggleFilter() {
+      setSortBar(false);
+      setFilterBar(prev=>!prev)
+    }
+    const handleClick = (e) => {
+      setSortList({...initialSortList, [e]: true})
     };
+    console.log(sortList)
+  
+    const handleDelete = () => {
+      setSortList(initialSortList);
+    };
+    const handleArrowUp = () => {
+      setIsIncreasing(true);
+    }
+    const handleArrowDown = () => {
+      setIsIncreasing(false);
+    }
     useEffect(() => {
         const fetchProds = async () => {
           if (user) {
@@ -33,8 +62,41 @@ export default function Products() {
         };
         fetchProds();
       }, [user._id]);
-    prods && prods.sort((a,b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? -1 : 0));
-    prods && prods.sort((a,b) => b.energie - a.energie);
+    sortList.name && prods && (
+      isIncreasing 
+      ? prods.sort((a,b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? -1 : 0))
+      : prods.sort((b,a) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? -1 : 0))
+    )
+    sortList.creation_date && prods && (
+      isIncreasing
+      ? prods.sort((a,b) => new Date(a.creation_date) - new Date(b.creation_date))
+      : prods.sort((b,a) => new Date(a.creation_date) - new Date(b.creation_date))
+    )
+    sortList.energie && prods && (
+      isIncreasing
+      ? prods.sort((a,b) => a.energie - b.energie)
+      : prods.sort((b,a) => a.energie - b.energie)
+    )
+    sortList.proteine && prods && (
+      isIncreasing
+      ? prods.sort((a,b) => a.proteine - b.proteine)
+      : prods.sort((b,a) => a.proteine - b.proteine)
+    )
+    sortList.carbs && prods && (
+      isIncreasing
+      ? prods.sort((a,b) => a.carbs - b.carbs)
+      : prods.sort((b,a) => a.carbs - b.carbs)
+    )
+    sortList.lipide && prods && (
+      isIncreasing
+      ? prods.sort((a,b) => a.lipide - b.lipide)
+      : prods.sort((b,a) => a.lipide - b.lipide)
+    )
+    sortList.calcium && prods && (
+      isIncreasing
+      ? prods.sort((a,b) => a.calcium - b.calcium)
+      : prods.sort((b,a) => a.calcium - b.calcium)
+    )
 
     const products = prods!==undefined && prods.map(x=>{
         return(
@@ -76,17 +138,101 @@ export default function Products() {
           <div class="wrapper">
             <div class="container">
               <div className='d-flex justify-content-end align-items-center p-3'>
-                <div className="filter-div">
+                <div className="sort-div" onClick={toggleSort}>
                     <FaSort className='m-2'/>
                     <span className='m-2'>Sort by</span>
                 </div>
-                <div className="filter-div">
+                <div className="filter-div" onClick={toggleFilter}>
                   <FaFilter className='m-2'/>
                   <span className='m-2'>Filter</span>
                 </div>
               </div>
-              <div className="d-flex justify-content-center p-3">
-                s
+              <div className="d-flex justify-content-center p-3 sort-filter">
+                {sortBar && (
+                  <div className='d-flex flex-column justify-content-center p-3 border border-primary sort'>
+                    <div className='d-flex justify-content-between align-items-center'>
+                      <b className='m-1'>Sort by</b>
+                      <div className='d-flex'>
+                        {isIncreasing 
+                        ? <>
+                          <IoMdArrowDropupCircle className='m-2' style={{cursor: 'pointer'}}/>
+                          <IoMdArrowDropdown className='m-2' style={{cursor: 'pointer'}} onClick={handleArrowDown}/>
+                        </>
+                        : <>
+                          <IoMdArrowDropup className='m-2' style={{cursor: 'pointer'}} onClick={handleArrowUp}/>
+                          <IoMdArrowDropdownCircle className='m-2' style={{cursor: 'pointer'}}/>
+                        </>
+                        }
+                      </div>
+                    </div>
+                    <hr style={{width: '100%', color: '#0d6efd'}}/>
+                    <div className='row d-flex align-items-center p-3'>
+                      <Chip
+                        className='col-sm-6 col-md-4 col-lg-3'
+                        label="Nom"
+                        variant={!sortList.name && "outlined"}
+                        onClick={()=>handleClick('name')}
+                        onDelete={sortList.name && (handleDelete)}
+                      />
+                      <Chip
+                        className='col-sm-6 col-md-4 col-lg-3'
+                        label="Durée de Shelf Life"
+                        variant={!sortList.shife_time && "outlined"}
+                        onClick={()=>handleClick('shife_time')}
+                        onDelete={sortList.shife_time && (handleDelete)}
+                      />
+                      <Chip
+                        className='col-sm-6 col-md-4 col-lg-3'
+                        label="Date de création"
+                        variant={!sortList.creation_date && "outlined"}
+                        onClick={()=>handleClick('creation_date')}
+                        onDelete={sortList.creation_date && (handleDelete)}
+                      />
+
+                      <Chip
+                        className='col-sm-6 col-md-4 col-lg-3'
+                        label="Valeur Energétique"
+                        variant={!sortList.energie && "outlined"}
+                        onClick={()=>handleClick('energie')}
+                        onDelete={sortList.energie && (handleDelete)}
+                      />
+                      <Chip
+                        className='col-sm-6 col-md-4 col-lg-3'
+                        label="Protéines"
+                        variant={!sortList.proteine && "outlined"}
+                        onClick={()=>handleClick('proteine')}
+                        onDelete={sortList.proteine && (handleDelete)}
+                      />
+                      <Chip
+                        className='col-sm-6 col-md-4 col-lg-3'
+                        label="Carbohydrates"
+                        variant={!sortList.carbs && "outlined"}
+                        onClick={()=>handleClick('carbs')}
+                        onDelete={sortList.carbs && (handleDelete)}
+                      />
+                      <Chip
+                        className='col-sm-6 col-md-4 col-lg-3'
+                        label="Lipides"
+                        variant={!sortList.lipide && "outlined"}
+                        onClick={()=>handleClick('lipide')}
+                        onDelete={sortList.lipide && (handleDelete)}
+                      />
+                      <Chip
+                        className='col-sm-6 col-md-4 col-lg-3'
+                        label="Calcium"
+                        variant={!sortList.calcium && "outlined"}
+                        onClick={()=>handleClick('calcium')}
+                        onDelete={sortList.calcium && (handleDelete)}
+                      />
+                    </div>
+                  </div>
+                )}
+                {filterBar && (
+                  <div className='d-flex flex-column justify-content-center p-3 align-items-start border filter'>
+                    <b className='m-1'>Filter</b>
+                    <hr style={{width: '100%', color: '#6610f2'}}/>
+                  </div>
+                )}
               </div>
               <div class="row g-1">
                 {products}

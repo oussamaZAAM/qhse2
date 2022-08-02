@@ -6,6 +6,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from "../../Context/authContext";
 import "./Product.css";
 import { AiFillCamera } from 'react-icons/ai'
+import { BiTrash } from 'react-icons/bi'
 
 const Product = (props) => {
     const [product, setProduct] = useState();
@@ -76,8 +77,19 @@ const Product = (props) => {
             await axios.post("http://localhost:5000/api/upload", data);
             //envoyer la donnee vers le "backend" avec "axios" dans le champs "upload"
         } catch (err) {}
-        setPicture(fileName)
-        setEditValues({...editValues, photos: fileName});
+        setPicture(prev=>[...prev, fileName])
+        setEditValues({...editValues, photos: [...picture, fileName]});
+    }
+    function deleteImage(imageId) {
+        setImagePage(prev=>{
+            if (prev!==1){
+                return prev-1;
+            } else {
+                return prev;
+            }
+        });
+        picture.splice(imageId,1)
+        setEditValues({...editValues, photos: picture})
     }
     useEffect(() => {
         const fetchProducts = async() => {
@@ -114,13 +126,30 @@ const Product = (props) => {
         <h3 className="p-5 text-center">{editValues.name}</h3>
         <div className="row">
             <div className="col-sm-12 col-md-6 col-lg-6 text-center center-image d-flex flex-column">
-                <img className='wrapping-image' src={"http://localhost:5000/images/"+picture[imagePage-1]} width="400px"/>
-                {isEdit && (   
-                    <Button className="wrapped-btn" variant="contained" component="label">
-                        <AiFillCamera size={30}/>
-                        <input hidden accept="image/*" multiple type="file" onChange={(e) => handleUpload(e)}/>
-                    </Button>)}
-                {picture.length!==1 && <Pagination count={picture.length} page={imagePage} onChange={handleImagePage}/>}
+                {picture.length!==0 
+                    ? 
+                    <>
+                        {picture.length!==0 && isEdit && <div className='delete-product-div'><BiTrash className='delete-product-img' onClick={()=>deleteImage(imagePage-1)} /></div>}
+                        <img className='wrapping-image' src={"http://localhost:5000/images/"+picture[imagePage-1]} width="400px" />
+                    </>
+                    : 
+                    <div className='d-flex align-items-center border border-dark'>
+                        <h3 className="p-3">Pas d'image</h3>
+                        {isEdit && <label className="p-3" variant="contained" component="label" for="file">
+                            <AiFillCamera size={30}/>
+                            <input hidden accept="image/*" multiple type="file" id="file" onChange={(e) => handleUpload(e)}/>
+                        </label>}
+                    </div>
+                }
+                {isEdit && (
+                    <>
+                        <label className="wrapped-btn" variant="contained" component="label" for="file">
+                            <AiFillCamera size={30}/>
+                            <input hidden accept="image/*" type="file" id="file" onChange={(e) => handleUpload(e)}/>
+                        </label>
+                    </>
+                    )}
+                {picture.length>1 && <Pagination count={picture.length} page={imagePage} onChange={handleImagePage}/>}
             </div>
             <div className="row col-sm-12 col-md-6 col-lg-6">
                 <div className="container">
@@ -231,6 +260,7 @@ const Product = (props) => {
                                         hiddenLabel
                                         className="col-12 col-sm-6 col-md-4 col-lg-4"
                                         id="filled-hidden-label-normal"
+                                        type='date'
                                         value={editValues.creation_date}
                                         name='creation_date'
                                         variant="filled"

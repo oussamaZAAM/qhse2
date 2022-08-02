@@ -22,5 +22,17 @@
     display: block;
 }
 .wrapping-image:hover{
-    filter: brightness(75%)
+    filter: brightness(75%);
+}
+.delete-product-div{
+    z-index: 100;
+    display: flex;
+    justify-content: flex-end;
+    padding: 3px;
+}
+.delete-product-div:hover{
+    cursor: pointer;
+   background-color: red;
+   border-radius: 30px;
+   color: white;
 }

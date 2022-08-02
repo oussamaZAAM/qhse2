@@ -55,6 +55,7 @@ ProductRouter.put('/:prodId', async (req, res) => {
   try {
       const updatedProduct = await Product.findByIdAndUpdate({_id:req.params.prodId}, {
         name: req.body.name,
+        photos: req.body.photos,
         shifelife: req.body.shifelife,
         shife_time: req.body.shife_time,
         fiche_technique: req.body.fiche_technique,

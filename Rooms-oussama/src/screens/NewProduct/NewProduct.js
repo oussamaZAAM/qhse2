@@ -70,20 +70,20 @@ export default function NewProduct() {
 
   }
     const handleUpload = async (e) => {
-    const pic=e.target.files[0]; //Initialiser "pic" avec l'image telecharger depuis la machine
-    // setFile(e.target.files[0])
-    const data = new FormData(); //Initialiser "data" par une Forme de donnes
-    const fileName = Date.now() + pic.name; //Initialiser "fileName" par le nom de fichier telecharge
-    data.append("name", fileName);
-    data.append("file", pic);
-    //Ajouter les informations de fichier telecharge a notre "data"
-    try {
-        await axios.post("http://localhost:5000/api/upload", data);
-        //envoyer la donnee vers le "backend" avec "axios" dans le champs "upload"
-      } catch (err) {}
-    //   setPicture(fileName)
-      setPicture(prev=>[...prev, fileName])
-      setProduct({...product, photos: picture});
+        const pic=e.target.files[0]; //Initialiser "pic" avec l'image telecharger depuis la machine
+        // setFile(e.target.files[0])
+        const data = new FormData(); //Initialiser "data" par une Forme de donnes
+        const fileName = Date.now() + pic.name; //Initialiser "fileName" par le nom de fichier telecharge
+        data.append("name", fileName);
+        data.append("file", pic);
+        //Ajouter les informations de fichier telecharge a notre "data"
+        try {
+            await axios.post("http://localhost:5000/api/upload", data);
+            //envoyer la donnee vers le "backend" avec "axios" dans le champs "upload"
+        } catch (err) {}
+        // setPicture(fileName)
+        setPicture(prev=>[...prev, fileName])
+        setProduct({...product, photos: picture});
     }
     function handleImagePage(event, value) {
         setImagePage(value);
@@ -93,6 +93,8 @@ export default function NewProduct() {
         setImagePage(prev=>{
             if (prev!==1){
                 return prev-1;
+            } else {
+                return prev;
             }
         });
     }
@@ -192,6 +194,7 @@ export default function NewProduct() {
             <TextField
                 className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
+                type='date'
                 label="Date de creation"
                 value={product.creation_date}
                 name='creation_date'

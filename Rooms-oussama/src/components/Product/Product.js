@@ -52,7 +52,8 @@ export default function Product(props) {
 
                  <div class="weight">
 
-                    <small>Energie : {props.prod.energie}</small>
+                    <small>proteine : {props.prod.proteine}</small>
+                    <small>date : {props.prod.creation_date}</small>
                                                  
                  </div>
 
