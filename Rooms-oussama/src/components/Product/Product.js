@@ -19,18 +19,13 @@ export default function Product(props) {
         e.preventDefault();
         try{
             await axios.delete("http://localhost:5000/api/product/" + props.prod._id);
-            navigate("../../main")
+            navigate("/main")
         }catch(err){
             console.log(err)      
         }
     }
 
     return(
-        // <tr onClick={handleOrg} className="sortable">
-        //     <td>{props.prod.name}</td>
-        //     <td><img src={"../../../../../Server/public/images/"+props.prod.photos}/></td>
-        //     <td>{props.prod.creation_date}</td>
-        // </tr>
         <div class="col-md-6 col-lg-4 col-xl-3">
 
           <div class="card p-3">
@@ -52,7 +47,7 @@ export default function Product(props) {
 
                  <div class="weight">
 
-                    <small>proteine : {props.prod.proteine}</small>
+                    <small>Numero : {props.count}</small>
                     <small>date : {props.prod.creation_date}</small>
                                                  
                  </div>

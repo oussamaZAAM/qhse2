@@ -7,10 +7,11 @@ import { AuthContext } from "../../Context/authContext";
 import "./Product.css";
 import { AiFillCamera, AiOutlineCloudUpload } from 'react-icons/ai'
 import { BiTrash } from 'react-icons/bi'
+import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
 
 const Product = (props) => {
     const [product, setProduct] = useState();
-    const [page, setPage] = useState(1);
+    const [orgProducts, setOrgProducts] = useState();
     const [imagePage, setImagePage] = useState(1);
     const [picture, setPicture] = useState('');
     const [isEdit, setIsEdit] = useState(props.isEdit==="isEdit");
@@ -36,9 +37,6 @@ const Product = (props) => {
         calcium:"",
     })
     const navigate = useNavigate();
-    function handlePage(event, value) {
-        setPage(value);
-    }
     function handleImagePage(event, value) {
         setImagePage(value);
     }
@@ -47,6 +45,9 @@ const Product = (props) => {
     }
     function handleChange(event) {
         setEditValues({...editValues, [event.target.name]: event.target.value})
+    }
+    function handleChangeUserEtiquettes(event) {
+        setEditValues({...editValues, userEtiquettes: {...editValues.userEtiquettes, [event.target.name]: event.target.value}})
     }
     const handleEdit = async() => {
         try{
@@ -123,6 +124,15 @@ const Product = (props) => {
         picture.splice(imageId,1)
         setEditValues({...editValues, photos: picture})
     }
+    function navigateLeft() {
+        const previousProductId = orgProducts && orgProducts[thisProductIndex-1]._id
+        navigate("/product/"+ previousProductId);
+    }
+    function navigateRight() {
+        const previousProductId = orgProducts && orgProducts[thisProductIndex+1]._id
+        navigate("/product/"+ previousProductId);
+    }
+    
     useEffect(() => {
         const fetchProducts = async() => {
             const res = await axios.get("http://localhost:5000/api/product/"+props.productId);
@@ -145,18 +155,47 @@ const Product = (props) => {
                 proteine:res.data.proteine,
                 carbs:res.data.carbs,
                 lipide:res.data.lipide,
-                calcium:res.data.calcium,
+                userEtiquettes:res.data.userEtiquettes,
             })
             setPicture(res.data.photos)
         }
         fetchProducts();
+        const fetchOrgProducts = async() => {
+            const res = await axios.get("http://localhost:5000/api/product/a/"+org._id);
+            setOrgProducts(res.data);
+        }
+        fetchOrgProducts();
     },[props.productId])
+    const mappedUserEtiquettes = editValues.userEtiquettes && Object.keys(editValues.userEtiquettes).map((key,value)=>{
+        return (
+            <h5 className='p-3'>{key}: <b>{editValues.userEtiquettes[key]}</b></h5>
+        )
+    })
+    const mappedModifiedUserEtiquettes = editValues.userEtiquettes && Object.keys(editValues.userEtiquettes).map((key,value)=>{
+        return (
+            <div className='d-flex justify-content-start'>
+                <h5 className='p-3'>{key}: </h5>
+                <TextField
+                    hiddenLabel
+                    className="col-12 col-sm-6 col-md-4 col-lg-4"
+                    id="filled-hidden-label-normal"
+                    type="number"
+                    value={editValues.userEtiquettes[key]}
+                    name={key}
+                    variant="filled"
+                    onChange={handleChangeUserEtiquettes}
+                />
+            </div>
+        )
+    })
+    const thisProductIndex = orgProducts && orgProducts.findIndex(x=> x._id === props.productId)
   return (
     product && 
     <div className="container">
-        <h3 className="p-5 text-center">{editValues.name}</h3>
+        <h3 className="p-4 text-center">{editValues.name}</h3>
+        <p className="text-center">Numéro du produit : {thisProductIndex+1}</p>
         <div className="row">
-            <div className="col-sm-12 col-md-6 col-lg-6 text-center center-image d-flex flex-column">
+            <div className="col-sm-11 col-md-5 col-lg-5 text-center center-image d-flex flex-column">
                 {picture.length!==0 
                     ? 
                     <>
@@ -182,20 +221,31 @@ const Product = (props) => {
                     )}
                 {picture.length>1 && <Pagination count={picture.length} page={imagePage} onChange={handleImagePage}/>}
             </div>
-            <div className="row col-sm-12 col-md-6 col-lg-6">
+            <div className="row col-sm-11 col-md-5 col-lg-5 d-flex align-items-center">
                 <div className="container">
-                    {page === 1 ?
-                    !isEdit ?
-                        (<>
+                    {!isEdit ?
+                        (<div className="product-scroll">
                             <h5 className='p-3'>Shelf Life: <b>{editValues.shifelife}</b></h5>
                             <h5 className='p-3'>Durée de Shelf Life: <b>{editValues.shife_time}</b></h5>
                             <h5 className='p-3'>Fiche Technique: <div name = "fiche_tech" onClick={handleDownload}><b>{editValues.fiche_technique.slice(13)}</b></div></h5>
                             <h5 className='p-3'>FDS: <div name="fds" onClick={handleDownload}><b>{editValues.fds.slice(13)}</b></div></h5>
                             <h5 className='p-3'>Emballage: <b>{editValues.emballage}</b></h5>
                             <h5 className='p-3'>Grammage: <b>{editValues.grammage}</b></h5>
-                        </>)
+                            <h5 className='p-3'>Type de client: <b>{editValues.type_client}</b></h5>
+                            <h5 className='p-3'>Date de création: <b>{editValues.creation_date}</b></h5>
+                            <h5 className='p-3'>Agrément Sanitaire: <b>{editValues.agrement}</b></h5>
+                            <h5 className='p-3'>Autorisation Sanitaire: <b>{editValues.autorisation}</b></h5>
+                            <h5 className='p-3'>Site de production: <b>{editValues.site}</b></h5>
+                            <h5 className='p-3'>Organisme: <b>{org.name}</b></h5>
+                            <h4 className='text-center col-12 col-sm-6 col-md-4 col-lg-4 etiquettes'>Etiquettes</h4>
+                            <h5 className='p-3'>Valeur Energétique: <b>{editValues.energie}</b></h5>
+                            <h5 className='p-3'>Protéines: <b>{editValues.proteine}</b></h5>
+                            <h5 className='p-3'>Carbohydrates: <b>{editValues.carbs}</b></h5>
+                            <h5 className='p-3'>Lipides: <b>{editValues.lipide}</b></h5>
+                            {mappedUserEtiquettes}
+                        </div>)
                     :
-                        (<>
+                        (<div className="product-scroll">
                             <div className='d-flex justify-content-start'>
                                 <h5 className='p-3'>Shelf Life: </h5>
                                 <TextField
@@ -275,183 +325,147 @@ const Product = (props) => {
                                     onChange={handleChange}
                                 />
                             </div>
-                        </>)
-                    
-                    : page === 2 ?
-                        isEdit ?
-                            (<>
-                                <div className='d-flex justify-content-start'>
-                                    <h5 className='p-3'>Type de client: </h5>
-                                    <TextField
-                                        hiddenLabel
-                                        className="col-12 col-sm-6 col-md-4 col-lg-4"
-                                        id="filled-hidden-label-normal"
-                                        value={editValues.type_client}
-                                        name='type_client'
-                                        variant="filled"
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                                <div className='d-flex justify-content-start'>
-                                    <h5 className='p-3'>Date de création: </h5>
-                                    <TextField
-                                        hiddenLabel
-                                        className="col-12 col-sm-6 col-md-4 col-lg-4"
-                                        id="filled-hidden-label-normal"
-                                        type='date'
-                                        value={editValues.creation_date}
-                                        name='creation_date'
-                                        variant="filled"
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                                <div className='d-flex justify-content-start'>
-                                    <h5 className='p-3'>Agrément Sanitaire: </h5>
-                                    <TextField
-                                        hiddenLabel
-                                        className="col-12 col-sm-6 col-md-4 col-lg-4"
-                                        id="filled-hidden-label-normal"
-                                        value={editValues.agrement}
-                                        name='agrement'
-                                        variant="filled"
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                                <div className='d-flex justify-content-start'>
-                                    <h5 className='p-3'>Autorisation Sanitaire: </h5>
-                                    <TextField
-                                        hiddenLabel
-                                        className="col-12 col-sm-6 col-md-4 col-lg-4"
-                                        id="filled-hidden-label-normal"
-                                        value={editValues.autorisation}
-                                        name='autorisation'
-                                        variant="filled"
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                                <div className='d-flex justify-content-start'>
-                                    <h5 className='p-3'>Site de production: </h5>
-                                    <TextField
-                                        hiddenLabel
-                                        className="col-12 col-sm-6 col-md-4 col-lg-4"
-                                        id="filled-hidden-label-normal"
-                                        value={editValues.site}
-                                        name='site'
-                                        variant="filled"
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                                <div className='d-flex justify-content-start'>
-                                    <h5 className='p-3'>Organisme: </h5>
-                                    <TextField
-                                        disabled
-                                        hiddenLabel
-                                        className="col-12 col-sm-6 col-md-4 col-lg-4"
-                                        id="filled-hidden-label-normal"
-                                        value={org.name}
-                                        name='org'
-                                        variant="filled"
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                            </>)
-                            : (<>
-                                <h5 className='p-3'>Type de client: <b>{editValues.type_client}</b></h5>
-                                <h5 className='p-3'>Date de création: <b>{editValues.creation_date}</b></h5>
-                                <h5 className='p-3'>Agrément Sanitaire: <b>{editValues.agrement}</b></h5>
-                                <h5 className='p-3'>Autorisation Sanitaire: <b>{editValues.autorisation}</b></h5>
-                                <h5 className='p-3'>Site de production: <b>{editValues.site}</b></h5>
-                                <h5 className='p-3'>Organisme: <b>{org.name}</b></h5>
-                            </>
-                            )
-                        :
-                        isEdit ?
-                            (<>
-                                <h4 className='text-center col-12 col-sm-6 col-md-4 col-lg-4 etiquettes'>Etiquettes</h4>
-                                <div className='d-flex justify-content-start'>
-                                    <h5 className='p-3'>Valeur Energétique: </h5>
-                                    <TextField
-                                        hiddenLabel
-                                        className="col-12 col-sm-6 col-md-4 col-lg-4"
-                                        id="filled-hidden-label-normal"
-                                        type="number"
-                                        value={editValues.energie}
-                                        name='energie'
-                                        variant="filled"
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                                <div className='d-flex justify-content-start'>
-                                    <h5 className='p-3'>Protéines: </h5>
-                                    <TextField
-                                        hiddenLabel
-                                        className="col-12 col-sm-6 col-md-4 col-lg-4"
-                                        id="filled-hidden-label-normal"
-                                        type="number"
-                                        value={editValues.proteine}
-                                        name='proteine'
-                                        variant="filled"
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                                <div className='d-flex justify-content-start'>
-                                    <h5 className='p-3'>Carbohydrates: </h5>
-                                    <TextField
-                                        hiddenLabel
-                                        className="col-12 col-sm-6 col-md-4 col-lg-4"
-                                        id="filled-hidden-label-normal"
-                                        type="number"
-                                        value={editValues.carbs}
-                                        name='carbs'
-                                        variant="filled"
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                                <div className='d-flex justify-content-start'>
-                                    <h5 className='p-3'>Lipides: </h5>
-                                    <TextField
-                                        hiddenLabel
-                                        className="col-12 col-sm-6 col-md-4 col-lg-4"
-                                        id="filled-hidden-label-normal"
-                                        type="number"
-                                        value={editValues.lipide}
-                                        name='lipide'
-                                        variant="filled"
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                                <div className='d-flex justify-content-start'>
-                                    <h5 className='p-3'>Calcium: </h5>
-                                    <TextField
-                                        hiddenLabel
-                                        className="col-12 col-sm-6 col-md-4 col-lg-4"
-                                        id="filled-hidden-label-normal"
-                                        type="number"
-                                        value={editValues.calcium}
-                                        name='calcium'
-                                        variant="filled"
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                            </>)
-                            :
-                            (<>
-                                <h4 className='text-center col-12 col-sm-6 col-md-4 col-lg-4 etiquettes'>Etiquettes</h4>
-                                <h5 className='p-3'>Valeur Energétique: <b>{editValues.energie}</b></h5>
-                                <h5 className='p-3'>Protéines: <b>{editValues.proteine}</b></h5>
-                                <h5 className='p-3'>Carbohydrates: <b>{editValues.carbs}</b></h5>
-                                <h5 className='p-3'>Lipides: <b>{editValues.lipide}</b></h5>
-                                <h5 className='p-3'>Calcium: <b>{editValues.calcium}</b></h5>
-                             </>)
-                    }
+                            <div className='d-flex justify-content-start'>
+                                <h5 className='p-3'>Type de client: </h5>
+                                <TextField
+                                    hiddenLabel
+                                    className="col-12 col-sm-6 col-md-4 col-lg-4"
+                                    id="filled-hidden-label-normal"
+                                    value={editValues.type_client}
+                                    name='type_client'
+                                    variant="filled"
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className='d-flex justify-content-start'>
+                                <h5 className='p-3'>Date de création: </h5>
+                                <TextField
+                                    hiddenLabel
+                                    className="col-12 col-sm-6 col-md-4 col-lg-4"
+                                    id="filled-hidden-label-normal"
+                                    type='date'
+                                    value={editValues.creation_date}
+                                    name='creation_date'
+                                    variant="filled"
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className='d-flex justify-content-start'>
+                                <h5 className='p-3'>Agrément Sanitaire: </h5>
+                                <TextField
+                                    hiddenLabel
+                                    className="col-12 col-sm-6 col-md-4 col-lg-4"
+                                    id="filled-hidden-label-normal"
+                                    value={editValues.agrement}
+                                    name='agrement'
+                                    variant="filled"
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className='d-flex justify-content-start'>
+                                <h5 className='p-3'>Autorisation Sanitaire: </h5>
+                                <TextField
+                                    hiddenLabel
+                                    className="col-12 col-sm-6 col-md-4 col-lg-4"
+                                    id="filled-hidden-label-normal"
+                                    value={editValues.autorisation}
+                                    name='autorisation'
+                                    variant="filled"
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className='d-flex justify-content-start'>
+                                <h5 className='p-3'>Site de production: </h5>
+                                <TextField
+                                    hiddenLabel
+                                    className="col-12 col-sm-6 col-md-4 col-lg-4"
+                                    id="filled-hidden-label-normal"
+                                    value={editValues.site}
+                                    name='site'
+                                    variant="filled"
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className='d-flex justify-content-start'>
+                                <h5 className='p-3'>Organisme: </h5>
+                                <TextField
+                                    disabled
+                                    hiddenLabel
+                                    className="col-12 col-sm-6 col-md-4 col-lg-4"
+                                    id="filled-hidden-label-normal"
+                                    value={org.name}
+                                    name='org'
+                                    variant="filled"
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <h4 className='text-center col-12 col-sm-6 col-md-4 col-lg-4 etiquettes'>Etiquettes</h4>
+                            <div className='d-flex justify-content-start'>
+                                <h5 className='p-3'>Valeur Energétique: </h5>
+                                {console.log(editValues)}
+                                <TextField
+                                    hiddenLabel
+                                    className="col-12 col-sm-6 col-md-4 col-lg-4"
+                                    id="filled-hidden-label-normal"
+                                    type="number"
+                                    value={editValues.energie}
+                                    name='energie'
+                                    variant="filled"
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className='d-flex justify-content-start'>
+                                <h5 className='p-3'>Protéines: </h5>
+                                <TextField
+                                    hiddenLabel
+                                    className="col-12 col-sm-6 col-md-4 col-lg-4"
+                                    id="filled-hidden-label-normal"
+                                    type="number"
+                                    value={editValues.proteine}
+                                    name='proteine'
+                                    variant="filled"
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className='d-flex justify-content-start'>
+                                <h5 className='p-3'>Carbohydrates: </h5>
+                                <TextField
+                                    hiddenLabel
+                                    className="col-12 col-sm-6 col-md-4 col-lg-4"
+                                    id="filled-hidden-label-normal"
+                                    type="number"
+                                    value={editValues.carbs}
+                                    name='carbs'
+                                    variant="filled"
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className='d-flex justify-content-start'>
+                                <h5 className='p-3'>Lipides: </h5>
+                                <TextField
+                                    hiddenLabel
+                                    className="col-12 col-sm-6 col-md-4 col-lg-4"
+                                    id="filled-hidden-label-normal"
+                                    type="number"
+                                    value={editValues.lipide}
+                                    name='lipide'
+                                    variant="filled"
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            {mappedModifiedUserEtiquettes}
+                        </div>)}
                 </div>
-                <Pagination count={3} page={page} onChange={handlePage}/>
             </div>
         </div>
         {!isEdit?
-        (<div className="container text-center products-btn">
-            <Button className='btn btn-primary m-2' onClick={enableEdit}>Modifier</Button>
-            <Button className='btn btn-danger m-2' onClick={handleDelete}>Supprimer</Button>
+        (<div className="container text-center products-btn d-flex justify-content-between align-items-center">
+            {thisProductIndex !==0 ? <FaArrowCircleLeft className='pointer' size={20} onClick={navigateLeft}/> : <FaArrowCircleLeft color='gray' size={20} />}
+            <div className="d-flex justify-content-center">
+                <Button className='btn btn-primary m-2' onClick={enableEdit}>Modifier</Button>
+                <Button className='btn btn-danger m-2' onClick={handleDelete}>Supprimer</Button>
+            </div>
+            {orgProducts && thisProductIndex !== orgProducts.length-1 ? <FaArrowCircleRight className='pointer' size={20} onClick={navigateRight}/> : <FaArrowCircleRight color='gray' size={20} />}
         </div>)
         :(<div className="container text-center products-btn">
             <Button className='btn btn-primary m-2 enregistrer' onClick={handleEdit}>Enregistrer</Button>

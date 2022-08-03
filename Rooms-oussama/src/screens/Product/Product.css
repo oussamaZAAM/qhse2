@@ -36,3 +36,10 @@
    border-radius: 30px;
    color: white;
 }
+.product-scroll{
+    height: 25rem;
+    overflow-y: scroll;
+}
+.pointer:hover{
+    cursor: pointer;
+}

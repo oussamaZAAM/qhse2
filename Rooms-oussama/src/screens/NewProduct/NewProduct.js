@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Button, Pagination } from '@mui/material';
 import { AiFillCamera,AiOutlineCloudUpload } from 'react-icons/ai'
-import { FaTimes } from 'react-icons/fa'
+import { FaCheckCircle,FaTimes } from 'react-icons/fa'
 import { AuthContext } from "../../Context/authContext";
 import axios from 'axios';
 import {useNavigate} from "react-router-dom"
@@ -13,6 +13,9 @@ export default function NewProduct() {
     const navigate = useNavigate();
     const [picture, setPicture] = useState([]);
     const [imagePage, setImagePage] = useState(1);
+    const [newEtiquetteName, setNewEtiquetteName] = useState('');
+    const [newEtiquettes, setNewEtiquettes] = useState([]);
+    const [newEtiquettesData, setNewEtiquettesData] = useState({});
     const { org } = useContext(AuthContext);
 
   const [product, setProduct] = useState({
@@ -34,7 +37,6 @@ export default function NewProduct() {
     proteine: "",
     carbs: "",
     lipide: "",
-    calcium: "",
   });
   const handleChange = (event) => {
     setProduct({...product, [event.target.name]: event.target.value});
@@ -59,7 +61,7 @@ export default function NewProduct() {
         proteine: product.proteine,
         carbs: product.carbs,
         lipide: product.lipide,
-        calcium: product.calcium,
+        userEtiquettes: newEtiquettesData,
     }
     try{
         await axios.post("http://localhost:5000/api/product/create", newProduct)
@@ -121,7 +123,29 @@ export default function NewProduct() {
             }
         });
     }
-    console.log(product)
+    function handleChangeEtiquette(e) {
+        setNewEtiquetteName(e.target.value)
+    }
+    function handleAddEtiquette(e) {
+        setNewEtiquettes([...newEtiquettes, newEtiquetteName])
+        setNewEtiquettesData({...newEtiquettesData, [newEtiquetteName]: ''})
+        setNewEtiquetteName('')
+    }
+    function handleNewEtiquettes(e) {
+        setNewEtiquettesData({...newEtiquettesData, [e.target.name]: e.target.value})
+    }
+    const newEtiquettesText = newEtiquettes.map(x=>{
+        return (
+            <TextField
+                className="col-12 col-sm-6 col-md-4 col-lg-4"
+                id="outlined-name"
+                label={x}
+                value={product.x}
+                name={x}
+                onChange={handleNewEtiquettes}
+            />
+        )
+    })
   return (
     <main className="container">
         <div className="row text-center"><h1 className='text-center'>New Product</h1></div>
@@ -350,7 +374,7 @@ export default function NewProduct() {
                 helperText="Entrer des entiers."
                 onChange={handleChange}
                 />)}
-            {product.calcium==="" || Number.isInteger(+product.calcium)!==false ?
+            {/* {product.calcium==="" || Number.isInteger(+product.calcium)!==false ?
             (<TextField
                 className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
@@ -367,7 +391,20 @@ export default function NewProduct() {
                 name='calcium'
                 helperText="Entrer des entiers."
                 onChange={handleChange}
-                />)}
+                />)} */}
+            <div className='d-flex w-50 justify-content-between align-items-center'>
+                <TextField
+                    hiddenLabel
+                    id="filled-hidden-label-small"
+                    placeholder='Nouvelle Etiquette'
+                    value={newEtiquetteName}
+                    variant="filled"
+                    size="small"
+                    onChange={handleChangeEtiquette}
+                />
+                <FaCheckCircle style={{cursor: 'pointer'}} className="mx-3" size={30} onClick={handleAddEtiquette}/>
+            </div>
+            {newEtiquettesText}
             </Box>
             <Button className="m-3" variant="outlined" onClick={submitProduct}>Enregistrer</Button>
         </div>
