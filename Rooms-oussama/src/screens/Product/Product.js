@@ -30,6 +30,7 @@ const Product = (props) => {
         agrement:"",
         autorisation:"",
         site:"",
+        org:"",
         energie:"",
         proteine:"",
         carbs:"",
@@ -152,6 +153,7 @@ const Product = (props) => {
                 agrement:res.data.agrement,
                 autorisation:res.data.autorisation,
                 site:res.data.site,
+                org: res.data.organism,
                 energie:res.data.energie,
                 proteine:res.data.proteine,
                 carbs:res.data.carbs,
@@ -238,7 +240,7 @@ const Product = (props) => {
                             <h5 className='p-3'>Agrément Sanitaire: <b>{editValues.agrement}</b></h5>
                             <h5 className='p-3'>Autorisation Sanitaire: <b>{editValues.autorisation}</b></h5>
                             <h5 className='p-3'>Site de production: <b>{editValues.site}</b></h5>
-                            <h5 className='p-3'>Organisme: <b>{org.name}</b></h5>
+                            <h5 className='p-3'>Organisme: <b>{editValues.org}</b></h5>
                             <h4 className='text-center col-12 col-sm-6 col-md-4 col-lg-4 etiquettes'>Etiquettes</h4>
                             <h5 className='p-3'>Valeur Energétique: <b>{editValues.energie}</b></h5>
                             <h5 className='p-3'>Protéines: <b>{editValues.proteine}</b></h5>

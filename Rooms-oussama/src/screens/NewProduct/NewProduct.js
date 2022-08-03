@@ -81,7 +81,7 @@ export default function NewProduct() {
         agrement: product.agrement,
         autorisation: product.autorisation,
         site: product.site,
-        organism: org.name,
+        organism: org._id,
         energie: product.energie,
         proteine: product.proteine,
         carbs: product.carbs,

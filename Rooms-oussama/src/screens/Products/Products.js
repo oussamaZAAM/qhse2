@@ -50,6 +50,7 @@ export default function Products() {
     const handleArrowDown = () => {
       setIsIncreasing(false);
     }
+    console.log(org._id)
     useEffect(() => {
         const fetchProds = async () => {
           if (user) {
