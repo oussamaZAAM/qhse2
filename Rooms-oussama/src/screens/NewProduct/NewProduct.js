@@ -41,6 +41,27 @@ export default function NewProduct() {
   const handleChange = (event) => {
     setProduct({...product, [event.target.name]: event.target.value});
   };
+  console.log( {
+    name: product.name,
+    shifelife: product.shifelife,
+    shife_time: product.shife_time,
+    fiche_technique: product.fiche_technique,
+    fds: product.fds,
+    photos: product.photos,
+    emballage: product.emballage,
+    grammage: product.grammage,
+    type_client: product.type_client,
+    creation_date: product.creation_date,
+    agrement: product.agrement,
+    autorisation: product.autorisation,
+    site: product.site,
+    organism: org.name,
+    energie: product.energie,
+    proteine: product.proteine,
+    carbs: product.carbs,
+    lipide: product.lipide,
+    userEtiquettes: newEtiquettesData,
+})
   const submitProduct = async () => {
     const newProduct = {
         name: product.name,

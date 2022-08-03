@@ -124,7 +124,7 @@ export default function Organism(props) {
                             <div className=" m-2">Domaine : <b>{!lastValues.domaines ? editValues.domaines : lastValues.domaines}</b></div>
                             <div className=" m-2">Téléphone : <b>{!lastValues.tel ? editValues.tel : lastValues.tel}</b></div>
                             <div className=" m-2">Adresse : <b>{!lastValues.Adresse ? editValues.Adresse : lastValues.Adresse}</b></div>
-                            <div className=" m-2">Location : <b>{!lastValues.Carte ? editValues.Carte : lastValues.Carte}</b></div>
+                            <div className=" m-2">Localisation : <b>{!lastValues.Carte ? editValues.Carte : lastValues.Carte}</b></div>
                             <div className="d-flex justify-content-end m-2">
                             <Button className="bg-prime" onClick={editOrg}>Modifier</Button>
                             <Button className="bg-danger" onClick={delOrg} >Supprimer</Button>
