@@ -17,20 +17,45 @@ app.use(bodyParser.json({limit: "30mb", extended: true}));
 app.use(bodyParser.urlencoded({limit: "30mb", extended: true}));
 app.use(cors());
 
-const storage = multer.diskStorage({
+const storageImage = multer.diskStorage({
     destination: (req, file, cb) => {
+      
       cb(null, "public/images");
     },
     filename: (req, file, cb) => {
       cb(null, req.body.name);
     },
   });
-  const upload = multer({ storage: storage });
-  app.post("/api/upload", upload.single("file"), (req, res) => {
+const storageFile = multer.diskStorage({
+    destination: (req, file, cb) => {
+      
+      cb(null, "public/files");
+    },
+    filename: (req, file, cb) => {
+      cb(null, req.body.name);
+    },
+  });
+  const uploadImage = multer({ storage: storageImage });
+  const uploadFile = multer({ storage: storageFile });
+  app.post("/api/upload/image", uploadImage.single("file"), (req, res) => {
     try {
       return res.status(200).json("File uploded successfully");
     } catch (error) {
       console.error(error);
+    }
+  });
+  app.post("/api/upload/file", uploadFile.single("file"), (req, res) => {
+    try {
+      return res.status(200).json("File uploded successfully");
+    } catch (error) {
+      console.error(error);
+    }
+  });
+  app.get('/api/download/:id', async (req, res) => {
+    try {
+      res.sendFile(path.join(__dirname, "public/files", req.params.id));
+    } catch (error) {
+      res.status(400).send('Error while downloading file. Try again later.');
     }
   });
 app.use("/images", express.static(path.join(__dirname, "public/images")));//pour donner l'acces aux images apartir du backend.

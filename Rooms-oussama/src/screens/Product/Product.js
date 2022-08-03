@@ -74,11 +74,37 @@ const Product = (props) => {
         data.append("file", pic);
         //Ajouter les informations de fichier telecharge a notre "data"
         try {
-            await axios.post("http://localhost:5000/api/upload", data);
+            await axios.post("http://localhost:5000/api/upload/image", data);
             //envoyer la donnee vers le "backend" avec "axios" dans le champs "upload"
         } catch (err) {}
+        // setPicture(fileName)
         setPicture(prev=>[...prev, fileName])
-        setEditValues({...editValues, photos: [...picture, fileName]});
+        setProduct({...product, photos: picture});
+    }
+    const handleDownload= async (e) => {
+        await axios.get("http://localhost:5000/api/download/"+editValues.fiche_technique);
+        switch(e.target.name){
+            case "fiche_tech":
+                await axios.get("http://localhost:5000/api/download/"+editValues.fiche_technique);
+            case "fds":
+                await axios.get("http://localhost:5000/api/download/"+editValues.fds);
+        }
+        
+    }
+    const handleUploadFile = async (e) => {
+        const pic=e.target.files[0]; //Initialiser "pic" avec l'image telecharger depuis la machine
+        // setFile(e.target.files[0])
+        const data = new FormData(); //Initialiser "data" par une Forme de donnes
+        const fileName = Date.now() + pic.name; //Initialiser "fileName" par le nom de fichier telecharge
+        data.append("name", fileName);
+        data.append("file", pic);
+        //Ajouter les informations de fichier telecharge a notre "data"
+        try {
+            await axios.post("http://localhost:5000/api/upload/file", data);
+            //envoyer la donnee vers le "backend" avec "axios" dans le champs "upload"
+        } catch (err) {}
+        // setPicture(fileName)
+        setEditValues({...product, fiche_technique: fileName});
     }
     function deleteImage(imageId) {
         setImagePage(prev=>{
@@ -119,7 +145,6 @@ const Product = (props) => {
         }
         fetchProducts();
     },[props.productId])
-    console.log(editValues)
   return (
     product && 
     <div className="container">
@@ -158,8 +183,8 @@ const Product = (props) => {
                         (<>
                             <h5 className='p-3'>Shelf Life: <b>{editValues.shifelife}</b></h5>
                             <h5 className='p-3'>Durée de Shelf Life: <b>{editValues.shife_time}</b></h5>
-                            <h5 className='p-3'>Fiche Technique: <b>{editValues.fiche_technique}</b></h5>
-                            <h5 className='p-3'>FDS: <b>{editValues.fds}</b></h5>
+                            <h5 className='p-3'>Fiche Technique: <div name = "fiche_tech" onClick={handleDownload}><b>{editValues.fiche_technique.slice(13)}</b></div></h5>
+                            <h5 className='p-3'>FDS: <div name="fds" onClick={handleDownload}><b>{editValues.fds.slice(13)}</b></div></h5>
                             <h5 className='p-3'>Emballage: <b>{editValues.emballage}</b></h5>
                             <h5 className='p-3'>Grammage: <b>{editValues.grammage}</b></h5>
                         </>)
@@ -195,11 +220,13 @@ const Product = (props) => {
                                     hiddenLabel
                                     className="col-12 col-sm-6 col-md-4 col-lg-4"
                                     id="filled-hidden-label-normal"
-                                    value={editValues.fiche_technique}
-                                    name='fiche_technique'
+                                    value={(editValues.fiche_technique).slice(13)}
+                                    name='fiche_tech'
                                     variant="filled"
                                     onChange={handleChange}
                                 />
+                                 <input type="file" id="file" onChange={(e) => handleUploadFile(e)}/>
+
                             </div>
                             <div className='d-flex justify-content-start'>
                                 <h5 className='p-3'>FDS: </h5>
@@ -207,11 +234,12 @@ const Product = (props) => {
                                     hiddenLabel
                                     className="col-12 col-sm-6 col-md-4 col-lg-4"
                                     id="filled-hidden-label-normal"
-                                    value={editValues.fds}
+                                    value={editValues.fds.slice(13)}
                                     name='fds'
                                     variant="filled"
-                                    onChange={handleChange}
                                 />
+                                                                 <input type="file" id="file" onChange={(e) => handleUploadFile(e)}/>
+
                             </div>
                             <div className='d-flex justify-content-start'>
                                 <h5 className='p-3'>Emballage: </h5>
@@ -332,7 +360,6 @@ const Product = (props) => {
                                 <h4 className='text-center col-12 col-sm-6 col-md-4 col-lg-4 etiquettes'>Etiquettes</h4>
                                 <div className='d-flex justify-content-start'>
                                     <h5 className='p-3'>Valeur Energétique: </h5>
-                                    {console.log(editValues)}
                                     <TextField
                                         hiddenLabel
                                         className="col-12 col-sm-6 col-md-4 col-lg-4"
