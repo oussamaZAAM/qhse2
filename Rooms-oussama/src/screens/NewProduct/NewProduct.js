@@ -16,6 +16,7 @@ export default function NewProduct() {
     const [newEtiquetteName, setNewEtiquetteName] = useState('');
     const [newEtiquettes, setNewEtiquettes] = useState([]);
     const [newEtiquettesData, setNewEtiquettesData] = useState({});
+    const [other, setOther] = useState(false);
     const { org } = useContext(AuthContext);
 
   const [product, setProduct] = useState({
@@ -39,7 +40,10 @@ export default function NewProduct() {
     lipide: "",
   });
   const handleChange = (event) => {
-    setProduct({...product, [event.target.name]: event.target.value});
+if(event.target.name==="type_client" && event.target.value==="Autre"){
+    setOther(true);
+}   
+setProduct({...product, [event.target.name]: event.target.value});
   };
   console.log( {
     name: product.name,
@@ -106,7 +110,6 @@ export default function NewProduct() {
         } catch (err) {}
         // setPicture(fileName)
         setPicture(prev=>[...prev, fileName])
-        console.log(picture)
         setProduct({...product, photos: [...picture, fileName]});
     }
     const handleUploadFile = async (e) => {
@@ -259,6 +262,8 @@ export default function NewProduct() {
                 name='grammage'
                 onChange={handleChange}
             />
+            
+            {other?
             <TextField
                 className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
@@ -267,6 +272,15 @@ export default function NewProduct() {
                 name='type_client'
                 onChange={handleChange}
             />
+            :<select name= "type_client" className="form-select col-12 col-sm-6 col-md-4 col-lg-4" aria-label="Default select example" id="outlined-name" onChange={handleChange}>
+  <option selected>Type de client</option>
+  <option  value="Tous">Tous</option>
+  <option value="Enfants">Enfants</option>
+  <option value="Adultes">Adultes</option>
+  <option value="Industries">Industries</option>
+  <option value="Autre">Autre..</option>
+</select>
+}
             <TextField
                 className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
