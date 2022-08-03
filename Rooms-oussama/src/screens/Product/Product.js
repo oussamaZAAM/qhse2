@@ -34,7 +34,7 @@ const Product = (props) => {
         proteine:"",
         carbs:"",
         lipide:"",
-        calcium:"",
+        editCount: 0,
     })
     const navigate = useNavigate();
     function handleImagePage(event, value) {
@@ -50,8 +50,9 @@ const Product = (props) => {
         setEditValues({...editValues, userEtiquettes: {...editValues.userEtiquettes, [event.target.name]: event.target.value}})
     }
     const handleEdit = async() => {
+        setEditValues({...editValues, editCount: editValues.editCount+1})
         try{
-            await axios.put("http://localhost:5000/api/product/" + props.productId, editValues)
+            await axios.put("http://localhost:5000/api/product/" + props.productId, {...editValues, editCount: editValues.editCount+1})
         } catch(err){
             console.log(err);
         }
@@ -156,6 +157,7 @@ const Product = (props) => {
                 carbs:res.data.carbs,
                 lipide:res.data.lipide,
                 userEtiquettes:res.data.userEtiquettes,
+                editCount:res.data.editCount,
             })
             setPicture(res.data.photos)
         }
@@ -461,8 +463,11 @@ const Product = (props) => {
         {!isEdit?
         (<div className="container text-center products-btn d-flex justify-content-between align-items-center">
             {thisProductIndex !==0 ? <FaArrowCircleLeft className='pointer' size={20} onClick={navigateLeft}/> : <FaArrowCircleLeft color='gray' size={20} />}
-            <div className="d-flex justify-content-center">
-                <Button className='btn btn-primary m-2' onClick={enableEdit}>Modifier</Button>
+            <div className="d-flex justify-content-center align-items-start">
+                <div className="d-flex flex-column justify-content-center align-items-center">
+                    <Button className='btn btn-primary m-2 w-50' onClick={enableEdit}>Modifier</Button>
+                    <span>Compteur de modification : <b>{editValues.editCount}</b></span>
+                </div>
                 <Button className='btn btn-danger m-2' onClick={handleDelete}>Supprimer</Button>
             </div>
             {orgProducts && thisProductIndex !== orgProducts.length-1 ? <FaArrowCircleRight className='pointer' size={20} onClick={navigateRight}/> : <FaArrowCircleRight color='gray' size={20} />}

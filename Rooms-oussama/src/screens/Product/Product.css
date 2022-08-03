@@ -43,3 +43,6 @@
 .pointer:hover{
     cursor: pointer;
 }
+.modifer{
+    width: 10px;
+}

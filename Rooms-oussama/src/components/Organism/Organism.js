@@ -23,7 +23,7 @@ export default function Organism(props) {
     return(
             <tr onClick={handleOrg} className="sortable">
       <td>{props.orgId.name}</td>
-      <td>{props.orgId.domaines}</td>
+      <td>{props.orgId.Adresse}</td>
       <td>{props.orgId.tel}</td>
     </tr>
     )
