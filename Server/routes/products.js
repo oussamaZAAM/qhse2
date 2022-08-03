@@ -26,7 +26,8 @@ ProductRouter.post('/create', async (req, res) => {
                     proteine: req.body.proteine,                   
                     carbs: req.body.carbs,                   
                     lipide: req.body.lipide,
-                    userEtiquettes: req.body.userEtiquettes             
+                    userEtiquettes: req.body.userEtiquettes,
+                    editCount: req.body.editCount,
                 });
                 const cuser = await newProduct.save(function(){});
                 res.status(200).json(cuser);
@@ -72,6 +73,7 @@ ProductRouter.put('/:prodId', async (req, res) => {
         carbs: req.body.carbs,
         lipide: req.body.lipide,
         userEtiquettes: req.body.userEtiquettes,
+        editCount: req.body.editCount,
       });
       res.status(200).json("Product has been updated");
     } catch (err) {

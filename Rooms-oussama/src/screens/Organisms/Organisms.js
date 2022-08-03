@@ -43,8 +43,8 @@ export default function OrganismPage() {
                   <table className="table table-striped table-hover">
                     <thead>
                       <tr>
-                        <th scope="col-4">Name</th>
-                        <th scope="col-4">Domaine</th>
+                        <th scope="col-4">Nom</th>
+                        <th scope="col-4">Adresse</th>
                         <th scope="col-4">Téléphone</th>
                       </tr>
                     </thead>

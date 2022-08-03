@@ -71,6 +71,11 @@ const ProductSchema = new mongoose.Schema({
   userEtiquettes: {
     type: Object,
   },
+  editCount: {
+    type: Number,
+    default: 0,
+    required: true,
+  },
   organism: {
     type: String,
   },

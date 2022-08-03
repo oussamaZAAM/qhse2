@@ -44,7 +44,7 @@ OrganismRouter.put("/:orgId", async (req, res) => {
 
 OrganismRouter.get('/:orgId', async (req, res) => {
     try {
-        const orgs = await Organism.findOne({_Id:req.params.orgId});
+        const orgs = await Organism.findOne({_id:req.params.orgId});
         res.status(200).json(orgs);
       } catch (err) {
         res.status(500).json(err);
