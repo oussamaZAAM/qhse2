@@ -8,8 +8,7 @@ import Product from '../models/Product.js';
 ProductRouter.post('/create', async (req, res) => {
   
                 const newProduct = new Product({
-                    name: req.body.name,
-                    count: req.body.count,              
+                    name: req.body.name,             
                     shifelife: req.body.shifelife,                   
                     shife_time: req.body.shife_time,                   
                     fiche_technique: req.body.fiche_technique,                   
@@ -56,7 +55,6 @@ ProductRouter.put('/:prodId', async (req, res) => {
   try {
       const updatedProduct = await Product.findByIdAndUpdate({_id:req.params.prodId}, {
         name: req.body.name,
-        count: req.body.count,
         photos: req.body.photos,
         shifelife: req.body.shifelife,
         shife_time: req.body.shife_time,
