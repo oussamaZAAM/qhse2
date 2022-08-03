@@ -4,10 +4,6 @@ const ProductSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  count: {
-    type: Number,
-    required: true,
-  },
   shifelife: {
     type: String,
     required: true
