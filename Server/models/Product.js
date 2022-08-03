@@ -4,6 +4,10 @@ const ProductSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  count: {
+    type: Number,
+    required: true,
+  },
   shifelife: {
     type: String,
     required: true
@@ -68,9 +72,8 @@ const ProductSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  calcium: {
-    type: Number,
-    required: true
+  userEtiquettes: {
+    type: Object,
   },
   organism: {
     type: String,

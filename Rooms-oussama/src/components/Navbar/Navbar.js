@@ -12,19 +12,19 @@ export default function Navbar() {
         dispatch({ type: "LOGIN_SUCCESS", payload: [undefined,undefined]});
         localStorage.removeItem("user");
         localStorage.removeItem("org");
-        navigate("./login")
+        navigate("/login")
       }
     function handleFinish() {
         dispatch({ type: "SELECT_SUCCESS", payload: [user,undefined]});
         localStorage.removeItem("org");
-        navigate("./main")
+        navigate("/main")
       }
     return(
         <div style={{backgroundColor:"#F5F0BB"}}>
 
 
         <nav className="navbar navbar-expand-lg navbar-light justify-content-between">
-  <a className="navbar-brand" href="../main"><img src="http://localhost:5000/images/logo1.png" style={{maxHeight:"70px", marginTop:"20px", marginLeft:"20px", paddingBottom:"20px"}}/></a>
+  <a className="navbar-brand" href="../main"><img src="http://localhost:5000/images/logo1.jpeg" style={{maxHeight:"70px", marginTop:"20px", marginLeft:"20px", paddingBottom:"20px"}}/></a>
   
 
     {(user!==null && user!==undefined) && 

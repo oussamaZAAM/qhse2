@@ -33,11 +33,6 @@ code {
     background: #F5F0BB;
   }
 }
-.body{
-  background: url("../src/images/login-background.jpg");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-}
 .vertical-center {
   min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
   min-height: 100vh; /* These two lines are counted as one :-)       */
@@ -60,205 +55,23 @@ code {
 
 
 
+::-webkit-scrollbar {
+  width: 10px;
 
-
-/* .rooms{
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  flex-direction: column;
-  text-align: center;
-  border-right: 11px solid #B2FFDA;
-}
-.rooms h1{
-  line-height: 113px;
-  font-size: 60px;
-  letter-spacing: -0.02em;
-  color: #B2FFDA;
-  text-shadow: -3px 6px 4px rgba(0, 0, 0, 0.25);
 }
 
-.login-form{
-  display: grid;
-  justify-content: space-between;
-  margin: 20px 0 0 20px;
-}
-.login-input{
-  background: #FFFFFF;
-  border: 3px solid #1D8654;
-  box-sizing: border-box;
-  border-radius: 21px;
-  padding: 10px;
-  margin: 10px 10%;
-  text-indent: 10px;
-  width: 100%;
-  box-sizing: border-box;
-}
-.login-submit{
-  background: #37FF9F;
-  mix-blend-mode: multiply;
-  border-radius: 17px;
-  padding: 10px;
-  margin: 10px 10% 0 30%;
-}
-.login-suggest{
-  font-weight: 300;
-  font-size: 24px;
-  line-height: 28px;
-  letter-spacing: -0.02em;
-  color: #FFFFFF;
-}
-.login-suggest span{
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 28px;
-  letter-spacing: -0.02em;
-  color: #B2FFDA;
-}
-.navbar{
-  position: fixed;
-  top:0;
-  width: 100%;
-}
-.navbar-logo{
-  width: 120px;
-  height: 80px;
-}
-.navbar-list{
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: 1fr 3fr 1fr 1fr 0.5fr;
-  flex-direction: row;
-  overflow: hidden;
-  background: #FFFFFF;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  margin: 0;
-  align-items: center;
-}
-.navbar-li{
-  list-style-type: none;
-  width: 120%;
-}
-.navbar-search{
-  padding: 10px;
-  border-radius: 7px;
-}
-.navbar-user{
-  display: grid;
-  align-items: center;
-  grid-template-columns: 0.5fr 2fr;
-  background: #B2FFDA;
-  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 35px;
-  font-style: normal;
-  font-weight: 700;
-  color: #000000;
-}
-.post-grid{
-  margin-left: 15px;
-  display: grid;
-  grid-template-columns: 0.6fr 5fr 0.5fr;
-  align-items: center;
-}
-
-.text-button{
-  border: none;
-  background:none; 
-}
-.feed{
-  margin-top: 7.5%;
-}
-.post{
-  background: rgba(255, 255, 255, 0.37);
-  box-shadow: 2px -2px 4px rgba(0, 0, 0, 0.25), -4px 4px 4px rgba(0, 0, 0, 0.25);
+::-webkit-scrollbar-thumb {
+  background-color: #b0b0b0;
+  background-clip: padding-box;
+  border: 0.05em solid #eeeeee;
   border-radius: 10px;
-  max-width: 50%;
-  margin: 2.5% 25%;
 }
-.post-room-name p{
-  margin-top: -25px;
+
+::-webkit-scrollbar-track {
+  background-color: white;
+  border-radius: 10px;
 }
-.profileimage{
-  width: 50px;
-  height: 50px;
-  border-radius: 35px;
-}
-.post-like{
-  padding: 5px;
-  margin: 0 5px;
-}
-.comment-like:hover{
-  cursor: pointer;
-}
-.post-like:hover{
-  cursor: pointer;
-}
-.hover-cursor:hover{
-  cursor:pointer;
-}
-.hover-background{
-  padding: 10px;
-}
-.hover-background:hover{
-  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 29.5px;
-  cursor:pointer;
-}
-.post-rating{
-  display: grid;
-  grid-template-columns: 0.5fr 6fr 1fr;
-  align-items: center;
-  padding: 10px 0 0 0;
-}
-.post-rate{
-  display: grid;
-  grid-template-columns: 1fr 1fr 0.4fr;
-  align-items: center;
-  margin: 15px 0;
-  padding: 15px 0 10px 0;
-  border-top: 1px solid;
-  
-}
-.post-rate div{
-  display: flex;
-  align-items: center;
-}
-.post-desc{
-  margin-left: 15px;
-}
-.comment-grid{
-  display: grid;
-  grid-template-columns: 1fr 7fr;
-  padding: 20px 25px 20px 25px;
-  border-top: 1px solid;
-  border-image: linear-gradient(to right, transparent 20%, #000 25% 75%, transparent 80%) 100% 1;
-}
-.comment-content{
-  border: 1px solid;
-  border-radius: 9px;
-  padding: 0 20px;
-}
-.comment-content p{
-  margin: 10px 10px 10px 30px;
-}
-.comment-header{
-  display: grid;
-  grid-template-columns: 6fr 1fr;
-}
-.comment-like{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.comment{
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-}
-.comment-close{
-  align-self: flex-end;
-  padding: 0px 10px;
-} */
+
 @media screen and (max-width: 280px) {
   .logo-img {
     width: 100px;

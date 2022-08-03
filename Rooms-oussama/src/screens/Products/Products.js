@@ -40,7 +40,6 @@ export default function Products() {
     const handleClick = (e) => {
       setSortList({...initialSortList, [e]: true})
     };
-    console.log(sortList)
   
     const handleDelete = () => {
       setSortList(initialSortList);
@@ -98,11 +97,12 @@ export default function Products() {
       : prods.sort((b,a) => a.calcium - b.calcium)
     )
 
-    const products = prods!==undefined && prods.map(x=>{
+    const products = prods!==undefined && prods.map((x,index)=>{
         return(
             <Product 
               key={x._id}
               prod={x}
+              count={index+1}
             />
            
         )

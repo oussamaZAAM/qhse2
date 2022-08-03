@@ -8,7 +8,8 @@ import Product from '../models/Product.js';
 ProductRouter.post('/create', async (req, res) => {
   
                 const newProduct = new Product({
-                    name: req.body.name,                   
+                    name: req.body.name,
+                    count: req.body.count,              
                     shifelife: req.body.shifelife,                   
                     shife_time: req.body.shife_time,                   
                     fiche_technique: req.body.fiche_technique,                   
@@ -25,8 +26,8 @@ ProductRouter.post('/create', async (req, res) => {
                     energie: req.body.energie,                   
                     proteine: req.body.proteine,                   
                     carbs: req.body.carbs,                   
-                    lipide: req.body.lipide,                   
-                    calcium: req.body.calcium,                
+                    lipide: req.body.lipide,
+                    userEtiquettes: req.body.userEtiquettes             
                 });
                 const cuser = await newProduct.save(function(){});
                 res.status(200).json(cuser);
@@ -55,6 +56,7 @@ ProductRouter.put('/:prodId', async (req, res) => {
   try {
       const updatedProduct = await Product.findByIdAndUpdate({_id:req.params.prodId}, {
         name: req.body.name,
+        count: req.body.count,
         photos: req.body.photos,
         shifelife: req.body.shifelife,
         shife_time: req.body.shife_time,
@@ -71,7 +73,7 @@ ProductRouter.put('/:prodId', async (req, res) => {
         proteine: req.body.proteine,
         carbs: req.body.carbs,
         lipide: req.body.lipide,
-        calcium: req.body.calcium,
+        userEtiquettes: req.body.userEtiquettes,
       });
       res.status(200).json("Product has been updated");
     } catch (err) {
@@ -81,7 +83,7 @@ ProductRouter.put('/:prodId', async (req, res) => {
 
 ProductRouter.delete('/:prodId', async (req, res) => {
   try {
-      const products = await Product.findOne({_Id:req.params.orgId});
+      const products = await Product.findOne({_id:req.params.prodId});
       await products.deleteOne();
       res.status(200).json("The product has been deleted");
     } catch (err) {
