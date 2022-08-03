@@ -244,7 +244,6 @@ export default function NewProduct() {
                 className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
                 type='date'
-                label="Date de creation"
                 value={product.creation_date}
                 name='creation_date'
                 onChange={handleChange}
