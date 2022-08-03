@@ -80,12 +80,35 @@ export default function NewProduct() {
         data.append("file", pic);
         //Ajouter les informations de fichier telecharge a notre "data"
         try {
-            await axios.post("http://localhost:5000/api/upload", data);
+            await axios.post("http://localhost:5000/api/upload/image", data);
             //envoyer la donnee vers le "backend" avec "axios" dans le champs "upload"
         } catch (err) {}
         // setPicture(fileName)
         setPicture(prev=>[...prev, fileName])
         setProduct({...product, photos: picture});
+    }
+    const handleUploadFile = async (e) => {
+        const pic=e.target.files[0]; //Initialiser "pic" avec l'image telecharger depuis la machine
+        // setFile(e.target.files[0])
+        const data = new FormData(); //Initialiser "data" par une Forme de donnes
+        const fileName = Date.now() + pic.name; //Initialiser "fileName" par le nom de fichier telecharge
+        data.append("name", fileName);
+        data.append("file", pic);
+        //Ajouter les informations de fichier telecharge a notre "data"
+        try {
+            await axios.post("http://localhost:5000/api/upload/file", data);
+            //envoyer la donnee vers le "backend" avec "axios" dans le champs "upload"
+        } catch (err) {}
+        // setPicture(fileName)
+        console.log(e);
+        setPicture(prev=>[...prev, fileName]);
+        switch (e.target.id){
+             case "fiche_tech":
+                setProduct({...product, fiche_technique: fileName});
+            case "fds":
+                setProduct({...product, fds: fileName});
+        }
+        
     }
     function handleImagePage(event, value) {
         setImagePage(value);
@@ -165,18 +188,19 @@ export default function NewProduct() {
                 className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
                 label="Fiche Technique"
-                value={product.fiche_technique}
+                value={product.fiche_technique.slice(13,-1)}
                 name='fiche_technique'
-                onChange={handleChange}
             />
+                                        <input type="file" id="fiche-tech" onChange={(e) => handleUploadFile(e)}/>
+
             <TextField
                 className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
                 label="FDS"
-                value={product.fds}
+                value={product.fds.slice(13,-1)}
                 name='fds'
-                onChange={handleChange}
-            />
+            />                                        <input type="file" id="fds" onChange={(e) => handleUploadFile(e)}/>
+
             <div className="col-12 col-sm-6 col-md-4 col-lg-4 d-flex justify-content-center" >
                 {picture.length!==0 && 
                 (<div className="d-flex flex-column align-items-center">
