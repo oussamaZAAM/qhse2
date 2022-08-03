@@ -84,7 +84,7 @@ const Product = (props) => {
     }
     const handleDownload= async (e) => {
         
-        switch(e.target.name){
+        switch(e.target.id){
             case "fiche_tech":
                 await axios.get("http://localhost:5000/api/download/"+editValues.fiche_technique);
             case "fds":
@@ -227,8 +227,8 @@ const Product = (props) => {
                         (<div className="product-scroll">
                             <h5 className='p-3'>Shelf Life: <b>{editValues.shifelife}</b></h5>
                             <h5 className='p-3'>Durée de Shelf Life: <b>{editValues.shife_time}</b></h5>
-                            <h5 className='p-3'>Fiche Technique: <div name = "fiche_tech" onClick={handleDownload}><b>{editValues.fiche_technique.slice(13)}</b></div></h5>
-                            <h5 className='p-3'>FDS: <div name="fds" onClick={handleDownload}><b>{editValues.fds.slice(13)}</b></div></h5>
+                            <h5 className='p-3'>Fiche Technique: <b id = "fiche_tech" onClick={handleDownload}>{editValues.fiche_technique.slice(13)}</b></h5>
+                            <h5 className='p-3'>FDS: <b id="fds" onClick={handleDownload}>{editValues.fds.slice(13)}</b></h5>
                             <h5 className='p-3'>Emballage: <b>{editValues.emballage}</b></h5>
                             <h5 className='p-3'>Grammage: <b>{editValues.grammage}</b></h5>
                             <h5 className='p-3'>Type de client: <b>{editValues.type_client}</b></h5>
