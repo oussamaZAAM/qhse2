@@ -5,7 +5,7 @@ import { Button } from 'react-bootstrap';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from "../../Context/authContext";
 import "./Product.css";
-import { AiFillCamera } from 'react-icons/ai'
+import { AiFillCamera, AiOutlineCloudUpload } from 'react-icons/ai'
 import { BiTrash } from 'react-icons/bi'
 import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
 
@@ -80,11 +80,11 @@ const Product = (props) => {
         } catch (err) {}
         // setPicture(fileName)
         setPicture(prev=>[...prev, fileName])
-        setProduct({...product, photos: picture});
+        setProduct({...product, photos: [...picture,fileName]});
     }
     const handleDownload= async (e) => {
-        await axios.get("http://localhost:5000/api/download/"+editValues.fiche_technique);
-        switch(e.target.name){
+        
+        switch(e.target.id){
             case "fiche_tech":
                 await axios.get("http://localhost:5000/api/download/"+editValues.fiche_technique);
             case "fds":
@@ -105,7 +105,13 @@ const Product = (props) => {
             //envoyer la donnee vers le "backend" avec "axios" dans le champs "upload"
         } catch (err) {}
         // setPicture(fileName)
-        setEditValues({...product, fiche_technique: fileName});
+        switch (e.target.id){
+            case "fiche_tech":
+                setEditValues({...product, fiche_technique: fileName});                break;
+            case "fds":
+                setEditValues({...product, fds: fileName});     
+        }
+        
     }
     function deleteImage(imageId) {
         setImagePage(prev=>{
@@ -221,8 +227,8 @@ const Product = (props) => {
                         (<div className="product-scroll">
                             <h5 className='p-3'>Shelf Life: <b>{editValues.shifelife}</b></h5>
                             <h5 className='p-3'>Durée de Shelf Life: <b>{editValues.shife_time}</b></h5>
-                            <h5 className='p-3'>Fiche Technique: <div name = "fiche_tech" onClick={handleDownload}><b>{editValues.fiche_technique.slice(13)}</b></div></h5>
-                            <h5 className='p-3'>FDS: <div name="fds" onClick={handleDownload}><b>{editValues.fds.slice(13)}</b></div></h5>
+                            <h5 className='p-3'>Fiche Technique: <b id = "fiche_tech" onClick={handleDownload}>{editValues.fiche_technique.slice(13)}</b></h5>
+                            <h5 className='p-3'>FDS: <b id="fds" onClick={handleDownload}>{editValues.fds.slice(13)}</b></h5>
                             <h5 className='p-3'>Emballage: <b>{editValues.emballage}</b></h5>
                             <h5 className='p-3'>Grammage: <b>{editValues.grammage}</b></h5>
                             <h5 className='p-3'>Type de client: <b>{editValues.type_client}</b></h5>
@@ -275,7 +281,9 @@ const Product = (props) => {
                                     variant="filled"
                                     onChange={handleChange}
                                 />
-                                 <input type="file" id="file" onChange={(e) => handleUploadFile(e)}/>
+                                 <label className="p-3" variant="contained" component="label" for="fiche_tech">
+                                                           <AiOutlineCloudUpload size={20}/> <input hidden type="file" id="fiche_tech" onChange={(e) => handleUploadFile(e)}/>
+                                                           </label>
 
                             </div>
                             <div className='d-flex justify-content-start'>
@@ -288,7 +296,9 @@ const Product = (props) => {
                                     name='fds'
                                     variant="filled"
                                 />
-                                                                 <input type="file" id="file" onChange={(e) => handleUploadFile(e)}/>
+                                <label className="p-3" variant="contained" component="label" for="fds">
+                                                           <AiOutlineCloudUpload size={20}/> <input hidden type="file" id="fds" onChange={(e) => handleUploadFile(e)}/>
+                                                           </label>
 
                             </div>
                             <div className='d-flex justify-content-start'>

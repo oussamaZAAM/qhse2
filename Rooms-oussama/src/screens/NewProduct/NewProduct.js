@@ -3,8 +3,8 @@ import "./NewProduct.css";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Button, Pagination } from '@mui/material';
-import { AiFillCamera } from 'react-icons/ai'
-import { FaCheckCircle, FaTimes } from 'react-icons/fa'
+import { AiFillCamera,AiOutlineCloudUpload } from 'react-icons/ai'
+import { FaCheckCircle,FaTimes } from 'react-icons/fa'
 import { AuthContext } from "../../Context/authContext";
 import axios from 'axios';
 import {useNavigate} from "react-router-dom"
@@ -85,7 +85,8 @@ export default function NewProduct() {
         } catch (err) {}
         // setPicture(fileName)
         setPicture(prev=>[...prev, fileName])
-        setProduct({...product, photos: picture});
+        console.log(picture)
+        setProduct({...product, photos: [...picture, fileName]});
     }
     const handleUploadFile = async (e) => {
         const pic=e.target.files[0]; //Initialiser "pic" avec l'image telecharger depuis la machine
@@ -100,11 +101,10 @@ export default function NewProduct() {
             //envoyer la donnee vers le "backend" avec "axios" dans le champs "upload"
         } catch (err) {}
         // setPicture(fileName)
-        console.log(e);
-        setPicture(prev=>[...prev, fileName]);
         switch (e.target.id){
-             case "fiche_tech":
+            case "fiche_tech":
                 setProduct({...product, fiche_technique: fileName});
+                break;
             case "fds":
                 setProduct({...product, fds: fileName});
         }
@@ -184,23 +184,29 @@ export default function NewProduct() {
                 name='shife_time'
                 onChange={handleChange}
             />
+            <div className='d-flex justify-content-start'>
             <TextField
                 className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
                 label="Fiche Technique"
-                value={product.fiche_technique.slice(13,-1)}
-                name='fiche_technique'
+                value={product.fiche_technique.slice(13)}
+                name='fiche_tech'
             />
-                                        <input type="file" id="fiche-tech" onChange={(e) => handleUploadFile(e)}/>
-
+                                        <label className="p-3" variant="contained" component="label" for="fiche_tech">
+                                                           <AiOutlineCloudUpload size={20}/> <input hidden type="file" id="fiche_tech" onChange={(e) => handleUploadFile(e)}/>
+                                                           </label>
+                                                           </div>
+                                                           <div className='d-flex justify-content-start'>
             <TextField
                 className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
                 label="FDS"
-                value={product.fds.slice(13,-1)}
+                value={product.fds.slice(13)}
                 name='fds'
-            />                                        <input type="file" id="fds" onChange={(e) => handleUploadFile(e)}/>
-
+            />                                       <label className="p-3" variant="contained" component="label" for="fds">
+            <AiOutlineCloudUpload size={20}/> <input hidden type="file" id="fds" onChange={(e) => handleUploadFile(e)}/>
+            </label>
+            </div>
             <div className="col-12 col-sm-6 col-md-4 col-lg-4 d-flex justify-content-center" >
                 {picture.length!==0 && 
                 (<div className="d-flex flex-column align-items-center">
