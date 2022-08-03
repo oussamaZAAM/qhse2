@@ -68,6 +68,7 @@ ProductRouter.put('/:prodId', async (req, res) => {
         agrement: req.body.agrement,
         autorisation: req.body.autorisation,
         site: req.body.site,
+        organism: req.body.organism,
         energie: req.body.energie,
         proteine: req.body.proteine,
         carbs: req.body.carbs,

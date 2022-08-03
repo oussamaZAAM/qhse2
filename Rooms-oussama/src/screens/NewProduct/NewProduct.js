@@ -33,39 +33,39 @@ export default function NewProduct() {
     agrement: "",
     autorisation: "",
     site: "",
-    org: "",
+    org: org.name,
     energie: "",
     proteine: "",
     carbs: "",
     lipide: "",
   });
   const handleChange = (event) => {
-if(event.target.name==="type_client" && event.target.value==="Autre"){
-    setOther(true);
-}   
-setProduct({...product, [event.target.name]: event.target.value});
+    if(event.target.name==="type_client" && event.target.value==="Autre"){
+        setOther(true);
+    }   
+    setProduct({...product, [event.target.name]: event.target.value});
   };
-  console.log( {
-    name: product.name,
-    shifelife: product.shifelife,
-    shife_time: product.shife_time,
-    fiche_technique: product.fiche_technique,
-    fds: product.fds,
-    photos: product.photos,
-    emballage: product.emballage,
-    grammage: product.grammage,
-    type_client: product.type_client,
-    creation_date: product.creation_date,
-    agrement: product.agrement,
-    autorisation: product.autorisation,
-    site: product.site,
-    organism: org.name,
-    energie: product.energie,
-    proteine: product.proteine,
-    carbs: product.carbs,
-    lipide: product.lipide,
-    userEtiquettes: newEtiquettesData,
-})
+//   console.log( {
+//     name: product.name,
+//     shifelife: product.shifelife,
+//     shife_time: product.shife_time,
+//     fiche_technique: product.fiche_technique,
+//     fds: product.fds,
+//     photos: product.photos,
+//     emballage: product.emballage,
+//     grammage: product.grammage,
+//     type_client: product.type_client,
+//     creation_date: product.creation_date,
+//     agrement: product.agrement,
+//     autorisation: product.autorisation,
+//     site: product.site,
+//     organism: org.name,
+//     energie: product.energie,
+//     proteine: product.proteine,
+//     carbs: product.carbs,
+//     lipide: product.lipide,
+//     userEtiquettes: newEtiquettesData,
+// })
   const submitProduct = async () => {
     const newProduct = {
         name: product.name,
@@ -208,28 +208,29 @@ setProduct({...product, [event.target.name]: event.target.value});
                 name='shife_time'
                 onChange={handleChange}
             />
-            <div className='d-flex justify-content-start'>
-            <TextField
-                className="col-12 col-sm-6 col-md-4 col-lg-4"
-                id="outlined-name"
-                label="Fiche Technique"
-                value={product.fiche_technique.slice(13)}
-                name='fiche_tech'
-            />
-                                        <label className="p-3" variant="contained" component="label" for="fiche_tech">
-                                                           <AiOutlineCloudUpload size={20}/> <input hidden type="file" id="fiche_tech" onChange={(e) => handleUploadFile(e)}/>
-                                                           </label>
-                                                           </div>
-                                                           <div className='d-flex justify-content-start'>
-            <TextField
-                className="col-12 col-sm-6 col-md-4 col-lg-4"
-                id="outlined-name"
-                label="FDS"
-                value={product.fds.slice(13)}
-                name='fds'
-            />                                       <label className="p-3" variant="contained" component="label" for="fds">
-            <AiOutlineCloudUpload size={20}/> <input hidden type="file" id="fds" onChange={(e) => handleUploadFile(e)}/>
-            </label>
+            <div className='d-flex justify-content-start align-items-start col-12 col-sm-6 col-md-4 col-lg-4'>
+                <TextField
+                    className="col-12"
+                    id="outlined-name"
+                    label="Fiche Technique"
+                    value={product.fiche_technique.slice(13)}
+                    name='fiche_tech'
+                />
+                <label className="p-3" variant="contained" component="label" for="fiche_tech">
+                    <AiOutlineCloudUpload style={{cursor: 'pointer'}} size={20}/> <input hidden type="file" id="fiche_tech" onChange={(e) => handleUploadFile(e)}/>
+                </label>
+            </div>
+            <div className='d-flex justify-content-start align-items-start col-12 col-sm-6 col-md-4 col-lg-4'>
+                <TextField
+                    className="col-12"
+                    id="outlined-name"
+                    label="FDS"
+                    value={product.fds.slice(13)}
+                    name='fds'
+                />
+                <label className="p-3" variant="contained" component="label" for="fds">
+                    <AiOutlineCloudUpload style={{cursor: 'pointer'}} size={20}/> <input hidden type="file" id="fds" onChange={(e) => handleUploadFile(e)}/>
+                </label>
             </div>
             <div className="col-12 col-sm-6 col-md-4 col-lg-4 d-flex justify-content-center" >
                 {picture.length!==0 && 
@@ -273,21 +274,23 @@ setProduct({...product, [event.target.name]: event.target.value});
                 onChange={handleChange}
             />
             :<select name= "type_client" className="form-select col-12 col-sm-6 col-md-4 col-lg-4" aria-label="Default select example" id="outlined-name" onChange={handleChange}>
-  <option selected>Type de client</option>
-  <option  value="Tous">Tous</option>
-  <option value="Enfants">Enfants</option>
-  <option value="Adultes">Adultes</option>
-  <option value="Industries">Industries</option>
-  <option value="Autre">Autre..</option>
-</select>
-}
+                <option selected>Type de client</option>
+                <option value="Tous">Tous</option>
+                <option value="Enfants">Enfants</option>
+                <option value="Adultes">Adultes</option>
+                <option value="Industries">Industries</option>
+                <option value="Autre">Autre..</option>
+            </select>
+            }
             <TextField
                 className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
                 type='date'
+                label="Date de création"
                 value={product.creation_date}
                 name='creation_date'
                 onChange={handleChange}
+                InputLabelProps={{ shrink: true }}
             />
             <TextField
                 className="col-12 col-sm-6 col-md-4 col-lg-4"
@@ -319,9 +322,9 @@ setProduct({...product, [event.target.name]: event.target.value});
                 className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"
                 label="Organisme"
-                value={product.org.name}
+                value={org.name}
                 name='org'
-                onChange={handleChange}
+                InputLabelProps={{ shrink: true }}
             />
             </Box>
             <hr/>
