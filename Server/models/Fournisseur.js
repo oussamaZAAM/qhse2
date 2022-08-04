@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 
 const FournisseurSchema = new mongoose.Schema({
+  
+  
   code_four: {
     type: String,
     required: true
@@ -14,19 +16,19 @@ const FournisseurSchema = new mongoose.Schema({
     required: true
   },
   
-  ville: {
-    type: String,
-    required: true
-  },
   tel: {
     type: Number,
     required: true
   },
-  Pays: {
+  ville: {
     type: String,
     required: true
   },
-  Mail: {
+  pays: {
+    type: String,
+    required: true
+  },
+  mail: {
     type: String,
     required: true
   }
