@@ -12,7 +12,7 @@ OrganismRouter.post('/create', async (req, res) => {
                     name: req.body.name,
                     user: req.body.user,
                     site_num: req.body.site_num,
-                    creation_time: req.body.creation_time,
+                    creation_date: req.body.creation_date,
                     domaines: req.body.domaines,
                     tel: req.body.tel,
                     Adresse: req.body.Adresse,
@@ -29,7 +29,7 @@ OrganismRouter.put("/:orgId", async (req, res) => {
     const updatedorganism = await Organism.findByIdAndUpdate({_id: req.params.orgId},{
           name: req.body.name,
           site_num: req.body.site_num,
-          creation_time: req.body.creation_time,
+          creation_date: req.body.creation_date,
           domaines: req.body.domaines,
           tel: req.body.tel,
           Adresse: req.body.Adresse,
@@ -61,7 +61,7 @@ OrganismRouter.get('/a/:userId', async (req, res) => {
 
 OrganismRouter.delete('/:orgId', async (req, res) => {
     try {
-        const orgs = await Organism.findOne({_Id:req.params.orgId});
+        const orgs = await Organism.findOne({_id:req.params.orgId});
         await orgs.deleteOne();
         res.status(200).json("The organism has been deleted");
       } catch (err) {
