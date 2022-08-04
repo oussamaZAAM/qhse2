@@ -5,6 +5,7 @@ import cors from 'cors';
 import userRouter from './routes/users.js';
 import OrganismRouter from "./routes/organisms.js";
 import ProductRouter from "./routes/products.js";
+import FournisseurRouter from "./routes/fournisseurs.js";
 import multer from "multer"
 import path from "path";
 import {fileURLToPath} from 'url';
@@ -61,6 +62,7 @@ const storageFile = multer.diskStorage({
 app.use("/images", express.static(path.join(__dirname, "public/images")));//pour donner l'acces aux images apartir du backend.
 app.use("/api/user", userRouter);
 app.use("/api/organism", OrganismRouter);
+app.use("/api/fournisseur", FournisseurRouter);
 app.use("/api/product", ProductRouter);
 
 const CONNECTION_URL= 'mongodb://localhost:27017/ayoub';

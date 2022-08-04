@@ -4,6 +4,7 @@ import Register from "./screens/Register/Register"
 import Navbar from "./components/Navbar/Navbar"
 import NewOrganism from "./screens/NewOrganism/NewOrganism"
 import Organism from "./screens/Organism/Organism"
+import Fournisseurs from "./screens/Fournisseurs/Fournisseurs"
 import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import { AuthContext } from "./Context/authContext";
 import Organisms from "./screens/Organisms/Organisms";
@@ -42,6 +43,7 @@ export default function App() {
           <Route path="/products" element={org?<Products />:(user?<Organisms />:<Login />)} />
           <Route path="/product/:id/:isEdit" element={org?<HandleProduct />:(user?<Organisms />:<Login />)} />
           <Route path="/product/:id" element={org?<HandleProduct />:(user?<Organisms />:<Login />)} />
+          <Route path="/fournisseurs" element={org?<Fournisseurs />:(user?<Organisms />:<Login />)} />
         {/* </Route> */}
       </Routes>
     </BrowserRouter>
