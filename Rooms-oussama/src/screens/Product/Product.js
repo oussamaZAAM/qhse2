@@ -13,6 +13,7 @@ import AnimatedPage from '../AnimatedPage';
 const Product = (props) => {
     const [product, setProduct] = useState();
     const [orgProducts, setOrgProducts] = useState();
+    const [productOrganism, setProductOrganism] = useState();
     const [imagePage, setImagePage] = useState(1);
     const [picture, setPicture] = useState('');
     const [isEdit, setIsEdit] = useState(props.isEdit==="isEdit");
@@ -170,6 +171,11 @@ const Product = (props) => {
             setOrgProducts(res.data);
         }
         fetchOrgProducts();
+        const fetchMyOrg = async() => {
+            const res = await axios.get("http://localhost:5000/api/organism/"+org._id);
+            setProductOrganism(res.data)
+        }
+        fetchMyOrg();
     },[props.productId])
     const mappedUserEtiquettes = editValues.userEtiquettes && Object.keys(editValues.userEtiquettes).map((key,value)=>{
         return (
@@ -246,7 +252,7 @@ const Product = (props) => {
                             <h5 className='p-3'>Agrément Sanitaire: <b>{editValues.agrement}</b></h5>
                             <h5 className='p-3'>Autorisation Sanitaire: <b>{editValues.autorisation}</b></h5>
                             <h5 className='p-3'>Site de production: <b>{editValues.site}</b></h5>
-                            <h5 className='p-3'>Organisme: <b>{editValues.org}</b></h5>
+                            <h5 className='p-3'>Organisme: <b>{productOrganism && productOrganism.name}</b></h5>
                             <h4 className='text-center col-12 col-sm-6 col-md-4 col-lg-4 etiquettes'>Etiquettes</h4>
                             <h5 className='p-3'>Valeur Energétique: <b>{editValues.energie}</b></h5>
                             <h5 className='p-3'>Protéines: <b>{editValues.proteine}</b></h5>

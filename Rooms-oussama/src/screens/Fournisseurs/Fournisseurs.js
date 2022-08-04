@@ -59,12 +59,12 @@ export default function Fournisseur() {
                 <table className="table table-striped table-hover">
                     <thead>
                       <tr>
-                        <th className="text-center" scope="col-4">Num</th>
+                        <th className="text-center" scope="col-4">Numéro</th>
                         <th className="text-center" scope="col-4">Code</th>
                         <th className="text-center" scope="col-4">Raison</th>
                         <th className="text-center" scope="col-4">Pays</th>
                         <th className="text-center" scope="col-4">Ville</th>
-                        <th className="text-center" scope="col-4">Tél</th>
+                        <th className="text-center" scope="col-4">Téléphone</th>
                         <th className="text-center" scope="col-4 ">Mail</th>
                       </tr>
                     </thead>
@@ -76,13 +76,13 @@ export default function Fournisseur() {
                 </div>
                 
                 <div className="col-9 col-sm-12 col-md-4 col-lg-3 register-a" style={{maxWidth: "fit-content"}}> 
-                    <h1 className="text-prime pb-5">Ajouter Fournisseur</h1>
+                    <h1 className="text-prime pb-5">Ajouter un Fournisseur</h1>
                     <form className="form-group ">
                         <input className="form-control m-2" placeholder="Code Fournisseur" ref={code_fourn}/>
                         <input className="form-control m-2" placeholder="Raison Social" ref={raison_soc} />
                         <input className="form-control m-2" placeholder="Pays" ref={pays} />
                         <input className="form-control m-2" placeholder="Ville" ref={ville} />
-                        <input className="form-control m-2" placeholder="Tel." ref={tel} />
+                        <input className="form-control m-2" placeholder="Tél." ref={tel} />
                         <input className="form-control m-2" placeholder="Mail" ref={mail} />
                         <div className="d-flex justify-content-end m-2">
                         <Button className="bg-prime" onClick={userFournisseur} >Enregister</Button>

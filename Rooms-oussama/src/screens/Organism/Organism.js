@@ -85,7 +85,6 @@ export default function Organism(props) {
             window.alert("Téléphone Non Valide")
         }
     }
-    console.log(props.orgId)
     const delOrg= async (e)=>{
         e.preventDefault();
         try{
