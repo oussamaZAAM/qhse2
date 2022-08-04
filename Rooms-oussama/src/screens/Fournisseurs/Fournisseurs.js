@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import {Button} from 'react-bootstrap';
 import { AuthContext } from "../../Context/authContext";
 import Fournisseurs from '../../components/Fournisseurs/Fournisseurs.js';
+import "./Fournisseurs.css";
 
 export default function Fournisseur() {
     const code_fourn = useRef();
@@ -33,8 +34,8 @@ export default function Fournisseur() {
         const fournisseur = {user:user._id,code_fourn:code_fourn.current.value, raison_soc:raison_soc.current.value,ville:ville.current.value,pays:pays.current.value,tel:parseInt(tel.current.value),mail:mail.current.value}
         try{
             await axios.post("http://localhost:5000/api/fournisseur/create",fournisseur);
-
-        }catch(err){
+            window.location.reload()
+                }catch(err){
                 console.log(err)        
         }
     }
@@ -49,22 +50,22 @@ export default function Fournisseur() {
         )
     })
     return(
-        <main className="jumbotron vertical-center new-organism-main" >
+        <main className="background vertical-center new-organism-main" >
             <div className="container p-5 rounded">
             <div className="row">
-                <div className=" col-9 col-sm-12 col-md-5 col-lg-5 d-flex b justify-content-center align-items-center row">
+                <div className=" col-9 col-sm-12 col-md-5 col-lg-6 d-flex b justify-content-center align-items-center row">
                 <h1>Liste des Fournisseurs</h1>
                 {fournisseurs.length!==0 && (
                 <table className="table table-striped table-hover">
                     <thead>
                       <tr>
-                        <th scope="col-4">Num</th>
-                        <th scope="col-4">Code</th>
-                        <th scope="col-4">Raison</th>
-                        <th scope="col-4">Pays</th>
-                        <th scope="col-4">Ville</th>
-                        <th scope="col-4">Tél</th>
-                        <th scope="col-4">Mail</th>
+                        <th className="text-center" scope="col-4">Num</th>
+                        <th className="text-center" scope="col-4">Code</th>
+                        <th className="text-center" scope="col-4">Raison</th>
+                        <th className="text-center" scope="col-4">Pays</th>
+                        <th className="text-center" scope="col-4">Ville</th>
+                        <th className="text-center" scope="col-4">Tél</th>
+                        <th className="text-center" scope="col-4 ">Mail</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -74,7 +75,7 @@ export default function Fournisseur() {
                 )}
                 </div>
                 
-                <div className="col-9 col-sm-12 col-md-4 col-lg-4 register-a" style={{maxWidth: "fit-content"}}> 
+                <div className="col-9 col-sm-12 col-md-4 col-lg-3 register-a" style={{maxWidth: "fit-content"}}> 
                     <h1 className="text-prime pb-5">Ajouter Fournisseur</h1>
                     <form className="form-group ">
                         <input className="form-control m-2" placeholder="Code Fournisseur" ref={code_fourn}/>

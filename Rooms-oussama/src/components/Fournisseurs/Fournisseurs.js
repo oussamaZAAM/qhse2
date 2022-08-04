@@ -15,13 +15,13 @@ export default function Fournisseurs(props) {
     
     return(
             <tr className="sortable">
-      <td>{props.num}</td>
-      <td>{props.fourId.code_four}</td>
-      <td>{props.fourId.raison_soc}</td>
-      <td>{props.fourId.pays}</td>
-      <td>{props.fourId.ville}</td>
-      <td>{props.fourId.tel}</td>
-      <td>{props.fourId.mail}</td>
+      <td className="text-center">{props.num}</td>
+      <td className="text-center">{props.fourId.code_four}</td>
+      <td className="text-center">{props.fourId.raison_soc}</td>
+      <td className="text-center">{props.fourId.pays}</td>
+      <td className="text-center">{props.fourId.ville}</td>
+      <td className="text-center">{props.fourId.tel}</td>
+      <td className="text-center">{props.fourId.mail}</td>
     </tr>
     )
 }
