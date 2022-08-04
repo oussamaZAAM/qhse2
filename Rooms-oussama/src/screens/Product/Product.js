@@ -8,6 +8,7 @@ import "./Product.css";
 import { AiFillCamera, AiOutlineCloudUpload,AiFillCaretDown,AiFillCaretUp } from 'react-icons/ai'
 import { BiTrash } from 'react-icons/bi'
 import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
+import AnimatedPage from '../AnimatedPage';
 
 const Product = (props) => {
     const [product, setProduct] = useState();
@@ -195,6 +196,7 @@ const Product = (props) => {
     const thisProductIndex = orgProducts && orgProducts.findIndex(x=> x._id === props.productId)
   return (
     product && 
+    <AnimatedPage>
     <div className="container">
         <div className='row'>
         <Button href="../products" className='col-2 small mt-3'><AiFillCaretUp />Liste des produits</Button>
@@ -482,6 +484,7 @@ const Product = (props) => {
             <Button className='btn btn-primary m-2 enregistrer' onClick={handleEdit}>Enregistrer</Button>
         </div>)}
     </div>
+    </AnimatedPage>
   )
 }
 
