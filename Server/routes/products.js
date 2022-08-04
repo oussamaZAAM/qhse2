@@ -36,7 +36,7 @@ ProductRouter.post('/create', async (req, res) => {
 
 ProductRouter.get('/a/:orgId', async (req, res) => {
     try {
-        const Products = await Product.find({org:req.params.orgId});
+        const Products = await Product.find({organism:req.params.orgId});
         res.status(200).json(Products);
       } catch (err) {
         res.status(500).json(err);
@@ -68,6 +68,7 @@ ProductRouter.put('/:prodId', async (req, res) => {
         agrement: req.body.agrement,
         autorisation: req.body.autorisation,
         site: req.body.site,
+        organism: req.body.organism,
         energie: req.body.energie,
         proteine: req.body.proteine,
         carbs: req.body.carbs,

@@ -5,12 +5,13 @@ import 'bootstrap/dist/css/bootstrap.css';
 import {Button} from 'react-bootstrap';
 import { AuthContext } from "../../Context/authContext";
 import "./Organism.css"
-import Menu from "../../components/Menu/Menu"
+import { MuiTelInput, isValidPhoneNumber } from 'mui-tel-input'
+import { Typography } from "@mui/material";
 
 export default function Organism(props) {
     const name = useRef();
     const site_num = useRef();
-    const creation_time = useRef();
+    const creation_date = useRef();
     const domaines = useRef();
     const tel = useRef();
     const adresse = useRef();
@@ -46,8 +47,17 @@ export default function Organism(props) {
     function endEditOrg() {
         setIsEdit(false);
     }
-    function editValuesFunc(e) {
-        setEditValues({...editValues, [e.target.name]: e.target.value})
+    
+    const [value, setValue] = useState('')
+    const [isValid, setIsValid] = useState(true)
+
+    const handleChange = (newValue) => {
+        setIsValid(isValidPhoneNumber(newValue))
+        setValue(newValue)
+        setEditValues({...editValues, tel: newValue})
+    }
+    function editValuesFunc(name, value) {
+        setEditValues({...editValues, [name]: value})
     }
     function formatDate(date) {
         var d = new Date(date),
@@ -63,15 +73,19 @@ export default function Organism(props) {
         return [year, month, day].join('-');
     }
     const submitEditOrg = async () => {
-        try{
-            console.log(props)
-            await axios.put("http://localhost:5000/api/organism/" + props.orgId, editValues);
-        } catch (err) {
-            console.log(err);
+        if(isValid){
+            try{
+                await axios.put("http://localhost:5000/api/organism/" + props.orgId, editValues);
+            } catch (err) {
+                console.log(err);
+            }
+            setIsEdit(false)
+            setLastValues(editValues)
+        } else {
+            window.alert("Téléphone Non Valide")
         }
-        setIsEdit(false)
-        setLastValues(editValues)
     }
+    console.log(props.orgId)
     const delOrg= async (e)=>{
         e.preventDefault();
         try{
@@ -91,10 +105,11 @@ export default function Organism(props) {
           setOrg(
             res.data
           );
+          setValue(res.data.tel)
           setEditValues({
             name: res.data.name,
             site_num: res.data.site_num,
-            creation_date:res.data.creation_time,
+            creation_date:res.data.creation_date,
             domaines:res.data.domaines,
             tel:res.data.tel,
             Adresse:res.data.Adresse,
@@ -103,7 +118,7 @@ export default function Organism(props) {
           setLastValues({
             name: res.data.name,
             site_num: res.data.site_num,
-            creation_date:res.data.creation_time,
+            creation_date:res.data.creation_date,
             domaines:res.data.domaines,
             tel:res.data.tel,
             Adresse:res.data.Adresse,
@@ -136,7 +151,7 @@ export default function Organism(props) {
                 </div>
             </main>
         : (
-            <div className="container display-flex justify-content-center">
+            <div className="container justify-content-center">
                 <h3 className="text-prime p-3">Modification . . .</h3>
                 <div className="row mediaquery-770">
                     <div className="col-12 org-edit-label">
@@ -146,7 +161,7 @@ export default function Organism(props) {
                             name="name" 
                             type="text" 
                             placeholder={!lastValues.name ? editValues.name : lastValues.name} 
-                            onChange={editValuesFunc}></input>
+                            onChange={(event)=>editValuesFunc(event.target.name, event.target.value)}></input>
                     </div>
                     <div className="col-12 org-edit-label">
                         <label>Sites :</label>
@@ -155,7 +170,7 @@ export default function Organism(props) {
                             name="site_num" 
                             type="text" 
                             placeholder={!lastValues.site_num ? editValues.site_num : lastValues.site_num} 
-                            onChange={editValuesFunc}></input>
+                            onChange={(event)=>editValuesFunc(event.target.name, event.target.value)}></input>
                     </div>
                     <div className="col-12 org-edit-label">
                         <label className="org-label">Date de création :</label>
@@ -163,8 +178,8 @@ export default function Organism(props) {
                             className="org-name" 
                             name="creation_date" 
                             type="date" 
-                            value={!lastValues.creation_date ? formatDate(editValues.creation_date) : formatDate(lastValues.creation_date)}
-                            onChange={editValuesFunc}></input>
+                            value={formatDate(editValues.creation_date)}
+                            onChange={(event)=>editValuesFunc(event.target.name, event.target.value)}></input>
                     </div>
                     <div className="col-12 org-edit-label">
                         <label>Domaine :</label>
@@ -173,16 +188,23 @@ export default function Organism(props) {
                             name="domaines" 
                             type="text" 
                             placeholder={!lastValues.domaines ? editValues.domaines : lastValues.domaines} 
-                            onChange={editValuesFunc}></input>
+                            onChange={(event)=>editValuesFunc(event.target.name, event.target.value)}></input>
                     </div>
                     <div className="col-12 org-edit-label">
                         <label>Téléphone :</label>
-                        <input 
-                            className="org-name" 
-                            name="tel" 
-                            type="tel" 
-                            placeholder={!lastValues.tel ? editValues.tel : lastValues.tel} 
-                            onChange={editValuesFunc}></input>
+                        <div className='d-flex flex-column align-items-end'>
+                            <MuiTelInput 
+                                value={value}
+                                label="Téléphone" 
+                                className="org-name" 
+                                name="tel" 
+                                onChange={handleChange} 
+                            />
+                            <Typography>This is valid ? {isValid 
+                                ? <b className="text-success">yes</b>
+                                : <b className="text-danger">no</b>}
+                            </Typography>
+                        </div>
                     </div>
                     <div className="col-12 org-edit-label">
                         <label>Adresse :</label>
@@ -191,16 +213,16 @@ export default function Organism(props) {
                             name="Adresse" 
                             type="text" 
                             placeholder={!lastValues.Adresse ? editValues.Adresse : lastValues.Adresse} 
-                            onChange={editValuesFunc}></input>
+                            onChange={(event)=>editValuesFunc(event.target.name, event.target.value)}></input>
                     </div>
                     <div className="col-12 org-edit-label">
-                        <label>Location :</label>
+                        <label>Localisation :</label>
                         <input 
                             className="org-name" 
                             name="Carte" 
                             type="text" 
                             placeholder={!lastValues.Carte ? editValues.Carte : lastValues.Carte} 
-                            onChange={editValuesFunc}></input>
+                            onChange={(event)=>editValuesFunc(event.target.name, event.target.value)}></input>
                     </div>
                 </div>
                 <div className="row p-5">

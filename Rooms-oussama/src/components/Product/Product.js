@@ -45,7 +45,7 @@ export default function Product(props) {
                     <button onClick={handleDelete} class="btn btn-danger cart-button btn-block"><span class="dot">1</span>Supprimer </button>
                 </div>
 
-                 <div class="weight">
+                 <div class="weight d-flex flex-column">
 
                     <small>Numero : {props.count}</small>
                     <small>date : {props.prod.creation_date}</small>

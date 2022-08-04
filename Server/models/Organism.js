@@ -13,7 +13,7 @@ const OrganismSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  creation_time: {
+  creation_date: {
     type: Date,
     required: true
   },
@@ -22,7 +22,7 @@ const OrganismSchema = new mongoose.Schema({
     required: true
   },
   tel: {
-    type: Number,
+    type: String,
     required: true
   },
   Adresse: {
