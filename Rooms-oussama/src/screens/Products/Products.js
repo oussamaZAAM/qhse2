@@ -298,9 +298,11 @@ export default function Products() {
               </div>
               <div class="row g-1">
                 {products}
-                <Link className="text-center m-2" to="../new-product">
-                      <AiOutlinePlus size={50} style={{borderRadius: "9px", border: "3px solid"}}/>
-                </Link>
+                <div className='d-flex  justify-content-center align-items-center'>
+                  <Link className="text-center m-2" to="../new-product">
+                        <AiOutlinePlus size={50} style={{borderRadius: "9px", border: "3px solid"}}/>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

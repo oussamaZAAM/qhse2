@@ -10,18 +10,17 @@ export default function Fournisseurs(props) {
 
     const { user, dispatch } = useContext(AuthContext);
 
-    
 
     
     return(
-            <tr className="sortable">
-      <td className="text-center">{props.num}</td>
-      <td className="text-center">{props.fourId.code_four}</td>
-      <td className="text-center">{props.fourId.raison_soc}</td>
-      <td className="text-center">{props.fourId.pays}</td>
-      <td className="text-center">{props.fourId.ville}</td>
-      <td className="text-center">{props.fourId.tel}</td>
-      <td className="text-center">{props.fourId.mail}</td>
-    </tr>
+            <tr className="sortable" onClick={()=>props.handleClick(props.num)}>
+              <td className="text-center">{props.num}</td>
+              <td className="text-center">{props.fourId.code_four}</td>
+              <td className="text-center">{props.fourId.raison_soc}</td>
+              <td className="text-center">{props.fourId.pays}</td>
+              <td className="text-center">{props.fourId.ville}</td>
+              <td className="text-center">{props.fourId.tel}</td>
+              <td className="text-center">{props.fourId.mail}</td>
+            </tr>
     )
 }
