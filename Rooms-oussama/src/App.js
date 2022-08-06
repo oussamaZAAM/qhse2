@@ -9,6 +9,7 @@ import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import { AuthContext } from "./Context/authContext";
 import Organisms from "./screens/Organisms/Organisms";
 import Products from "./screens/Products/Products";
+import RawRecap from "./screens/RawRecap/RawRecap";
 import Raw from "./screens/Raw/Raw";
 import "./App.css"
 import NewProduct from "./screens/NewProduct/NewProduct"
@@ -52,6 +53,7 @@ export default function App() {
           <Route path="/new-product" element={org?<NewProduct />:(user?<Organisms/>:<Login />)} />
           <Route path="/new-raw" element={org?<NewRaw />:(user?<Organisms/>:<Login />)} />
           <Route path="/products" element={org?<Products />:(user?<Organisms />:<Login />)} />
+          <Route path="/raw-recap" element={org?<RawRecap />:(user?<Organisms />:<Login />)} />
           <Route path="/raw/:name" element={org?<HandleRaw />:(user?<Organisms />:<Login />)} />
           <Route path="/product/:id/:isEdit" element={org?<HandleProduct />:(user?<Organisms />:<Login />)} />
           <Route path="/product/:id" element={org?<HandleProduct />:(user?<Organisms />:<Login />)} />

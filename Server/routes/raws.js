@@ -22,7 +22,6 @@ RawRouter.post('/create', async (req, res) => {
                     userEtiquettes: req.body.userEtiquettes,
                     editCount: req.body.editCount,
                 });
-                console.log(newProduct);
                 const cuser = await newProduct.save(function(){});
                 res.status(200).json(cuser);
 });
@@ -45,6 +44,7 @@ RawRouter.get('/:prodId', async (req, res) => {
         res.status(500).json(err);
       }
 });
+
 
 RawRouter.put('/:prodId', async (req, res) => {
   try {

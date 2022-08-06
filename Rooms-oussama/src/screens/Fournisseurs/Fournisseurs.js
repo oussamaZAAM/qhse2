@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import { MuiTelInput, isValidPhoneNumber } from 'mui-tel-input';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from "../../components/Alert/Alert";
+import { AiFillCaretDown,AiFillCaretUp } from 'react-icons/ai'
 
 export default function Fournisseur() {
     const code_four = useRef();
@@ -136,7 +137,13 @@ export default function Fournisseur() {
     })
     return(
         <main className="background vertical-center new-organism-main" >
-            <div className="container p-5 rounded">
+            <div className="container rounded">
+              <div className="row">
+        <Button href="../products" className='col-2 small '><AiFillCaretUp />Liste des produits</Button>
+        <h3 className="text-center col"></h3>
+        <Button href="../new-raw" className='col-2 small'><AiFillCaretDown />Matiere Premiere</Button>
+        </div>
+              
               <div className="row">
                 <div className=" col-9 col-sm-12 col-md-5 col-lg-6 d-flex b justify-content-center align-items-center row">
                 <h1>Liste des Fournisseurs</h1>

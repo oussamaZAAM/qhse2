@@ -28,6 +28,7 @@ ProductRouter.post('/create', async (req, res) => {
                     lipide: req.body.lipide,
                     userEtiquettes: req.body.userEtiquettes,
                     editCount: req.body.editCount,
+                
                 });
                 const cuser = await newProduct.save(function(){});
                 res.status(200).json(cuser);
@@ -36,7 +37,9 @@ ProductRouter.post('/create', async (req, res) => {
 
 ProductRouter.get('/a/:orgId', async (req, res) => {
     try {
+     
         const Products = await Product.find({organism:req.params.orgId});
+        
         res.status(200).json(Products);
       } catch (err) {
         res.status(500).json(err);
@@ -91,7 +94,9 @@ ProductRouter.put('/:prodId', async (req, res) => {
         lipide: req.body.lipide,
         userEtiquettes: req.body.userEtiquettes,
         editCount: req.body.editCount,
+        raw: req.body.raw
       });
+    
       res.status(200).json("Product has been updated");
     } catch (err) {
       res.status(500).json(err);

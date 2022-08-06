@@ -79,6 +79,9 @@ const ProductSchema = new mongoose.Schema({
   organism: {
     type: String,
   },
+  raw: {
+    type: Array,
+  },
   date: {
     type: Date,
     default: Date.now

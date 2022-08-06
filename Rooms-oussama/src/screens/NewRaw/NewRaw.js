@@ -8,7 +8,7 @@ import { FaCheckCircle,FaTimes } from 'react-icons/fa'
 import { AuthContext } from "../../Context/authContext";
 import axios from 'axios';
 import {useNavigate} from "react-router-dom"
-import Product from '../../components/Product/Product';
+import { AiFillCaretDown,AiFillCaretUp } from 'react-icons/ai'
 
 export default function NewRaw() {
     const navigate = useNavigate();
@@ -53,7 +53,10 @@ export default function NewRaw() {
         userEtiquettes: newEtiquettesData,
     }
     try{
-        await axios.post("http://localhost:5000/api/raw/create", newProduct)
+        await axios.post("http://localhost:5000/api/raw/create", newProduct);
+        const res = await axios.get("http://localhost:5000/api/product/name/"+product.product);
+        await axios.put("http://localhost:5000/api/product/"+res.data._id, {...res.data, raw:[...res.data.raw, product.name]});
+
     } catch(err){
         console.log(err)
     }
@@ -154,6 +157,11 @@ export default function NewRaw() {
     return (
     <main className="container">
         <div className="row text-center"><h1 className='text-center'>Ajouter Matiere Propre</h1></div>
+        <div className="row">
+        <Button href="../fournisseurs" className='col-2 small '><AiFillCaretUp />Liste des fournisseurs</Button>
+        <h3 className="text-center col"></h3>
+        <Button href="../zones" className='col-2 small'><AiFillCaretDown />Les zones</Button>
+        </div>
         <div className='d-flex flex-column align-items-center'>
             <Box
                 className='row d-flex justify-content-center'

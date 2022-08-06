@@ -91,7 +91,6 @@ const Product = (props) => {
     const handleProd= async () => {
         
         const res = await axios.get("http://localhost:5000/api/product/name/"+editValues.product);
-        
         navigate("../../product/"+res.data._id)
         
     }
@@ -138,6 +137,7 @@ const Product = (props) => {
     
     useEffect(() => {
         const fetchProducts = async() => {
+            console.log(props)
             const res = await axios.get("http://localhost:5000/api/raw/"+props.productId);
             setProduct(res.data);
             setEditValues({
