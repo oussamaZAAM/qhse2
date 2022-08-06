@@ -6,6 +6,7 @@ import Personnel from '../models/Personnel.js';
 
 PersonnelRouter.post('/create', async (req, res)=>{
     const newPersonnel = await new Personnel({
+        _id: req.body._id,
         nom: req.body.nom,
         prenom: req.body.prenom,
         naissance: req.body.naissance,
@@ -50,6 +51,15 @@ PersonnelRouter.get('/a/:userId', async (req, res)=>{
         const persons = await Personnel.find({user:req.params.userId});
         res.status(200).json(persons);
       } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
+PersonnelRouter.delete('/:prodId', async (req, res)=>{
+    try{
+        const deletedPersonnel = await Personnel.findByIdAndDelete({_id: req.params.prodId});
+        res.status(200).json("The organism has been deleted");
+    } catch (err) {
         res.status(500).json(err);
     }
 })

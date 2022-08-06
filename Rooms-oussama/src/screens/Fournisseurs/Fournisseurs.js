@@ -138,18 +138,17 @@ export default function Fournisseur() {
     return(
         <main className="background vertical-center new-organism-main" >
             <div className="container rounded">
-              <div className="row">
-        <Button href="../products" className='col-2 small '><AiFillCaretUp />Liste des produits</Button>
-        <h3 className="text-center col"></h3>
-        <Button href="../new-raw" className='col-2 small'><AiFillCaretDown />Matiere Premiere</Button>
-        </div>
+              <div className="row d-flex justify-content-around">
+                <Button href="../products" className='col-2 small '><AiFillCaretUp />Liste des produits</Button>
+                <h3 className="text-center col-2"></h3>
+                <div className="col-6 small d-flex justify-content-center align-items-center">
+                  <Button href="../personnel" className='col-1 small mx-3'><AiFillCaretDown />Liste des personnels</Button>
+                  <Button href="../new-raw" className='col-1 small'><AiFillCaretDown />Matiere Premiere</Button>
+                </div>
+              </div>
               
               <div className="row">
                 <div className=" col-9 col-sm-12 col-md-5 col-lg-6 d-flex b justify-content-center align-items-center row">
-                  <div className='d-flex justify-content-between w-100'>
-                      <Button href="../products" className='col-2 small mt-3'><AiFillCaretUp />Liste des produits</Button>
-                      <Button href="../personnel" className='col-2 small mt-3'><AiFillCaretDown />Liste des personnels</Button>
-                  </div>
                   <h1>Liste des Fournisseurs</h1>
                   {fournisseurs.length!==0 && (
                   <table className="table table-striped table-hover">

@@ -133,8 +133,8 @@ const Product = (props) => {
         navigate("/product/"+ previousProductId);
     }
     function navigateRight() {
-        const previousProductId = orgProducts && orgProducts[thisProductIndex+1]._id
-        navigate("/product/"+ previousProductId);
+        const nextProductId = orgProducts && orgProducts[thisProductIndex+1]._id
+        navigate("/product/"+ nextProductId);
     }
     
     useEffect(() => {
@@ -199,7 +199,7 @@ const Product = (props) => {
             </div>
         )
     })
-    const thisProductIndex = orgProducts && orgProducts.findIndex(x=> x._id === props.productId)
+  const thisProductIndex = orgProducts && orgProducts.findIndex(x=> x._id === props.productId)
   return (
     product && 
     <AnimatedPage>
