@@ -14,6 +14,7 @@ import "./App.css"
 import NewProduct from "./screens/NewProduct/NewProduct"
 import NewRaw from "./screens/NewRaw/NewRaw"
 import Product from "./screens/Product/Product"
+import Personnel from "./screens/Personnel/Personnel"
 export default function App() {
   const {user, org} = useContext(AuthContext);
   function HandleOrganism() {
@@ -55,6 +56,7 @@ export default function App() {
           <Route path="/product/:id/:isEdit" element={org?<HandleProduct />:(user?<Organisms />:<Login />)} />
           <Route path="/product/:id" element={org?<HandleProduct />:(user?<Organisms />:<Login />)} />
           <Route path="/fournisseurs" element={org?<Fournisseurs />:(user?<Organisms />:<Login />)} />
+          <Route path="/personnel" element={org?<Personnel />:(user?<Organisms />:<Login />)} />
         {/* </Route> */}
       </Routes>
     </BrowserRouter>

@@ -8,7 +8,7 @@ import Fournisseur from '../models/Fournisseur.js';
 FournisseurRouter.post('/create', async (req, res) => {
     
                 const newFournisseur = new Fournisseur({
-
+                    _id: req.body._id,
                     code_four: req.body.code_four,
                     user: req.body.user,
                     raison_soc: req.body.raison_soc,
@@ -40,9 +40,9 @@ FournisseurRouter.put("/:fourId", async (req, res) => {
   }
 })
 
-FournisseurRouter.get('/:orgId', async (req, res) => {
+FournisseurRouter.get('/:fourId', async (req, res) => {
     try {
-        const fours = await Fournisseur.findOne({_id:req.params.orgId});
+        const fours = await Fournisseur.findOne({_id:req.params.fourId});
         res.status(200).json(fours);
       } catch (err) {
         res.status(500).json(err);
@@ -51,16 +51,15 @@ FournisseurRouter.get('/:orgId', async (req, res) => {
 FournisseurRouter.get('/a/:userId', async (req, res) => {
     try {
         const fours = await Fournisseur.find({user:req.params.userId});
-        console.log(fours)
         res.status(200).json(fours);
       } catch (err) {
         res.status(500).json(err);
       }
 });
 
-FournisseurRouter.delete('/:orgId', async (req, res) => {
+FournisseurRouter.delete('/:fourId', async (req, res) => {
     try {
-        const fours = await Fournisseur.findOne({_Id:req.params.orgId});
+        const fours = await Fournisseur.findOne({_id:req.params.fourId});
         await fours.deleteOne();
         res.status(200).json("The supplier has been deleted");
       } catch (err) {
