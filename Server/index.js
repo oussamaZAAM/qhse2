@@ -5,6 +5,7 @@ import cors from 'cors';
 import userRouter from './routes/users.js';
 import OrganismRouter from "./routes/organisms.js";
 import ProductRouter from "./routes/products.js";
+import RawRouter from "./routes/raws.js";
 import FournisseurRouter from "./routes/fournisseurs.js";
 import multer from "multer"
 import path from "path";
@@ -64,6 +65,7 @@ app.use("/api/user", userRouter);
 app.use("/api/organism", OrganismRouter);
 app.use("/api/fournisseur", FournisseurRouter);
 app.use("/api/product", ProductRouter);
+app.use("/api/raw", RawRouter);
 
 const CONNECTION_URL= 'mongodb://localhost:27017/ayoub';
 const PORT = process.env.PORT || 5000;

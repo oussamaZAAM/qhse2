@@ -9,7 +9,7 @@ FournisseurRouter.post('/create', async (req, res) => {
     
                 const newFournisseur = new Fournisseur({
 
-                    code_four: req.body.code_fourn,
+                    code_four: req.body.code_four,
                     user: req.body.user,
                     raison_soc: req.body.raison_soc,
                     ville: req.body.ville,
@@ -26,7 +26,7 @@ FournisseurRouter.post('/create', async (req, res) => {
 FournisseurRouter.put("/:fourId", async (req, res) => {
   try{
     const updatedfournisseur = await Fournisseur.findByIdAndUpdate({_id: req.params.fourId},{
-        code_four: req.body.code_fourn,
+        code_four: req.body.code_four,
         user: req.body.user,
         raison_soc: req.body.raison_soc,
         ville: req.body.ville,

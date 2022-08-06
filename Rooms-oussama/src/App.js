@@ -9,8 +9,10 @@ import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import { AuthContext } from "./Context/authContext";
 import Organisms from "./screens/Organisms/Organisms";
 import Products from "./screens/Products/Products";
+import Raw from "./screens/Raw/Raw";
 import "./App.css"
 import NewProduct from "./screens/NewProduct/NewProduct"
+import NewRaw from "./screens/NewRaw/NewRaw"
 import Product from "./screens/Product/Product"
 export default function App() {
   const {user, org} = useContext(AuthContext);
@@ -27,6 +29,13 @@ export default function App() {
       <Product productId={id} isEdit={isEdit} /> 
     )
   }
+  function HandleRaw() {
+    let {name} = useParams();
+    let {isEdit} = useParams();
+    return (
+      <Raw productId={name} isEdit={isEdit} /> 
+    )
+  }
 
     return(
     <BrowserRouter>
@@ -40,7 +49,9 @@ export default function App() {
           <Route path="/new-organism" element={org?<Organism />:(user?<NewOrganism />:<Login />)} />
           <Route path="/organism/:id" element={org?<HandleOrganism />:(user?<Organisms/>:<Login />)} />
           <Route path="/new-product" element={org?<NewProduct />:(user?<Organisms/>:<Login />)} />
+          <Route path="/new-raw" element={org?<NewRaw />:(user?<Organisms/>:<Login />)} />
           <Route path="/products" element={org?<Products />:(user?<Organisms />:<Login />)} />
+          <Route path="/raw/:name" element={org?<HandleRaw />:(user?<Organisms />:<Login />)} />
           <Route path="/product/:id/:isEdit" element={org?<HandleProduct />:(user?<Organisms />:<Login />)} />
           <Route path="/product/:id" element={org?<HandleProduct />:(user?<Organisms />:<Login />)} />
           <Route path="/fournisseurs" element={org?<Fournisseurs />:(user?<Organisms />:<Login />)} />

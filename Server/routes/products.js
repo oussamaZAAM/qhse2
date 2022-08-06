@@ -44,8 +44,24 @@ ProductRouter.get('/a/:orgId', async (req, res) => {
 });
 
 ProductRouter.get('/:prodId', async (req, res) => {
-    try {
-        const product = await Product.findOne({_id:req.params.prodId});
+  try {
+    let product = await Product.findOne(
+      {_id: req.params.prodId}
+      
+      
+  );
+        res.status(200).json(product);
+      } catch (err) {
+        res.status(500).json(err);
+      }
+});
+ProductRouter.get('/name/:prodId', async (req, res) => {
+  try {
+    let product = await Product.findOne(
+      {name: req.params.prodId}
+      
+      
+  );
         res.status(200).json(product);
       } catch (err) {
         res.status(500).json(err);
