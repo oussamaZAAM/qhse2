@@ -1,0 +1,16 @@
+.profile-photo{
+    width: 150px;
+    height: 150px;
+    border: 1px solid black;
+    object-fit: cover;
+}
+.profile-upload{
+    border: 1px solid black;
+    border-radius: 50%;
+    padding: 3px;
+}
+.profile-upload:hover{
+    background-color: gray;
+    opacity: 50%;
+    cursor: pointer;
+}

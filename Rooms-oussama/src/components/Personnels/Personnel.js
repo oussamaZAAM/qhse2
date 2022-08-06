@@ -1,9 +1,10 @@
-
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import './Personnel.css'
 
 
 export default function Personnels(props) {
+    const navigate = useNavigate();
     function formatDate(date) {
       var d = new Date(date),
           month = '' + (d.getMonth() + 1),
@@ -17,10 +18,13 @@ export default function Personnels(props) {
 
       return [year, month, day].join('-');
     }
+    function handleNavigate() {
+      navigate("./" + props.id);
+    }
 
     
     return(
-            <tr className="sortable" >
+            <tr className="sortable" onClick={handleNavigate}>
               <td className="text-center">{props.num}</td>
               <td className="text-center">{props.Person.nom}</td>
               <td className="text-center">{props.Person.prenom}</td>
