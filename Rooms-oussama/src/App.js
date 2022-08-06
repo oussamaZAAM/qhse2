@@ -15,6 +15,7 @@ import "./App.css"
 import NewProduct from "./screens/NewProduct/NewProduct"
 import NewRaw from "./screens/NewRaw/NewRaw"
 import Product from "./screens/Product/Product"
+import Personnels from "./screens/Personnels/Personnels"
 import Personnel from "./screens/Personnel/Personnel"
 export default function App() {
   const {user, org} = useContext(AuthContext);
@@ -24,18 +25,25 @@ export default function App() {
       <Organism orgId={id} /> 
     )
   }
+  function HandleRaw() {
+    let {id} = useParams();
+    let {isEdit} = useParams();
+
+    return (
+      <Raw ProductId={id} isEdit={isEdit}/> 
+    )
+  }
+  function HandlePersonnel() {
+    let {id} = useParams();
+    return (
+      <Personnel personId={id} /> 
+    )
+  }
   function HandleProduct() {
     let {id} = useParams();
     let {isEdit} = useParams();
     return (
       <Product productId={id} isEdit={isEdit} /> 
-    )
-  }
-  function HandleRaw() {
-    let {name} = useParams();
-    let {isEdit} = useParams();
-    return (
-      <Raw productId={name} isEdit={isEdit} /> 
     )
   }
 
@@ -58,7 +66,8 @@ export default function App() {
           <Route path="/product/:id/:isEdit" element={org?<HandleProduct />:(user?<Organisms />:<Login />)} />
           <Route path="/product/:id" element={org?<HandleProduct />:(user?<Organisms />:<Login />)} />
           <Route path="/fournisseurs" element={org?<Fournisseurs />:(user?<Organisms />:<Login />)} />
-          <Route path="/personnel" element={org?<Personnel />:(user?<Organisms />:<Login />)} />
+          <Route path="/personnel" element={org?<Personnels />:(user?<Organisms />:<Login />)} />
+          <Route path="/personnel/:id" element={org?<HandlePersonnel />:(user?<Organisms />:<Login />)} />
         {/* </Route> */}
       </Routes>
     </BrowserRouter>

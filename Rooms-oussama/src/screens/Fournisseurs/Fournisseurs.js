@@ -146,9 +146,13 @@ export default function Fournisseur() {
               
               <div className="row">
                 <div className=" col-9 col-sm-12 col-md-5 col-lg-6 d-flex b justify-content-center align-items-center row">
-                <h1>Liste des Fournisseurs</h1>
-                {fournisseurs.length!==0 && (
-                <table className="table table-striped table-hover">
+                  <div className='d-flex justify-content-between w-100'>
+                      <Button href="../products" className='col-2 small mt-3'><AiFillCaretUp />Liste des produits</Button>
+                      <Button href="../personnel" className='col-2 small mt-3'><AiFillCaretDown />Liste des personnels</Button>
+                  </div>
+                  <h1>Liste des Fournisseurs</h1>
+                  {fournisseurs.length!==0 && (
+                  <table className="table table-striped table-hover">
                     <thead>
                       <tr>
                         <th className="text-center" scope="col-4">Numéro</th>
