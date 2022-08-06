@@ -17,7 +17,7 @@ const FournisseurSchema = new mongoose.Schema({
   },
   
   tel: {
-    type: Number,
+    type: String,
     required: true
   },
   ville: {

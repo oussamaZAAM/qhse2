@@ -14,7 +14,6 @@ import Typography from '@mui/material/Typography';
 import { MuiTelInput, isValidPhoneNumber } from 'mui-tel-input';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from "../../components/Alert/Alert";
-import { width } from "@mui/system";
 
 export default function Fournisseur() {
     const code_four = useRef();
@@ -28,7 +27,7 @@ export default function Fournisseur() {
     const [clickedFour, setClickedFour] = useState(0);
     const [editValues, setEditValues] = useState();
     const [tel, setTel] = useState('')
-    const [isTelValid, setIsTelValid] = useState(true);
+    const [isTelValid, setIsTelValid] = useState(false);
     const [openAlert, setOpenAlert] = useState([false, false, false, false]);
 
 
@@ -45,7 +44,7 @@ export default function Fournisseur() {
           const res = await axios.get("http://localhost:5000/api/fournisseur/a/" + user._id);
           setFours(res.data);
           setEditValues(res.data[clickedFour]);
-          setTel(res.data[clickedFour].tel);
+          clickedFour !==0 && setTel(res.data[clickedFour].tel);
         }
       };
       fetchFours();
@@ -84,6 +83,8 @@ export default function Fournisseur() {
                 return newFours;
               });
               setClickedFour(0);
+              setTel('');
+              setIsTelValid(false);
               setOpenAlert([true, false, false, false]);
           }catch(err){
               console.log(err)        
@@ -98,7 +99,9 @@ export default function Fournisseur() {
     const deleteFournisseur= async (e)=>{
         try{
             await axios.delete("http://localhost:5000/api/fournisseur/" + editValues._id);
-            setClickedFour(0)
+            setClickedFour(0);
+            setTel('');
+            setIsTelValid(false);
             setFours(prevArray=>{
               const deletedArray = prevArray.filter(x=>x._id !== editValues._id);
               return deletedArray;
@@ -109,6 +112,7 @@ export default function Fournisseur() {
     }
     function handleClick(num) {
       setClickedFour(num);
+      setIsTelValid(true);
       setEditValues(fours[num-1])
       setTel(fours[num-1].tel)
     }
@@ -133,7 +137,7 @@ export default function Fournisseur() {
     return(
         <main className="background vertical-center new-organism-main" >
             <div className="container p-5 rounded">
-            <div className="row">
+              <div className="row">
                 <div className=" col-9 col-sm-12 col-md-5 col-lg-6 d-flex b justify-content-center align-items-center row">
                 <h1>Liste des Fournisseurs</h1>
                 {fournisseurs.length!==0 && (
@@ -179,7 +183,10 @@ export default function Fournisseur() {
                 : (
                   <div className="col-9 col-sm-12 col-md-4 col-lg-3 register-a" style={{maxWidth: "fit-content"}}> 
                     <div className="d-flex justify-content-center m-2">
-                      <IoMdCloseCircle className="fournisseur-close" color="red" size={30} onClick={()=>setClickedFour(0)} />
+                      <IoMdCloseCircle className="fournisseur-close" color="red" size={30} onClick={()=>{
+                        setClickedFour(0);
+                        setIsTelValid(false)
+                        setTel('');}} />
                     </div>
                     <h1 className="text-prime pb-5">Fournisseur numéro: {clickedFour}</h1>
                     <form className="form-group">
@@ -217,9 +224,9 @@ export default function Fournisseur() {
                         />
                         <div className='d-flex flex-column justify-content-center align-items-end'>
                           <MuiTelInput value={tel} onChange={handleChangeTel} />
-                          <Typography>This is valid ? {isTelValid
-                             ? <b className='text-success'>yes</b>
-                             : <b className='text-danger'>no</b>}
+                          <Typography>Téléphone Valide ? {isTelValid
+                             ? <b className='text-success'>Oui</b>
+                             : <b className='text-danger'>Non</b>}
                           </Typography>
                         </div>
                         <input 
@@ -270,7 +277,7 @@ export default function Fournisseur() {
                     </Alert>
                   </Snackbar>
                 }
-            </div>
+              </div>
             </div>
         </main>
     )
