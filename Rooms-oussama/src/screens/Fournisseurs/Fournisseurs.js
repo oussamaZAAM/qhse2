@@ -142,8 +142,9 @@ export default function Fournisseur() {
                 <Button href="../products" className='col-2 small '><AiFillCaretUp />Liste des produits</Button>
                 <h3 className="text-center col-2"></h3>
                 <div className="col-6 small d-flex justify-content-center align-items-center">
-                  <Button href="../personnel" className='col-1 small mx-3'><AiFillCaretDown />Liste des personnels</Button>
-                  <Button href="../new-raw" className='col-1 small'><AiFillCaretDown />Matiere Premiere</Button>
+                  <Button href="../personnel" className='col-1 small mx-2'><AiFillCaretDown />Liste des personnels</Button>
+                  <Button href="../new-raw" className='col-1 small mx-2'><AiFillCaretDown />Matière Première</Button>
+                  <Button href="../zones" className='col-1 small'><AiFillCaretDown />Zones</Button>
                 </div>
               </div>
               

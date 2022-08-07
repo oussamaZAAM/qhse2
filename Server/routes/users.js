@@ -1,4 +1,3 @@
-
 import { Router as _Router } from 'express';
 const userRouter = _Router();
 import User from '../models/User.js'

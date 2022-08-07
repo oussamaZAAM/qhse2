@@ -17,6 +17,9 @@ import NewRaw from "./screens/NewRaw/NewRaw"
 import Product from "./screens/Product/Product"
 import Personnels from "./screens/Personnels/Personnels"
 import Personnel from "./screens/Personnel/Personnel"
+import Zones from "./screens/Zones/Zones"
+import Test from "./screens/Test"
+import Zone from "./screens/Zone/Zone"
 export default function App() {
   const {user, org} = useContext(AuthContext);
   function HandleOrganism() {
@@ -46,6 +49,12 @@ export default function App() {
       <Product productId={id} isEdit={isEdit} /> 
     )
   }
+  function HandleZone() {
+    let {id} = useParams();
+    return (
+      <Zone zoneId={id} /> 
+    )
+  }
 
     return(
     <BrowserRouter>
@@ -68,6 +77,9 @@ export default function App() {
           <Route path="/fournisseurs" element={org?<Fournisseurs />:(user?<Organisms />:<Login />)} />
           <Route path="/personnel" element={org?<Personnels />:(user?<Organisms />:<Login />)} />
           <Route path="/personnel/:id" element={org?<HandlePersonnel />:(user?<Organisms />:<Login />)} />
+          <Route path="/zones" element={org?<Zones />:(user?<Organisms />:<Login />)} />
+          <Route path="/zones/:id" element={org?<HandleZone />:(user?<Organisms />:<Login />)} />
+          <Route path="/test" element={org?<Test />:(user?<Organisms />:<Login />)} />
         {/* </Route> */}
       </Routes>
     </BrowserRouter>
