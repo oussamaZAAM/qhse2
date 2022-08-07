@@ -156,7 +156,7 @@ export default function NewRaw() {
     })
     return (
     <main className="container">
-        <div className="row text-center"><h1 className='text-center'>Ajouter Matiere Propre</h1></div>
+        <div className="row text-center"><h1 className='text-center'>Ajouter Matière Propre</h1></div>
         <div className="row">
         <Button href="../fournisseurs" className='col-2 small '><AiFillCaretUp />Liste des fournisseurs</Button>
         <h3 className="text-center col"></h3>

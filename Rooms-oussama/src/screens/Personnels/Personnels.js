@@ -93,7 +93,7 @@ const Personnel = () => {
         <div className="container p-5 rounded">
           
             <div className="row d-flex justify-content-between">
-              <Button href="../raw-recap" className='col-2 small '><AiFillCaretUp />Matiere Premiere</Button>
+              <Button href="../raw-recap" className='col-2 small '><AiFillCaretUp />Matière Première</Button>
               <h3 className="text-center col-2"></h3>
             </div>
             <div className="row">

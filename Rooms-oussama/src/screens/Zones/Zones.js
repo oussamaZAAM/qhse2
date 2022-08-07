@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import "./Zones.css"
-import { Button, Chip, FormControl, InputLabel, MenuItem, OutlinedInput, Select, TextField } from '@mui/material';
+import {  Chip, FormControl, InputLabel, MenuItem, OutlinedInput, Select, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import { BiUpload } from 'react-icons/bi';
 import axios from 'axios';
@@ -10,6 +10,7 @@ import { AuthContext } from '../../Context/authContext';
 import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai';
 import Zone from '../../components/Zone/Zone';
 import { ObjectId } from 'bson';
+import { Button } from 'react-bootstrap';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -153,8 +154,7 @@ const Zones = () => {
                 ? <div className="container">
                     <div className="row d-flex justify-content-start mx-4 mt-2">
                         <div className="col-4 small d-flex justify-content-center align-items-center">
-                            <Button href="../personnel" className='col-2 small mx-2'><AiFillCaretUp />Liste des personnels</Button>
-                            <Button href="../new-raw" className='col-2 small mx-2'><AiFillCaretUp />Matière Première</Button>
+                            <Button href="../fournisseurs" className='col-2 small mx-2'><AiFillCaretUp />Liste des Fournisseurs</Button>
                         </div>
                         <div className="text-center"><h1 className='text-center'>Nouvelle Zone</h1></div>
                     </div>
@@ -383,7 +383,7 @@ const Zones = () => {
                             </div>
                         </Box>
                     </div>
-                    <div className='m-3 d-flex justify-content-center'><Button className="btn" onClick={saveZone}>Enregistrer</Button></div>
+                    <div className='m-3 d-flex justify-content-center'><Button className="btn btn-success" onClick={saveZone}>Enregistrer</Button></div>
                     
                     <div className='text-center'>
                         <h1>Tableaux des Zones</h1>
@@ -632,7 +632,7 @@ const Zones = () => {
                             </div>
                         </Box>
                     </div>
-                    <div className='d-flex justify-content-center m-3'><Button className="btn" onClick={saveBatiment}>Enregistrer</Button></div>
+                    <div className='d-flex justify-content-center m-3'><Button className="btn btn-success" onClick={saveBatiment}>Enregistrer</Button></div>
                 </div>
             }
             

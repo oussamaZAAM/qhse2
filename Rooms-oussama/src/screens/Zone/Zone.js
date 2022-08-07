@@ -3,10 +3,10 @@ import React, { useContext, useEffect, useState } from 'react'
 import './Zone.css'
 import { Box } from '@mui/system';
 import { AuthContext } from '../../Context/authContext';
-import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { AiFillCaretUp } from 'react-icons/ai';
-
+import { Button } from 'react-bootstrap';
+// import { Button } from '@mui/material';
 
 const Zone = (props) => {
     const [zone, setZone] = useState();
@@ -116,7 +116,7 @@ const Zone = (props) => {
                             </div>}
                         </Box>
                     </div>
-                    <div className="container text-center text-danger"><Button className="btn" onClick={deleteZone}>Supprimer</Button></div>
+                    <div className="container text-center"><Button className="btn btn-danger" onClick={deleteZone}>Supprimer</Button></div>
                 </div>
         </main>
     )
