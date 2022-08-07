@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../../Context/authContext';
 import 'bootstrap/dist/css/bootstrap.css';
+import { AiFillCaretDown,AiFillCaretUp } from 'react-icons/ai'
 
 export default function OrganismPage() {
     const [prods, setProds] = useState();
@@ -54,6 +55,11 @@ export default function OrganismPage() {
     return(
         <div className='container-fluid logo'>
             <div className=' justify-content-center pb-10 pt-7'>
+            <div className="row">
+        <Button href="../fournisseurs" className='col-2 small '><AiFillCaretUp />Liste des fournisseurs</Button>
+        <h3 className="text-center col"></h3>
+        <Button href="../personnel" className='col-2 small'><AiFillCaretDown />Les personnels</Button>
+        </div>
                 <div className='row organisms-grid'>
                   {organisms.length!==0 && (
                   <div className='col-auto col-sm-auto col-md-auto'>
@@ -70,6 +76,11 @@ export default function OrganismPage() {
                     </tbody>
                   </table>
                   </div>)}
+                  <div className='d-flex  justify-content-center align-items-center'>
+                  <Link className="text-center m-2" to="../new-raw">
+                        <AiOutlinePlus size={50} style={{borderRadius: "9px", border: "3px solid"}}/>
+                  </Link>
+                </div>
                   
                 </div>
             </div>
