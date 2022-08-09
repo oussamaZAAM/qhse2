@@ -11,6 +11,7 @@ import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai';
 import Zone from '../../components/Zone/Zone';
 import { ObjectId } from 'bson';
 import { Button } from 'react-bootstrap';
+import Batiment from '../../components/Zone/Batiment';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -26,9 +27,10 @@ const MenuProps = {
 const Zones = () => {
     const [value, setValue] = useState(0);
     const { user, org } = useContext(AuthContext);
-    const id = ObjectId();
+    const zoneId = ObjectId();
+    const batimentId = ObjectId();
     const [zone, setZone] = useState({
-        _id: id.toString(),
+        _id: zoneId.toString(),
         type: 'zone',
         code: '',
         ordre: '',
@@ -50,6 +52,7 @@ const Zones = () => {
         organism: org._id
     });
     const [batiment, setBatiment] = useState({
+        _id: batimentId.toString(),
         type: 'batiment',
         libelle: '',
         code: '',
@@ -75,6 +78,8 @@ const Zones = () => {
     });
 
     const [zones, setZones] = useState([]);
+    const [batiments, setBatiments] = useState([]);
+    console.log(batiments)
     const [persons, setPersons] = useState();
 
     const handleUploadFile = async (e, type) => {
@@ -111,7 +116,10 @@ const Zones = () => {
     }
     const saveBatiment = async() => {
         try {
+            const id = ObjectId();
+            setBatiment({...batiment, _id: id.toString()})
             await axios.post("http://localhost:5000/api/zone/createBatiment", batiment)
+            setBatiments(prev =>[...prev, batiment])
         } catch (err) {
             window.alert(err.message);
         }
@@ -127,6 +135,11 @@ const Zones = () => {
             setZones(res.data)
         }
         fetchZones();
+        const fetchBatiments = async() => {
+            const res = await axios.get("http://localhost:5000/api/zone/b/" + org._id);
+            setBatiments(res.data)
+        }
+        fetchBatiments();
     }, [user._id, org._id])
     const mappedPersons = persons && persons.map(x=>{
         return (
@@ -148,6 +161,19 @@ const Zones = () => {
           />
         )
       });
+    const workBatiments = batiments !==undefined && batiments.map((x, i) =>{
+        return(
+          <Batiment
+            num={i+1}
+            key={x._id}
+            id={x._id}
+            batiment={x}
+            persons={persons}
+          />
+        )
+      });
+      console.log(batiment)
+      console.log(zone)
     return (
         <main className="container">
             {value ===0
@@ -202,7 +228,7 @@ const Zones = () => {
                                 name='responsable'
                                 onChange={(e)=>handleChange(e, 'zone')}
                             >
-                            {mappedPersons}
+                                {mappedPersons}
                             </TextField>
                             <FormControl>
                                 <InputLabel id="demo-multiple-chip-label">Equipe</InputLabel>
@@ -407,6 +433,9 @@ const Zones = () => {
                     </div>
                 </div>
                 : <div className="container">
+                <div className="col-4 small d-flex justify-content-center align-items-center">
+                        <Button href="../fournisseurs" className='col-2 small mx-2'><AiFillCaretUp />Liste des Fournisseurs</Button>
+                    </div>
                 <div className="text-center"><h1 className='text-center'>Nouveau Bâtiment</h1></div>
                     <div className="container d-flex justify-content-center">
                         <Box
@@ -462,21 +491,48 @@ const Zones = () => {
                                 onChange={(e)=>handleChange(e, 'batiment')}
                             />
                             <TextField
-                                className="col-12 col-sm-6 col-md-4 col-lg-4"
-                                id="outlined-name"
+                                id="demo-simple-select-filled"
+                                select
                                 label="Responsable"
                                 value={batiment.responsable}
                                 name='responsable'
                                 onChange={(e)=>handleChange(e, 'batiment')}
-                            />
-                            <TextField
-                                className="col-12 col-sm-6 col-md-4 col-lg-4"
-                                id="outlined-name"
-                                label="Equipe"
-                                value={batiment.equipe}
-                                name='equipe'
-                                onChange={(e)=>handleChange(e, 'batiment')}
-                            />
+                            >
+                                {mappedPersons}
+                            </TextField>
+                            <FormControl>
+                                <InputLabel id="demo-multiple-chip-label">Equipe</InputLabel>
+                                <Select
+                                    multiple
+                                    label="Equipe"
+                                    value={batiment.equipe}
+                                    name='equipe'
+                                    onChange={(e)=>handleChange(e, 'batiment')}
+                                    input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                                    renderValue={(selected) => (
+                                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                        {selected.map((value) => {
+                                            const allIds = persons && persons.map(x=>x._id);
+                                            return(
+                                                <Chip 
+                                                    key={value} 
+                                                    label={persons[allIds.indexOf(value)].nom+' '+persons[allIds.indexOf(value)].prenom} />
+                                            )
+                                        })}
+                                        </Box>
+                                    )}
+                                    MenuProps={MenuProps}
+                                >
+                                {persons && persons.map((name) => (
+                                    <MenuItem
+                                        key={name._id}
+                                        value={name._id}
+                                    >
+                                    {name.nom + " " + name.prenom}
+                                    </MenuItem>
+                                ))}
+                                </Select>
+                            </FormControl>
                             <TextField
                                 className="col-12 col-sm-6 col-md-4 col-lg-4"
                                 id="outlined-name"
@@ -633,6 +689,26 @@ const Zones = () => {
                         </Box>
                     </div>
                     <div className='d-flex justify-content-center m-3'><Button className="btn btn-success" onClick={saveBatiment}>Enregistrer</Button></div>
+                    <div className='text-center'>
+                        <h1>Tableaux des Batiments</h1>
+                        {batiments && batiments.length !==0 
+                        ? <table className="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th className="text-center" scope="col-4">Numéro</th>
+                                <th className="text-center" scope="col-4">Code</th>
+                                <th className="text-center" scope="col-4">Ordre</th>
+                                <th className="text-center" scope="col-4">Superficie</th>
+                                <th className="text-center" scope="col-4">Responsable</th>
+                                <th className="text-center" scope="col-4">Equipe</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {workBatiments}
+                        </tbody>
+                        </table>
+                        :<div className="container text-center mt-5"><h3>Tableau Vide!</h3></div>}
+                    </div>
                 </div>
             }
             

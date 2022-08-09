@@ -8,7 +8,6 @@ export default function Zone(props) {
       navigate("./" + props.id);
     }
     const allIds = props.persons && props.persons.map(x=>x._id);
-    
     return(
             <tr className="sortable" onClick={handleNavigate}>
               <td className="text-center">{props.num}</td>

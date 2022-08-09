@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import './Personnel.css'
 
 
 export default function Batiment(props) {
@@ -8,17 +7,15 @@ export default function Batiment(props) {
     function handleNavigate() {
       navigate("./" + props.id);
     }
-
-    
+    const allIds = props.persons && props.persons.map(x=>x._id);
     return(
             <tr className="sortable" onClick={handleNavigate}>
               <td className="text-center">{props.num}</td>
-              <td className="text-center">{props.Person.nom}</td>
-              <td className="text-center">{props.Person.prenom}</td>
-              <td className="text-center">{formatDate(props.Person.naissance)}</td>
-              <td className="text-center">{props.Person.cin}</td>
-              <td className="text-center">{props.Person.metier}</td>
-              <td className="text-center">{props.Person.zone_affecte}</td>
+              <td className="text-center">{props.batiment.code}</td>
+              <td className="text-center">{props.batiment.ordre}</td>
+              <td className="text-center">{props.batiment.superficie}</td>
+              <td className="text-center">{props.persons[allIds.indexOf(props.batiment.responsable)].nom+' '+props.persons[allIds.indexOf(props.batiment.responsable)].prenom}</td>
+              <td className="text-center">{props.persons[allIds.indexOf(props.batiment.equipe[0])].nom+' '+props.persons[allIds.indexOf(props.batiment.equipe[0])].prenom+', ...'}</td>
             </tr>
     )
 }
