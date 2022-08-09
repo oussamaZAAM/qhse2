@@ -20,6 +20,7 @@ ZoneRouter.post("/createZone", async(req, res) => {
 })
 ZoneRouter.post("/createBatiment", async(req, res) => {
     const newBatiment = new Zone({
+        _id: req.body._id,
         type: req.body.type,
         libelle: req.body.libelle,
         code: req.body.code,
@@ -37,8 +38,16 @@ ZoneRouter.post("/createBatiment", async(req, res) => {
 })
 ZoneRouter.get("/z/:orgId", async(req, res) => {
     try{
-        const zones = await Zone.find({organism: req.params.orgId});
+        const zones = await Zone.find({organism: req.params.orgId, type: 'zone'});
         res.status(200).send(zones);
+    } catch(err){
+        res.status(500).json(err.message);
+    }
+})
+ZoneRouter.get("/b/:orgId", async(req, res) => {
+    try{
+        const batiments = await Zone.find({organism: req.params.orgId, type: 'batiment'});
+        res.status(200).send(batiments);
     } catch(err){
         res.status(500).json(err.message);
     }
@@ -46,7 +55,7 @@ ZoneRouter.get("/z/:orgId", async(req, res) => {
 ZoneRouter.get("/:zoneId", async(req, res) => {
     try{
         const zone = await Zone.findOne({_id: req.params.zoneId});
-        res.status(200).send(zone);
+        res.status(200).json(zone);
     } catch(err){
         res.status(500).json(err.message);
     }
