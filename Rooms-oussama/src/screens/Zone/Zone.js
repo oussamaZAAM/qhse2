@@ -7,21 +7,33 @@ import { useNavigate } from 'react-router-dom';
 import { AiFillCaretUp } from 'react-icons/ai';
 import { Button } from 'react-bootstrap';
 import { BiDownload } from 'react-icons/bi';
+import { Alert, Snackbar } from '@mui/material';
 // import { Button } from '@mui/material';
 
 const Zone = (props) => {
     const [zone, setZone] = useState();
-    const [batiment, setBatiment] = useState();
 
     const [persons, setPersons] = useState();
     const allIds = persons && persons.map(x=>x._id);
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
+    
+    const [openAlert, setOpenAlert] = useState([false, false]);
+
+    const handleCloseAlert = (event, reason) => {
+        if (reason === 'clickaway') {
+        return;
+        }
+        setOpenAlert(false);
+    };
 
     const deleteZone = async() => {
         try{
-            await axios.delete("http://localhost:5000/api/zone/" + props.zoneId);
-            navigate("../zones")
+            setOpenAlert(true);
+            if (window.confirm("Etes-vous sûr que vous voulez Supprimer ?")){
+                await axios.delete("http://localhost:5000/api/zone/" + props.zoneId);
+                navigate("../zones")
+            }
         } catch(err) {
             window.alert(err.message);
         }
@@ -147,6 +159,13 @@ const Zone = (props) => {
                     </div>
                     <div className="container text-center"><Button className="btn btn-danger" onClick={deleteZone}>Supprimer</Button></div>
                 </div>
+                {openAlert && 
+                    <Snackbar sx={{width: '35%'}} open={true} autoHideDuration={1500} onClose={handleCloseAlert}>
+                    <Alert onClose={handleCloseAlert} severity="warning" sx={{ width: '100%' }}>
+                        Suppression Annulée!
+                    </Alert>
+                    </Snackbar>
+                }
         </main>
     )
 }

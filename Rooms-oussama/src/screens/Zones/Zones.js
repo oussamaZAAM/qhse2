@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import "./Zones.css"
-import {  Chip, FormControl, InputLabel, MenuItem, OutlinedInput, Select, TextField } from '@mui/material';
+import {  Alert, Chip, FormControl, InputLabel, MenuItem, OutlinedInput, Select, Snackbar, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import { BiUpload } from 'react-icons/bi';
 import axios from 'axios';
@@ -79,8 +79,15 @@ const Zones = () => {
 
     const [zones, setZones] = useState([]);
     const [batiments, setBatiments] = useState([]);
-    console.log(batiments)
     const [persons, setPersons] = useState();
+    const [openAlert, setOpenAlert] = useState([false, false]);
+
+    const handleCloseAlert = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenAlert([false, false]);
+    };
 
     const handleUploadFile = async (e, type) => {
         const pic=e.target.files[0];
@@ -107,9 +114,14 @@ const Zones = () => {
     const saveZone = async() => {
         try {
             const id = ObjectId();
-            setZone({...zone, _id: id.toString()})
-            await axios.post("http://localhost:5000/api/zone/createZone", zone)
-            setZones(prev =>[...prev, zone])
+            if (Object.keys(zone).every(x=>zone[x] !== '' && zone[x].length !==0 )){
+                setZone({...zone, _id: id.toString()})
+                await axios.post("http://localhost:5000/api/zone/createZone", zone)
+                setZones(prev =>[...prev, zone])
+                setOpenAlert([true, false]);
+            } else {
+                setOpenAlert([false, true]);
+            }
         } catch (err) {
             window.alert(err.message);
         }
@@ -117,9 +129,13 @@ const Zones = () => {
     const saveBatiment = async() => {
         try {
             const id = ObjectId();
-            setBatiment({...batiment, _id: id.toString()})
-            await axios.post("http://localhost:5000/api/zone/createBatiment", batiment)
-            setBatiments(prev =>[...prev, batiment])
+            if (Object.keys(batiment).every(x=>batiment[x] !== '' && batiment[x].length !==0 )){
+                setBatiment({...batiment, _id: id.toString()})
+                await axios.post("http://localhost:5000/api/zone/createBatiment", batiment)
+                setBatiments(prev =>[...prev, batiment])
+                setOpenAlert([true, false]);
+            } else {
+                setOpenAlert([false, true]);}
         } catch (err) {
             window.alert(err.message);
         }
@@ -172,8 +188,16 @@ const Zones = () => {
           />
         )
       });
-      console.log(batiment)
-      console.log(zone)
+      const [blurredZone, setblurredZone] = useState();
+      const [blurredBatiment, setblurredBatiment] = useState();
+
+      const handleBlur = (e, type) => {
+        if (type === 'zone') {
+            setblurredZone({...blurredZone, [e.name]: true});
+        } else {
+            setblurredBatiment({...blurredBatiment, [e.name]: true});
+        }
+      }
     return (
         <main className="container">
             {value ===0
@@ -197,6 +221,9 @@ const Zones = () => {
                         >
                             <TextField
                                 className="col-12 col-sm-6 col-md-4 col-lg-4"
+                                required
+                                onBlur={(e)=>handleBlur(e.target, 'zone')}
+                                error={blurredZone && blurredZone.code && zone.code === ''}
                                 id="outlined-name"
                                 label="Codification Zone"
                                 value={zone.code}
@@ -205,6 +232,9 @@ const Zones = () => {
                             />
                             <TextField
                                 className="col-12 col-sm-6 col-md-4 col-lg-4"
+                                required
+                                onBlur={(e)=>handleBlur(e.target, 'zone')}
+                                error={blurredZone && blurredZone.ordre && zone.ordre === ''}
                                 id="outlined-name"
                                 label="Ordre"
                                 value={zone.ordre}
@@ -213,6 +243,9 @@ const Zones = () => {
                             />
                             <TextField
                                 className="col-12 col-sm-6 col-md-4 col-lg-4"
+                                required
+                                onBlur={(e)=>handleBlur(e.target, 'zone')}
+                                error={blurredZone && blurredZone.superficie && zone.superficie === ''}
                                 id="outlined-name"
                                 type='number'
                                 label="Superficie"
@@ -222,6 +255,9 @@ const Zones = () => {
                             />
                             <TextField
                                 id="demo-simple-select-filled"
+                                required
+                                onBlur={(e)=>handleBlur(e.target, 'zone')}
+                                error={blurredZone && blurredZone.responsable && zone.responsable === ''}
                                 select
                                 label='Responsable'
                                 value={zone.responsable}
@@ -231,10 +267,12 @@ const Zones = () => {
                                 {mappedPersons}
                             </TextField>
                             <FormControl>
-                                <InputLabel id="demo-multiple-chip-label">Equipe</InputLabel>
+                                <InputLabel id="demo-multiple-chip-label">Equipe *</InputLabel>
                                 <Select
                                     multiple
-                                    label="Equipe"
+                                    onBlur={(e)=>handleBlur(e.target, 'zone')}
+                                    error={blurredZone && blurredZone.equipe && zone.equipe.length === 0}
+                                    label="Equipe *"
                                     value={zone.equipe}
                                     name='equipe'
                                     onChange={(e)=>handleChange(e, 'zone')}
@@ -435,7 +473,7 @@ const Zones = () => {
                 : <div className="container">
                 <div className="col-4 small d-flex justify-content-center align-items-center">
                         <Button href="../fournisseurs" className='col-2 small mx-2'><AiFillCaretUp />Liste des Fournisseurs</Button>
-                    </div>
+                    </div> 
                 <div className="text-center"><h1 className='text-center'>Nouveau Bâtiment</h1></div>
                     <div className="container d-flex justify-content-center">
                         <Box
@@ -450,6 +488,9 @@ const Zones = () => {
                         >
                             <TextField
                                 className="col-12 col-sm-6 col-md-4 col-lg-4"
+                                required
+                                onBlur={(e)=>handleBlur(e.target, 'batiment')}
+                                error={blurredBatiment && blurredBatiment.libelle && batiment.libelle === ''}
                                 id="outlined-name"
                                 label="Libelle Bâtiments"
                                 value={batiment.libelle}
@@ -458,6 +499,9 @@ const Zones = () => {
                             />
                             <TextField
                                 className="col-12 col-sm-6 col-md-4 col-lg-4"
+                                required
+                                onBlur={(e)=>handleBlur(e.target, 'batiment')}
+                                error={blurredBatiment && blurredBatiment.code && batiment.code === ''}
                                 id="outlined-name"
                                 label="Codification Zone"
                                 value={batiment.code}
@@ -466,6 +510,9 @@ const Zones = () => {
                             />
                             <TextField
                                 className="col-12 col-sm-6 col-md-4 col-lg-4"
+                                required
+                                onBlur={(e)=>handleBlur(e.target, 'batiment')}
+                                error={blurredBatiment && blurredBatiment.ordre && batiment.ordre === ''}
                                 id="outlined-name"
                                 label="Ordre"
                                 value={batiment.ordre}
@@ -474,6 +521,9 @@ const Zones = () => {
                             />
                             <TextField
                                 className="col-12 col-sm-6 col-md-4 col-lg-4"
+                                required
+                                onBlur={(e)=>handleBlur(e.target, 'batiment')}
+                                error={blurredBatiment && blurredBatiment.superficie && batiment.superficie === ''}
                                 id="outlined-name"
                                 type='number'
                                 label="Superficie"
@@ -483,6 +533,9 @@ const Zones = () => {
                             />
                             <TextField
                                 className="col-12 col-sm-6 col-md-4 col-lg-4"
+                                required
+                                onBlur={(e)=>handleBlur(e.target, 'batiment')}
+                                error={blurredBatiment && blurredBatiment.nbr_niveau && batiment.nbr_niveau === ''}
                                 id="outlined-name"
                                 type='number'
                                 label="Nombre du niveaux"
@@ -492,6 +545,9 @@ const Zones = () => {
                             />
                             <TextField
                                 id="demo-simple-select-filled"
+                                required
+                                onBlur={(e)=>handleBlur(e.target, 'batiment')}
+                                error={blurredBatiment && blurredBatiment.responsable && batiment.responsable === ''}
                                 select
                                 label="Responsable"
                                 value={batiment.responsable}
@@ -501,10 +557,12 @@ const Zones = () => {
                                 {mappedPersons}
                             </TextField>
                             <FormControl>
-                                <InputLabel id="demo-multiple-chip-label">Equipe</InputLabel>
+                                <InputLabel id="demo-multiple-chip-label">Equipe *</InputLabel>
                                 <Select
                                     multiple
-                                    label="Equipe"
+                                    onBlur={(e)=>handleBlur(e.target, 'batiment')}
+                                    error={blurredBatiment && blurredBatiment.equipe && batiment.equipe.length === 0}
+                                    label="Equipe *"
                                     value={batiment.equipe}
                                     name='equipe'
                                     onChange={(e)=>handleChange(e, 'batiment')}
@@ -535,6 +593,9 @@ const Zones = () => {
                             </FormControl>
                             <TextField
                                 className="col-12 col-sm-6 col-md-4 col-lg-4"
+                                required
+                                onBlur={(e)=>handleBlur(e.target, 'batiment')}
+                                error={blurredBatiment && blurredBatiment.atex && batiment.atex === ''}
                                 id="outlined-name"
                                 type='number'
                                 label="Atex Numero"
@@ -717,13 +778,28 @@ const Zones = () => {
                     showLabels
                     value={value}
                     onChange={(event, newValue) => {
-                    setValue(newValue);
+                        setValue(newValue);
+                        handleCloseAlert();
                     }}
                 >
                     <BottomNavigationAction label="Zones"  />
                     <BottomNavigationAction label="Bâtiments"  />
                 </BottomNavigation>
             </div>
+            {openAlert[0] && 
+                <Snackbar sx={{width: '35%'}} open={true} autoHideDuration={2000} onClose={handleCloseAlert}>
+                <Alert onClose={handleCloseAlert} severity="success" sx={{ width: '100%' }}>
+                    Ajout Validé
+                </Alert>
+                </Snackbar>
+            }
+            {openAlert[1] && 
+                <Snackbar sx={{width: '35%'}} open={true} autoHideDuration={3000} onClose={handleCloseAlert}>
+                <Alert onClose={handleCloseAlert} severity="warning" sx={{ width: '100%' }}>
+                    Veuillez Entrer les champs nécessaire!
+                </Alert >
+                </Snackbar>
+            }
         </main>
     )
 }

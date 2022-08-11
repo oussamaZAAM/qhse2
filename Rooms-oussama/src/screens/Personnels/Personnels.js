@@ -6,7 +6,8 @@ import { FaTimes } from 'react-icons/fa';
 import { AuthContext } from '../../Context/authContext';
 import Personnels from '../../components/Personnels/Personnel';
 import { ObjectId } from 'bson';
-import { Alert, Snackbar } from '@mui/material'
+import { Alert, Box, Skeleton, Snackbar } from '@mui/material'
+import './Personnels.css'
 
 const Personnel = () => {
   const nom = useRef();
@@ -99,7 +100,7 @@ const Personnel = () => {
             <div className="row">
                 <div className=" col-9 col-sm-12 col-md-5 col-lg-6 d-flex b justify-content-center align-items-center row">
                   <h1>Liste des Personnels</h1>
-                  {persons && persons.length !==0 && <table className="table table-striped table-hover">
+                  <table className="table table-striped table-hover">
                     <thead>
                       <tr>
                         <th className="text-center" scope="col-4">Numéro</th>
@@ -111,10 +112,22 @@ const Personnel = () => {
                         <th className="text-center" scope="col-4">Zone affecté</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      {personnels}
+                   <tbody>
+                    {persons 
+                      ? personnels.length!==0
+                        ? personnels
+                        : <h3>Vide!</h3>
+                      : <tr className="sortable">
+                          <td className="text-center"><Skeleton animation="wave" /></td>
+                          <td className="text-center"><Skeleton animation="wave" /></td>
+                          <td className="text-center"><Skeleton animation="wave" /></td>
+                          <td className="text-center"><Skeleton animation="wave" /></td>
+                          <td className="text-center"><Skeleton animation="wave" /></td>
+                          <td className="text-center"><Skeleton animation="wave" /></td>
+                          <td className="text-center"><Skeleton animation="wave" /></td>
+                        </tr>}
                     </tbody>
-                  </table>}
+                  </table>
                 </div>
                 <div className="col-9 col-sm-12 col-md-4 col-lg-3 register-a" style={{maxWidth: "fit-content"}}>
                     <h1 className="text-prime pb-5">Ajouter un Personnel</h1>
