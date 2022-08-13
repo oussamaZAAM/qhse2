@@ -8,7 +8,7 @@ import { AuthContext } from '../../Context/authContext';
 import 'bootstrap/dist/css/bootstrap.css';
 import { FaFilter, FaSort } from 'react-icons/fa';
 import { IoMdArrowDropupCircle, IoMdArrowDropdownCircle, IoMdArrowDropup, IoMdArrowDropdown } from 'react-icons/io';
-import { Chip, MenuItem, Slider, TextField } from '@mui/material';
+import { Chip, MenuItem, Skeleton, Slider, TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 
 export default function Products() {
@@ -159,8 +159,6 @@ export default function Products() {
         window.alert('Choisir une variable!')
       }
     }
-    
-    if(prods!==undefined){
       return(
           <div class="wrapper">
             <div class="container">
@@ -297,7 +295,14 @@ export default function Products() {
                 )}
               </div>
               <div class="row g-1">
-                {products}
+                {prods
+                  ? products
+                  : <>
+                    <Skeleton animation='wave' className="col-md-6 col-lg-4 col-xl-3 mx-3" variant="rectangular" width={275} height={150} />
+                    <Skeleton animation='wave' className="col-md-6 col-lg-4 col-xl-3 mx-3" variant="rectangular" width={275} height={150} />
+                    <Skeleton animation='wave' className="col-md-6 col-lg-4 col-xl-3 mx-3" variant="rectangular" width={275} height={150} />
+                    <Skeleton animation='wave' className="col-md-6 col-lg-4 col-xl-3 mx-3" variant="rectangular" width={275} height={150} />
+                  </>}
                 <div className='d-flex  justify-content-center align-items-center'>
                   <Link className="text-center m-2" to="../new-product">
                         <AiOutlinePlus size={50} style={{borderRadius: "9px", border: "3px solid"}}/>
@@ -307,7 +312,4 @@ export default function Products() {
             </div>
           </div>
       )
-    }else{
-        return null
-    }
 }
