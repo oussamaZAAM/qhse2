@@ -12,6 +12,7 @@ import multer from "multer"
 import path from "path";
 import {fileURLToPath} from 'url';
 import ZoneRouter from "./routes/zones.js";
+import EquipementRouter from "./routes/Equipements.js";
 
 const __filename = fileURLToPath(import.meta.url);
 //__dirname sert a donne le path au root en dependant sur la machine locale dont on execute ce code.
@@ -70,6 +71,7 @@ app.use("/api/product", ProductRouter);
 app.use("/api/raw", RawRouter);
 app.use("/api/personnel", PersonnelRouter);
 app.use("/api/zone", ZoneRouter);
+app.use("/api/equipement", EquipementRouter);
 const CONNECTION_URL= 'mongodb://localhost:27017/ayoub';
 const PORT = process.env.PORT || 5000;
 

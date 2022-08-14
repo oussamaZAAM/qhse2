@@ -203,8 +203,9 @@ const Zones = () => {
             {value ===0
                 ? <div className="container">
                     <div className="row d-flex justify-content-start mx-4 mt-2">
-                        <div className="col-4 small d-flex justify-content-center align-items-center">
+                        <div className="d-flex justify-content-between align-items-center">
                             <Button href="../fournisseurs" className='col-2 small mx-2'><AiFillCaretUp />Liste des Fournisseurs</Button>
+                            <Button href="../equipements" className='col-2 small mx-2'><AiFillCaretDown />Liste des Equipements</Button>
                         </div>
                         <div className="text-center"><h1 className='text-center'>Nouvelle Zone</h1></div>
                     </div>

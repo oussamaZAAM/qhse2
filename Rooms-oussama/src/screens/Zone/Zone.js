@@ -5,10 +5,10 @@ import { Box } from '@mui/system';
 import { AuthContext } from '../../Context/authContext';
 import { useNavigate } from 'react-router-dom';
 import { AiFillCaretUp } from 'react-icons/ai';
-import { Button } from 'react-bootstrap';
+// import { Button } from 'react-bootstrap';
 import { BiDownload } from 'react-icons/bi';
 import { Alert, Snackbar } from '@mui/material';
-// import { Button } from '@mui/material';
+import { Button } from '@mui/material';
 
 const Zone = (props) => {
     const [zone, setZone] = useState();
@@ -157,7 +157,7 @@ const Zone = (props) => {
                             </div>}
                         </Box>
                     </div>
-                    <div className="container text-center"><Button className="btn btn-danger" onClick={deleteZone}>Supprimer</Button></div>
+                    <div className="container text-center"><Button className="btn text-danger" onClick={deleteZone}>Supprimer</Button></div>
                 </div>
                 {openAlert && 
                     <Snackbar sx={{width: '35%'}} open={true} autoHideDuration={1500} onClose={handleCloseAlert}>

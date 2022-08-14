@@ -20,6 +20,7 @@ import Personnel from "./screens/Personnel/Personnel"
 import Zones from "./screens/Zones/Zones"
 import Test from "./screens/Test"
 import Zone from "./screens/Zone/Zone"
+import { Equipements } from "./screens/Equipements/Equipements"
 export default function App() {
   const {user, org} = useContext(AuthContext);
   function HandleOrganism() {
@@ -80,6 +81,7 @@ export default function App() {
           <Route path="/personnel/:id" element={org?<HandlePersonnel />:(user?<Organisms />:<Login />)} />
           <Route path="/zones" element={org?<Zones />:(user?<Organisms />:<Login />)} />
           <Route path="/zones/:id" element={org?<HandleZone />:(user?<Organisms />:<Login />)} />
+          <Route path="/equipements" element={org?<Equipements />:(user?<Organisms />:<Login />)} />
           <Route path="/test" element={org?<Test />:(user?<Organisms />:<Login />)} />
         {/* </Route> */}
       </Routes>
