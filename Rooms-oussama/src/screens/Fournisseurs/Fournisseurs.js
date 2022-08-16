@@ -15,6 +15,7 @@ import { MuiTelInput, isValidPhoneNumber } from 'mui-tel-input';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from "../../components/Alert/Alert";
 import { AiFillCaretDown,AiFillCaretUp } from 'react-icons/ai'
+import { Skeleton } from "@mui/material";
 
 export default function Fournisseur() {
     const code_four = useRef();
@@ -164,7 +165,18 @@ export default function Fournisseur() {
                       </tr>
                     </thead>
                     <tbody>
-                      {fournisseurs}
+                      {fours !== undefined 
+                        ? fournisseurs
+                        : <tr className="sortable">
+                            <td className="text-center"><Skeleton animation="wave" /></td>
+                            <td className="text-center"><Skeleton animation="wave" /></td>
+                            <td className="text-center"><Skeleton animation="wave" /></td>
+                            <td className="text-center"><Skeleton animation="wave" /></td>
+                            <td className="text-center"><Skeleton animation="wave" /></td>
+                            <td className="text-center"><Skeleton animation="wave" /></td>
+                            <td className="text-center"><Skeleton animation="wave" /></td>
+                          </tr>
+                      }
                     </tbody>
                   </table>
                 )}

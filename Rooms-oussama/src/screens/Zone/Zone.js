@@ -7,8 +7,10 @@ import { useNavigate } from 'react-router-dom';
 import { AiFillCaretUp } from 'react-icons/ai';
 // import { Button } from 'react-bootstrap';
 import { BiDownload } from 'react-icons/bi';
-import { Alert, Snackbar } from '@mui/material';
+// import { Alert, Snackbar } from '@mui/material';
 import { Button } from '@mui/material';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from "../../components/Alert/Alert";
 
 const Zone = (props) => {
     const [zone, setZone] = useState();
@@ -29,10 +31,12 @@ const Zone = (props) => {
 
     const deleteZone = async() => {
         try{
-            setOpenAlert(true);
             if (window.confirm("Etes-vous sûr que vous voulez Supprimer ?")){
+                setOpenAlert([false, true]);
                 await axios.delete("http://localhost:5000/api/zone/" + props.zoneId);
                 navigate("../zones")
+            } else {
+                setOpenAlert([true, false]);
             }
         } catch(err) {
             window.alert(err.message);
@@ -159,10 +163,17 @@ const Zone = (props) => {
                     </div>
                     <div className="container text-center"><Button className="btn text-danger" onClick={deleteZone}>Supprimer</Button></div>
                 </div>
-                {openAlert && 
-                    <Snackbar sx={{width: '35%'}} open={true} autoHideDuration={1500} onClose={handleCloseAlert}>
+                {openAlert[0] && 
+                    <Snackbar sx={{width: '35%'}} open={true} autoHideDuration={2000} onClose={handleCloseAlert}>
                     <Alert onClose={handleCloseAlert} severity="warning" sx={{ width: '100%' }}>
-                        Suppression Annulée!
+                        Suppression Annulée !
+                    </Alert>
+                    </Snackbar>
+                }
+                {openAlert[1] && 
+                    <Snackbar sx={{width: '35%'}} open={true} autoHideDuration={1000} onClose={handleCloseAlert}>
+                    <Alert onClose={handleCloseAlert} severity="error" sx={{ width: '100%' }}>
+                        L'élément est supprimé !
                     </Alert>
                     </Snackbar>
                 }

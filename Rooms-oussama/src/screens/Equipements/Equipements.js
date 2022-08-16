@@ -1,4 +1,4 @@
-import { Alert, Snackbar } from '@mui/material';
+import { Alert, BottomNavigation, BottomNavigationAction, Snackbar } from '@mui/material';
 import axios from 'axios';
 import { ObjectId } from 'bson';
 import React, { useContext, useEffect, useRef, useState } from 'react'
@@ -19,6 +19,7 @@ export const Equipements = () => {
     const batiment = useRef();
     const { user, org } = useContext(AuthContext);
 
+    const [value, setValue] = useState(0);
     const [equips, setEquips] = useState();
     const [clickedEq, setClickedEq] = useState(0);
     const [editValues, setEditValues] = useState();
@@ -146,7 +147,7 @@ export const Equipements = () => {
 
                 <div className="row">
                     <div className=" col-9 col-sm-12 col-md-5 col-lg-6 d-flex b justify-content-center align-items-center row">
-                        <h1>Liste des Equipements <small>{equipements.length === 0 && " : Vide"}</small></h1>
+                        <h1>Liste des {value === 0 ? "Equipements" : value === 1 ? "Materiels" : "Logistiques"} <small>{equipements.length === 0 && " : Vide"}</small></h1>
                         {equipements.length !== 0 &&
                             <table className="table table-striped table-hover">
                             <thead>
@@ -175,14 +176,14 @@ export const Equipements = () => {
                             <input className="form-control m-2" placeholder="Numéro d'Inventaire" ref={num_inventaire} />
                             <input className="form-control m-2" placeholder="Zone" ref={zone} />
                             <div className="form-control m-2 d-flex align-items-center">
-                                <input readOnly={true} className="form-control m-2" value={editValues && editValues.fiche_technique.slice(13)} placeholder="Fiche Technique" ref={fiche_technique} />
+                                <input readOnly={true} className="form-control m-2" value={editValues && editValues.fiche_technique} placeholder="Fiche Technique" ref={fiche_technique} />
                                 <label variant="contained" component="label" >
                                     <input hidden type="file" id="fiche_technique" onChange={(e) => handleUploadFile(e)} />
                                     <BiUpload style={{cursor: 'pointer', marginLeft:"10px"}} size={20}/>
                                 </label>
                             </div>
                             <div className="form-control m-2 d-flex align-items-center">
-                                <input readOnly={true} className="form-control m-2" value={editValues && editValues.fds.slice(13)} placeholder="FDS" ref={fds} />
+                                <input readOnly={true} className="form-control m-2" value={editValues && editValues.fds} placeholder="FDS" ref={fds} />
                                 <label variant="contained" component="label" >
                                     <input hidden type="file" id="fds" onChange={(e) => handleUploadFile(e)} />
                                     <BiUpload style={{cursor: 'pointer', marginLeft:"10px"}} size={20}/>
@@ -285,6 +286,20 @@ export const Equipements = () => {
                         </Alert>
                     </Snackbar>
                     }
+                </div>
+                <div className='container w-100 d-flex flex-column align-items-center navigation'>
+                    <BottomNavigation
+                        showLabels
+                        value={value}
+                        onChange={(event, newValue) => {
+                            setValue(newValue);
+                            handleCloseAlert();
+                        }}
+                    >
+                        <BottomNavigationAction label="Equipements"  />
+                        <BottomNavigationAction label="Matériels"  />
+                        <BottomNavigationAction label="Logistiques"  />
+                    </BottomNavigation>
                 </div>
             </div>
         </main>
