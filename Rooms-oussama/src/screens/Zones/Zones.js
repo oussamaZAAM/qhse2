@@ -3,7 +3,6 @@ import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import "./Zones.css"
 import {  Alert, Chip, FormControl, InputLabel, MenuItem, OutlinedInput, Select, Skeleton, Snackbar, TextField } from '@mui/material';
-import { Box } from '@mui/system';
 import { BiUpload } from 'react-icons/bi';
 import axios from 'axios';
 import { AuthContext } from '../../Context/authContext';
@@ -12,6 +11,9 @@ import Zone from '../../components/Zone/Zone';
 import { ObjectId } from 'bson';
 import { Button } from 'react-bootstrap';
 import Batiment from '../../components/Zone/Batiment';
+import Fade from '@mui/material/Fade';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -81,6 +83,7 @@ const Zones = () => {
     const [batiments, setBatiments] = useState([]);
     const [persons, setPersons] = useState();
     const [openAlert, setOpenAlert] = useState([false, false]);
+    const [loading, setLoading] = useState(false);
 
     const handleCloseAlert = (event, reason) => {
         if (reason === 'clickaway') {
@@ -90,6 +93,7 @@ const Zones = () => {
     };
 
     const handleUploadFile = async (e, type) => {
+        setLoading(true);
         const pic=e.target.files[0];
         const data = new FormData();
         const fileName = Date.now() + pic.name;
@@ -103,6 +107,7 @@ const Zones = () => {
         } else {
             setBatiment({...batiment, flux: {...zone.flux, [e.target.id]: fileName}})
         }
+        setLoading(false);
     }
     const handleChange = (event, type) => {
         if(type === 'zone') {
@@ -112,6 +117,7 @@ const Zones = () => {
         }
     };
     const saveZone = async() => {
+        setLoading(true);
         try {
             const id = ObjectId();
             if (Object.keys(zone).every(x=>zone[x] !== '' && zone[x].length !==0 )){
@@ -125,8 +131,10 @@ const Zones = () => {
         } catch (err) {
             window.alert(err.message);
         }
+        setLoading(false);
     }
     const saveBatiment = async() => {
+        setLoading(true);
         try {
             const id = ObjectId();
             if (Object.keys(batiment).every(x=>batiment[x] !== '' && batiment[x].length !==0 )){
@@ -139,6 +147,7 @@ const Zones = () => {
         } catch (err) {
             window.alert(err.message);
         }
+        setLoading(false);
     }
     useEffect(()=>{
         const fetchPersons = async() => {
@@ -202,6 +211,18 @@ const Zones = () => {
         <main className="container">
             {value ===0
                 ? <div className="container">
+                    <Box sx={{ height: 40 }}>
+                        <Fade
+                            className="loading"
+                            in={loading}
+                            style={{
+                            transitionDelay: loading ? '800ms' : '0ms',
+                            }}
+                            unmountOnExit
+                        >
+                            <CircularProgress />
+                        </Fade>
+                    </Box>
                     <div className="row d-flex justify-content-start mx-4 mt-2">
                         <div className="d-flex justify-content-between align-items-center">
                             <Button href="../fournisseurs" className='col-2 small mx-2'><AiFillCaretUp />Liste des Fournisseurs</Button>

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import './Zone.css'
-import { Box } from '@mui/system';
 import { AuthContext } from '../../Context/authContext';
 import { useNavigate } from 'react-router-dom';
 import { AiFillCaretUp } from 'react-icons/ai';
@@ -11,6 +10,9 @@ import { BiDownload } from 'react-icons/bi';
 import { Button } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from "../../components/Alert/Alert";
+import Fade from '@mui/material/Fade';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 const Zone = (props) => {
     const [zone, setZone] = useState();
@@ -21,6 +23,7 @@ const Zone = (props) => {
     const navigate = useNavigate();
     
     const [openAlert, setOpenAlert] = useState([false, false]);
+    const [loading, setLoading] = useState(false);
 
     const handleCloseAlert = (event, reason) => {
         if (reason === 'clickaway') {
@@ -30,6 +33,7 @@ const Zone = (props) => {
     };
 
     const deleteZone = async() => {
+        setLoading(true);
         try{
             if (window.confirm("Etes-vous sûr que vous voulez Supprimer ?")){
                 setOpenAlert([false, true]);
@@ -41,6 +45,7 @@ const Zone = (props) => {
         } catch(err) {
             window.alert(err.message);
         }
+        setLoading(false);
     }
     const handleDownload = async(e) => {
         await axios.get("http://localhost:5000/api/download/"+zone.flux[e.target.id]);
@@ -59,9 +64,21 @@ const Zone = (props) => {
         fetchZone();
     }, [props.zoneId])
     const transformedPersonnel = zone && zone.equipe.map(x=>persons[allIds.indexOf(x)].nom+' '+persons[allIds.indexOf(x)].prenom);
-    return zone !== undefined && (
+    return zone !== undefined ? (
         <main className="container">
             <div className="container">
+                    <Box sx={{ height: 40 }}>
+                        <Fade
+                            className="loading"
+                            in={loading}
+                            style={{
+                            transitionDelay: loading ? '800ms' : '0ms',
+                            }}
+                            unmountOnExit
+                        >
+                            <CircularProgress />
+                        </Fade>
+                    </Box>
                     <div className="col-4 small d-flex justify-content-center align-items-center">
                         <Button href="../zones" className='col-2 small mx-2'><AiFillCaretUp />Liste des Zones</Button>
                     </div>
@@ -178,7 +195,19 @@ const Zone = (props) => {
                     </Snackbar>
                 }
         </main>
-    )
+    ) : <>
+        <Box sx={{ height: 40 }}>
+            <Fade
+                className="loading"
+                in={true}
+                style={{
+                transitionDelay: loading ? '800ms' : '0ms',
+                }}
+                unmountOnExit
+            >
+                <CircularProgress />
+            </Fade>
+        </Box></>
 }
 
 export default Zone

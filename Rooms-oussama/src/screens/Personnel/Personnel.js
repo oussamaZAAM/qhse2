@@ -10,11 +10,15 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/authContext';
 import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
 import { AiFillCaretUp } from 'react-icons/ai';
+import Fade from '@mui/material/Fade';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 const Personnel = (props) => {
   const [allPersonnel, setAllPersonnel] = useState()
   const [picture, setPicture] = useState([]);
   const [openAlert, setOpenAlert] = useState([false, false]);
+  const [loading, setLoading] = useState(false);
   
   const { user } = useContext(AuthContext);
 
@@ -54,9 +58,10 @@ const Personnel = (props) => {
     })
   }
   const editPersonnel = async() => {
-      const editValues = allPersonnel[thisProductIndex];
-      delete editValues.photo;
-      if (Object.keys(editValues).every(x=>editValues[x] !== '')){
+    setLoading(true);
+    const editValues = allPersonnel[thisProductIndex];
+    delete editValues.photo;
+    if (Object.keys(editValues).every(x=>editValues[x] !== '')){
         const updatedPersonnel = {...editValues, photo: picture[thisProductIndex]};
         try {
             await axios.put("http://localhost:5000/api/personnel/"+props.personId, updatedPersonnel)
@@ -67,14 +72,17 @@ const Personnel = (props) => {
     } else {
         setOpenAlert([false, true])
     }
+    setLoading(false);
   }
   const deletePersonnel = async() => {
+    setLoading(true);
     try {
         await axios.delete("http://localhost:5000/api/personnel/" + props.personId)
     } catch (err) {
         window.alert("Erreur")
     }
     navigate("../personnel")
+    setLoading(false);
   }
   const handleUpload = async (e) => {
     const pic=e.target.files[0];
@@ -123,6 +131,18 @@ const Personnel = (props) => {
   },[user._id])
   return (
     <main>
+        <Box sx={{ height: 40 }}>
+            <Fade
+            className="loading"
+            in={loading}
+            style={{
+                transitionDelay: loading ? '800ms' : '0ms',
+            }}
+            unmountOnExit
+            >
+                <CircularProgress />
+            </Fade>
+        </Box>
         <div className="container p-3 d-flex justify-content-between">
             <Button href="../personnel" className='col-4'><AiFillCaretUp />Liste des Personnels</Button>
             <h3 className="text-center col-2"></h3>

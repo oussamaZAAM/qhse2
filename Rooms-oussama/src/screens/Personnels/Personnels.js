@@ -6,8 +6,11 @@ import { FaTimes } from 'react-icons/fa';
 import { AuthContext } from '../../Context/authContext';
 import Personnels from '../../components/Personnels/Personnel';
 import { ObjectId } from 'bson';
-import { Alert, Box, Skeleton, Snackbar } from '@mui/material'
+import { Alert, Skeleton, Snackbar } from '@mui/material'
 import './Personnels.css'
+import Fade from '@mui/material/Fade';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 const Personnel = () => {
   const nom = useRef();
@@ -23,6 +26,7 @@ const Personnel = () => {
   const [persons, setPersons] = useState();
   const [picture, setPicture] = useState('');
   const [openAlert, setOpenAlert] = useState([false, false]);
+  const [loading, setLoading] = useState(false);
 
   const handleCloseAlert = (event, reason) => {
     if (reason === 'clickaway') {
@@ -46,6 +50,7 @@ const Personnel = () => {
     setPicture('')
   }
   const submitPersonnel = async() => {
+    setLoading(true);
     try{
       const generatedId = ObjectId();
       const personnel = {
@@ -68,6 +73,7 @@ const Personnel = () => {
     } catch (err) {
       console.log(err)
     }
+    setLoading(false);
   }
   useEffect(() => {
     const fetchPersons = async () => {
@@ -98,6 +104,18 @@ const Personnel = () => {
               <h3 className="text-center col-2"></h3>
             </div>
             <div className="row">
+                <Box sx={{ height: 40 }}>
+                  <Fade
+                    className="loading"
+                    in={loading}
+                    style={{
+                      transitionDelay: loading ? '800ms' : '0ms',
+                    }}
+                    unmountOnExit
+                  >
+                    <CircularProgress />
+                  </Fade>
+                </Box>
                 <div className=" col-9 col-sm-12 col-md-5 col-lg-6 d-flex b justify-content-center align-items-center row">
                   <h1>Liste des Personnels</h1>
                   <table className="table table-striped table-hover">

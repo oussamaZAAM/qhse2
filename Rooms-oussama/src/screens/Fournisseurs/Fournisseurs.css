@@ -5,3 +5,8 @@
 .fournisseur-close{
   cursor: pointer;
 }
+.loading{
+  position: fixed;
+  top: 50%;
+  right: 50%;
+}

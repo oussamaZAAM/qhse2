@@ -8,6 +8,9 @@ import { BiUpload } from 'react-icons/bi';
 import { IoMdCloseCircle } from 'react-icons/io';
 import Equipement from '../../components/Equipement/Equipement';
 import { AuthContext } from '../../Context/authContext';
+import Fade from '@mui/material/Fade';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 export const Equipements = () => {
     const libelle = useRef();
@@ -24,6 +27,7 @@ export const Equipements = () => {
     const [clickedEq, setClickedEq] = useState(0);
     const [editValues, setEditValues] = useState();
     const [openAlert, setOpenAlert] = useState([false, false, false]);
+    const [loading, setLoading] = useState(false);
 
     const handleCloseAlert = (event, reason) => {
         if (reason === 'clickaway') {
@@ -37,6 +41,7 @@ export const Equipements = () => {
     }
 
     const handleUploadFile = async (e) => {
+        setLoading(true);
         const pic=e.target.files[0];
         const data = new FormData();
         const fileName = Date.now() + pic.name;
@@ -46,9 +51,10 @@ export const Equipements = () => {
             await axios.post("http://localhost:5000/api/upload/file", data);
         } catch (err) {};
         setEditValues({...editValues, [e.target.id]: fileName});
-
+        setLoading(false);
     }
     const submitForm = async (e)=>{
+        setLoading(true);
         var id = new ObjectId();
         const equipement = {
             _id: id.toString(),
@@ -73,8 +79,10 @@ export const Equipements = () => {
         } else {
             setOpenAlert([false, false, true]);
         }
+        setLoading(false);
     }
     const editEquips = async () => {
+        setLoading(true);
         if (Object.keys(editValues).every(x=>editValues[x] !== '')){
             try{
                 await axios.put("http://localhost:5000/api/equipement/" + editValues._id, editValues);
@@ -96,8 +104,10 @@ export const Equipements = () => {
         } else {
             setOpenAlert([false, false, true]);
         }
+        setLoading(false);
     }
     const deleteEquips = async () => {
+        setLoading(true);
         try{
             await axios.delete("http://localhost:5000/api/equipement/" + editValues._id);
             setClickedEq(0);
@@ -109,6 +119,7 @@ export const Equipements = () => {
         }catch(err){
             console.log(err)        
         }
+        setLoading(false);
     }
     useEffect(()=>{
         const fetchEquips = async() => {
@@ -146,6 +157,18 @@ export const Equipements = () => {
                 </div>
 
                 <div className="row">
+                    <Box sx={{ height: 40 }}>
+                    <Fade
+                        className="loading"
+                        in={loading}
+                        style={{
+                        transitionDelay: loading ? '800ms' : '0ms',
+                        }}
+                        unmountOnExit
+                    >
+                        <CircularProgress />
+                    </Fade>
+                    </Box>
                     <div className=" col-9 col-sm-12 col-md-5 col-lg-6 d-flex b justify-content-center align-items-center row">
                         <h1>Liste des {value === 0 ? "Equipements" : value === 1 ? "Materiels" : "Logistiques"} <small>{equipements.length === 0 && " : Vide"}</small></h1>
                         {equipements.length !== 0 &&
