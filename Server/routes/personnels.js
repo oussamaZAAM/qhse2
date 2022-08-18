@@ -3,6 +3,7 @@ import { Router as _Router } from 'express';
 const PersonnelRouter = _Router();
 
 import Personnel from '../models/Personnel.js';
+import Zone from '../models/Zone.js';
 
 PersonnelRouter.post('/create', async (req, res)=>{
     const newPersonnel = await new Personnel({
@@ -12,7 +13,6 @@ PersonnelRouter.post('/create', async (req, res)=>{
         naissance: req.body.naissance,
         cin: req.body.cin,
         metier: req.body.metier,
-        zone_affecte: req.body.zone_affecte,
         photo: req.body.photo,
     })
     
@@ -37,7 +37,6 @@ PersonnelRouter.put('/:personId', async (req, res)=>{
             naissance: req.body.naissance,
             cin: req.body.cin,
             metier: req.body.metier,
-            zone_affecte: req.body.zone_affecte,
             photo: req.body.photo,
         });
         res.status(200).json("Personnel had been updated");
@@ -55,9 +54,9 @@ PersonnelRouter.get('/a/:userId', async (req, res)=>{
     }
 })
 
-PersonnelRouter.delete('/:prodId', async (req, res)=>{
+PersonnelRouter.delete('/:personId', async (req, res)=>{
     try{
-        const deletedPersonnel = await Personnel.findByIdAndDelete({_id: req.params.prodId});
+        const deletedPersonnel = await Personnel.findByIdAndDelete({_id: req.params.personId});
         res.status(200).json("The organism has been deleted");
     } catch (err) {
         res.status(500).json(err);

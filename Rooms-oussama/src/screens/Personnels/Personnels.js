@@ -18,7 +18,6 @@ const Personnel = () => {
   const naissance = useRef();
   const cin = useRef();
   const metier = useRef();
-  const zone_affecte = useRef();
   const photo = useRef();
   
   const { user } = useContext(AuthContext);
@@ -60,7 +59,6 @@ const Personnel = () => {
           naissance: naissance.current.value, 
           cin: cin.current.value,
           metier: metier.current.value,
-          zone_affecte: zone_affecte.current.value,
       }
       if (Object.keys(personnel).every(x=>personnel[x] !== '')){
         const personnel2 = {...personnel, photo: picture};
@@ -172,7 +170,6 @@ const Personnel = () => {
                         <input className="form-control m-2" type="date" placeholder="Date de Naissance" ref={naissance} />
                         <input className="form-control m-2" placeholder="CIN" ref={cin} />
                         <input className="form-control m-2" placeholder="Métier" ref={metier} />
-                        <input className="form-control m-2" placeholder="Zone affecté" ref={zone_affecte} />
                         <div className="d-flex justify-content-end m-2">
                         <Button className="bg-prime" onClick={submitPersonnel}>Enregister</Button>
                         </div>

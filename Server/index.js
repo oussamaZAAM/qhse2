@@ -6,7 +6,7 @@ import userRouter from './routes/users.js';
 import OrganismRouter from "./routes/organisms.js";
 import ProductRouter from "./routes/products.js";
 import RawRouter from "./routes/raws.js";
-import FournisseurRouter from "./routes/fournisseurs.js";
+import FournisseurRouter from "./routes/Fournisseurs.js";
 import PersonnelRouter from "./routes/personnels.js";
 import multer from "multer"
 import path from "path";

@@ -19,6 +19,7 @@ const Personnel = (props) => {
   const [picture, setPicture] = useState([]);
   const [openAlert, setOpenAlert] = useState([false, false]);
   const [loading, setLoading] = useState(false);
+  const [affectedZones, setAffectedZones] = useState([]);
   
   const { user } = useContext(AuthContext);
 
@@ -128,7 +129,13 @@ const Personnel = (props) => {
         }
     }
     fetchAllPersons();
-  },[user._id])
+    const fetchAffectedZones = async() => {
+        const res = await axios.get("http://localhost:5000/api/zone/includes/" + allPersonnel[thisProductIndex]._id);
+        setAffectedZones(res.data);
+    }
+    allPersonnel && fetchAffectedZones();
+  },[user._id, thisProductIndex]);
+  const zoneCodes = affectedZones.length!==0 ? affectedZones.map(zone => zone.code).join(' - ') : "Pas affecté !"
   return (
     <main>
         <Box sx={{ height: 40 }}>
@@ -215,10 +222,9 @@ const Personnel = (props) => {
                 {allPersonnel
                 ? <TextField 
                     className='col-11 col-sm-10 col-md-5 col-lg-3 m-2'
-                    value={allPersonnel[thisProductIndex].zone_affecte}
+                    value={zoneCodes}
                     label="Zone affecté"
-                    name='zone_affecte'
-                    onChange={handleChange}
+                    InputLabelProps={{shrink: true}}
                 />
                 : <Skeleton className='col-11 col-sm-10 col-md-5 col-lg-3 m-2' animation="wave" height={50} />}
             </div>

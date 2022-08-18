@@ -60,6 +60,16 @@ ZoneRouter.get("/:zoneId", async(req, res) => {
         res.status(500).json(err.message);
     }
 })
+
+ZoneRouter.get('/includes/:personId', async (req, res) => {
+    try{
+        const includedZones = await Zone.find({$or: [{responsable: req.params.personId}, {equipe: req.params.personId}]});
+        res.status(200).json(includedZones);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
 ZoneRouter.delete("/:zoneId", async(req, res) => {
     try{
         await Zone.findByIdAndDelete({_id: req.params.zoneId});
