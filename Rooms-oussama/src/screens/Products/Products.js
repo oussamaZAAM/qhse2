@@ -162,8 +162,8 @@ export default function Products() {
     
     if(prods!==undefined){
       return(
-          <div class="wrapper">
-            <div class="container">
+          <div className="wrapper">
+            <div className="container">
               <div className='d-flex justify-content-end align-items-center p-3'>
                 <div className="sort-div" onClick={toggleSort}>
                     <FaSort className='m-2'/>
@@ -296,7 +296,7 @@ export default function Products() {
                   </div>
                 )}
               </div>
-              <div class="row g-1">
+              <div className="row g-1">
                 {products}
                 <div className='d-flex  justify-content-center align-items-center'>
                   <Link className="text-center m-2" to="../new-product">

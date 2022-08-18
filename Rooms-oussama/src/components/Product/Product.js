@@ -26,26 +26,26 @@ export default function Product(props) {
     }
 
     return(
-        <div class="col-md-6 col-lg-4 col-xl-3">
+        <div className="col-md-6 col-lg-4 col-xl-3">
 
-          <div class="card p-3">
+          <div className="card p-3">
 
-            <div onClick={handleOrg}  class="text-center">
+            <div onClick={handleOrg}  className="text-center">
 
                 <img src={"http://localhost:5000/images/"+props.prod.photos[0]} className="img-height" width="200"/>
                 
             </div>
 
-            <div class="product-details">
+            <div className="product-details">
 
                  <span onClick={handleOrg} >{props.prod.name}</span>
 
-                 <div class="buttons d-flex flex-row justify-content-center">
-                    <button onClick={handleEdit} class="btn btn-primary cart-button btn-block mx-3"><span class="dot">1</span>Modifier </button>
-                    <button onClick={handleDelete} class="btn btn-danger cart-button btn-block"><span class="dot">1</span>Supprimer </button>
+                 <div className="buttons d-flex flex-row justify-content-center">
+                    <button onClick={handleEdit} className="btn btn-primary cart-button btn-block mx-3"><span className="dot">1</span>Modifier </button>
+                    <button onClick={handleDelete} className="btn btn-danger cart-button btn-block"><span className="dot">1</span>Supprimer </button>
                 </div>
 
-                 <div class="weight d-flex flex-column">
+                 <div className="weight d-flex flex-column">
 
                     <small>Numero : {props.count}</small>
                     <small>date : {props.prod.creation_date}</small>
