@@ -44,10 +44,10 @@ FournisseurRouter.get('/:fourId', async (req, res) => {
     try {
         const fours = await Fournisseur.findOne({_id:req.params.fourId});
         res.status(200).json(fours);
-      } catch (err) {
-        res.status(500).json(err);
-      }
-});
+    } catch (err) {
+      res.status(500).json(err);
+    }
+}); 
 FournisseurRouter.get('/a/:userId', async (req, res) => {
     try {
         const fours = await Fournisseur.find({user:req.params.userId});

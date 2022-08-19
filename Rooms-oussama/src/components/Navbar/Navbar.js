@@ -3,11 +3,12 @@ import { AuthContext } from "../../Context/authContext";
 import {Link, useNavigate} from "react-router-dom"
 import 'bootstrap/dist/css/bootstrap.css';
 import {Button} from 'react-bootstrap';
+import { propTypes } from "react-bootstrap/esm/Image";
+import "./Navbar.css"
 
-export default function Navbar() {
+export default function Navbar(props) {
     const { user,org, dispatch } = useContext(AuthContext);
     const navigate = useNavigate();
-
     function handleLogout() {
         dispatch({ type: "LOGIN_SUCCESS", payload: [undefined,undefined]});
         localStorage.removeItem("user");
@@ -41,7 +42,8 @@ export default function Navbar() {
     }
   
 </nav>
-        </div>
+
+       </div>
 
     )
 }

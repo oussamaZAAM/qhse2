@@ -27,8 +27,7 @@ export default function Product(props) {
 
     return(
         <div className="col-md-6 col-lg-4 col-xl-3">
-
-          <div className="card p-3">
+          <div className="card1 p-3">
 
             <div onClick={handleOrg}  className="text-center">
 

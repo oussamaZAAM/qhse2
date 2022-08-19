@@ -151,7 +151,7 @@ export default function NewProduct() {
     })
   return (
     <main className="container">
-        <div className="row text-center"><h1 className='text-center'>New Product</h1></div>
+        <div className="row text-center"><h1 className='text-center'>Nouveau Produit</h1></div>
         <div className='d-flex flex-column align-items-center'>
             <Box
                 className='row d-flex justify-content-center'

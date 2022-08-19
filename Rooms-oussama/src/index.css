@@ -15,7 +15,7 @@ body {
   margin-left: 25%;
 }
 .text-prime{
-  color: #73A9AD !important;
+  color: rgb(115, 169, 173) !important;
 }
 .bg-prime{
   background-color: #73A9AD !important;
@@ -30,7 +30,7 @@ code {
 }
 @media screen and (max-width: 768px) {
   .jumbotron{
-    background: #F5F0BB;
+    background: rgb(245, 240, 187);
   }
 }
 .vertical-center {

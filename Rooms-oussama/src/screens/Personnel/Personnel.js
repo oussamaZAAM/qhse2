@@ -1,4 +1,4 @@
-import { Alert, Button, Snackbar, TextField } from '@mui/material'
+import { Alert, Button, Skeleton, Snackbar, TextField } from '@mui/material'
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import './Personnel.css';
@@ -13,8 +13,7 @@ import { AiFillCaretUp } from 'react-icons/ai';
 
 const Personnel = (props) => {
   const [allPersonnel, setAllPersonnel] = useState()
-  const [editValues, setEditValues] = useState()
-  const [picture, setPicture] = useState('');
+  const [picture, setPicture] = useState([]);
   const [openAlert, setOpenAlert] = useState([false, false]);
   
   const { user } = useContext(AuthContext);
@@ -42,12 +41,23 @@ const Personnel = (props) => {
     return [year, month, day].join('-');
   }
   function handleChange(e) {
-    setEditValues({...editValues, [e.target.name]: e.target.value})
+    setAllPersonnel(prev=>{
+        const newPrev = [];
+        for (let i = 0; i < prev.length; i++){
+            if(i === thisProductIndex){
+                newPrev.push({...allPersonnel[i], [e.target.name]: e.target.value})
+            } else {
+                newPrev.push(prev[i])
+            }
+        }
+        return newPrev;
+    })
   }
   const editPersonnel = async() => {
+      const editValues = allPersonnel[thisProductIndex];
       delete editValues.photo;
       if (Object.keys(editValues).every(x=>editValues[x] !== '')){
-        const updatedPersonnel = {...editValues, photo: picture};
+        const updatedPersonnel = {...editValues, photo: picture[thisProductIndex]};
         try {
             await axios.put("http://localhost:5000/api/personnel/"+props.personId, updatedPersonnel)
         } catch (err) {
@@ -75,7 +85,17 @@ const Personnel = (props) => {
     try {
         await axios.post("http://localhost:5000/api/upload/image", data);
     } catch (err) {}
-    setPicture(fileName)
+    setPicture(prev=>{
+        const newPrev = [];
+        for (let i = 0; i < prev.length; i++) {
+            if (i === thisProductIndex) {
+                newPrev.push(fileName);
+            } else {
+                newPrev.push(prev[i]);
+            }
+        }
+        return newPrev;
+    })
   }
 
   const thisProductIndex = allPersonnel && allPersonnel.findIndex(x=> x._id === props.personId);
@@ -92,23 +112,16 @@ const Personnel = (props) => {
         try {
             const res = await axios.get("http://localhost:5000/api/personnel/a/"+user._id);
             setAllPersonnel(res.data);
+            const allPhotos = [];
+            res.data.forEach(x=>allPhotos.push(x.photo))
+            setPicture(allPhotos);
         } catch (err) {
             console.log(err)
         }
     }
     fetchAllPersons();
-    const fetchPersons = async() => {
-        try {
-            const res = await axios.get("http://localhost:5000/api/personnel/"+props.personId);
-            setEditValues(res.data);
-            setPicture(res.data.photo);
-        } catch (err) {
-            console.log(err)
-        }
-    }
-    fetchPersons();
-  },[user._id, props.personId])
-  return editValues!==undefined && (
+  },[user._id])
+  return (
     <main>
         <div className="container p-3 d-flex justify-content-between">
             <Button href="../personnel" className='col-4'><AiFillCaretUp />Liste des Personnels</Button>
@@ -118,60 +131,76 @@ const Personnel = (props) => {
             <Badge
                 overlap="circular"
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                badgeContent={
-                    <label>
+                badgeContent={allPersonnel && 
+                    (<label>
                         <BsUpload className='profile-upload' size={30} onClick={(e)=>handleUpload(e)} />
                         <input hidden accept="image/*" type="file" onChange={(e) => handleUpload(e)}/>
-                    </label>
+                    </label>)
                 }
             >
-                <Avatar sx={{width: '150px', height: '150px'}} className="profile-photo" src={"http://localhost:5000/images/"+picture} />
+                {allPersonnel 
+                    ? <Avatar sx={{width: '150px', height: '150px'}} className="profile-photo" src={"http://localhost:5000/images/"+picture[thisProductIndex]} />
+                    : <Skeleton animation='wave' variant="circular" sx={{width: '150px', height: '150px'}} />
+                }
             </Badge>
             <div>Numéro de Personnel : {thisProductIndex+1}</div>
             <div className='row d-flex justify-content-center align-items-center'>
-                <TextField 
+                {allPersonnel
+                    ?  <TextField 
+                        className='col-11 col-sm-10 col-md-5 col-lg-3 m-2'
+                        value={allPersonnel[thisProductIndex].nom}
+                        label="Nom"
+                        name='nom'
+                        onChange={handleChange}
+                    />
+                    : <Skeleton className='col-11 col-sm-10 col-md-5 col-lg-3 m-2' animation="wave" height={50} />
+                }
+                {allPersonnel
+                ? <TextField 
                     className='col-11 col-sm-10 col-md-5 col-lg-3 m-2'
-                    value={editValues.nom}
-                    label="Nom"
-                    name='nom'
-                    onChange={handleChange}
-                />
-                <TextField 
-                    className='col-11 col-sm-10 col-md-5 col-lg-3 m-2'
-                    value={editValues.prenom}
+                    value={allPersonnel[thisProductIndex].prenom}
                     label="Prénom"
                     name='prenom'
                     onChange={handleChange}
                 />
-                <TextField 
+                : <Skeleton className='col-11 col-sm-10 col-md-5 col-lg-3 m-2' animation="wave" height={50} />}
+                {allPersonnel
+                ? <TextField 
                     className='col-11 col-sm-10 col-md-5 col-lg-3 m-2'
-                    value={formatDate(editValues.naissance)}
+                    value={formatDate(allPersonnel[thisProductIndex].naissance)}
                     type='date'
                     label="Date de Naissance"
                     name='naissance'
                     onChange={handleChange}
                 />
-                <TextField 
+                : <Skeleton className='col-11 col-sm-10 col-md-5 col-lg-3 m-2' animation="wave" height={50} />}
+                {allPersonnel
+                ? <TextField 
                     className='col-11 col-sm-10 col-md-5 col-lg-3 m-2'
-                    value={editValues.cin}
+                    value={allPersonnel[thisProductIndex].cin}
                     label="CIN"
                     name='cin'
                     onChange={handleChange}
                 />
-                <TextField 
+                : <Skeleton className='col-11 col-sm-10 col-md-5 col-lg-3 m-2' animation="wave" height={50} />}
+                {allPersonnel
+                ? <TextField 
                     className='col-11 col-sm-10 col-md-5 col-lg-3 m-2'
-                    value={editValues.metier}
+                    value={allPersonnel[thisProductIndex].metier}
                     label="Métier"
                     name='metier'
                     onChange={handleChange}
                 />
-                <TextField 
+                : <Skeleton className='col-11 col-sm-10 col-md-5 col-lg-3 m-2' animation="wave" height={50} />}
+                {allPersonnel
+                ? <TextField 
                     className='col-11 col-sm-10 col-md-5 col-lg-3 m-2'
-                    value={editValues.zone_affecte}
+                    value={allPersonnel[thisProductIndex].zone_affecte}
                     label="Zone affecté"
                     name='zone_affecte'
                     onChange={handleChange}
                 />
+                : <Skeleton className='col-11 col-sm-10 col-md-5 col-lg-3 m-2' animation="wave" height={50} />}
             </div>
             <div className="d-flex justify-content-around align-items-center">
                 {thisProductIndex !==0 ? <FaArrowCircleLeft className='pointer' size={20} onClick={navigateLeft}/> : <FaArrowCircleLeft color='gray' size={20} />}

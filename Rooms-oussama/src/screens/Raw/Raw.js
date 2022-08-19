@@ -196,11 +196,7 @@ const Product = (props) => {
     product && 
     <AnimatedPage>
     <div className="container">
-        <div className='row'>
-        <Button href="../products" className='col-2 small mt-3'><AiFillCaretUp />Liste des produits</Button>
-        <h3 className="p-4 text-center col">{editValues.name}</h3>
-        <Button href="../fournisseurs" className='col-2 small mt-3'><AiFillCaretDown />Liste des fournisseurs</Button>
-        </div>
+        
         <p className="text-center">Numéro du produit : {thisProductIndex+1}</p>
         <div className="row">
             <div className="col-sm-11 col-md-5 col-lg-5 text-center center-image d-flex flex-column">

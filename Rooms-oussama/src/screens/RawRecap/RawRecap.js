@@ -55,11 +55,7 @@ export default function OrganismPage() {
     return(
         <div className='container-fluid logo'>
             <div className=' justify-content-center pb-10 pt-7'>
-            <div className="row">
-        <Button href="../fournisseurs" className='col-2 small '><AiFillCaretUp />Liste des fournisseurs</Button>
-        <h3 className="text-center col"></h3>
-        <Button href="../personnel" className='col-2 small'><AiFillCaretDown />Les personnels</Button>
-        </div>
+            
                 <div className='row organisms-grid'>
                   {organisms.length!==0 && (
                   <div className='col-auto col-sm-auto col-md-auto'>

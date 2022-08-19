@@ -40,8 +40,8 @@ body{
   margin-top: 30px;
 }
 
-.card{
-
+.card1{
+  background-color: white;
   border:1px solid #eee;
   cursor: pointer;
 }
@@ -146,23 +146,23 @@ body{
 
 
 
-.card:hover .buttons{
+.card1:hover .buttons{
 
   opacity: 1;
 }
 
 
-.card:hover .weight{
+.card1:hover .weight{
 
    margin-top: 10px;
 }
 
-.card:hover{
+.card1:hover{
   transform: scale(1.04);
   z-index: 2;
   overflow: hidden;
 }
-.card{
+.card1{
   min-width: fit-content;
 }
 .img-height{
