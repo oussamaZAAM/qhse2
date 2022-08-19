@@ -10,11 +10,16 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/authContext';
 import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
 import { AiFillCaretUp } from 'react-icons/ai';
+import Fade from '@mui/material/Fade';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 const Personnel = (props) => {
   const [allPersonnel, setAllPersonnel] = useState()
   const [picture, setPicture] = useState([]);
   const [openAlert, setOpenAlert] = useState([false, false]);
+  const [loading, setLoading] = useState(false);
+  const [affectedZones, setAffectedZones] = useState([]);
   
   const { user } = useContext(AuthContext);
 
@@ -54,9 +59,10 @@ const Personnel = (props) => {
     })
   }
   const editPersonnel = async() => {
-      const editValues = allPersonnel[thisProductIndex];
-      delete editValues.photo;
-      if (Object.keys(editValues).every(x=>editValues[x] !== '')){
+    setLoading(true);
+    const editValues = allPersonnel[thisProductIndex];
+    delete editValues.photo;
+    if (Object.keys(editValues).every(x=>editValues[x] !== '')){
         const updatedPersonnel = {...editValues, photo: picture[thisProductIndex]};
         try {
             await axios.put("http://localhost:5000/api/personnel/"+props.personId, updatedPersonnel)
@@ -67,14 +73,17 @@ const Personnel = (props) => {
     } else {
         setOpenAlert([false, true])
     }
+    setLoading(false);
   }
   const deletePersonnel = async() => {
+    setLoading(true);
     try {
         await axios.delete("http://localhost:5000/api/personnel/" + props.personId)
     } catch (err) {
         window.alert("Erreur")
     }
     navigate("../personnel")
+    setLoading(false);
   }
   const handleUpload = async (e) => {
     const pic=e.target.files[0];
@@ -120,9 +129,27 @@ const Personnel = (props) => {
         }
     }
     fetchAllPersons();
-  },[user._id])
+    const fetchAffectedZones = async() => {
+        const res = await axios.get("http://localhost:5000/api/zone/includes/" + allPersonnel[thisProductIndex]._id);
+        setAffectedZones(res.data);
+    }
+    allPersonnel && fetchAffectedZones();
+  },[user._id, thisProductIndex]);
+  const zoneCodes = affectedZones.length!==0 ? affectedZones.map(zone => zone.code).join(' - ') : "Pas affecté !"
   return (
     <main>
+        <Box sx={{ height: 40 }}>
+            <Fade
+            className="loading"
+            in={loading}
+            style={{
+                transitionDelay: loading ? '800ms' : '0ms',
+            }}
+            unmountOnExit
+            >
+                <CircularProgress />
+            </Fade>
+        </Box>
         <div className="container p-3 d-flex justify-content-between">
             <Button href="../personnel" className='col-4'><AiFillCaretUp />Liste des Personnels</Button>
             <h3 className="text-center col-2"></h3>
@@ -195,10 +222,9 @@ const Personnel = (props) => {
                 {allPersonnel
                 ? <TextField 
                     className='col-11 col-sm-10 col-md-5 col-lg-3 m-2'
-                    value={allPersonnel[thisProductIndex].zone_affecte}
+                    value={zoneCodes}
                     label="Zone affecté"
-                    name='zone_affecte'
-                    onChange={handleChange}
+                    InputLabelProps={{shrink: true}}
                 />
                 : <Skeleton className='col-11 col-sm-10 col-md-5 col-lg-3 m-2' animation="wave" height={50} />}
             </div>

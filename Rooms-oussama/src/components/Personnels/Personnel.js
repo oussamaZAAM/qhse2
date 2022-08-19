@@ -31,7 +31,7 @@ export default function Personnels(props) {
               <td className="text-center">{formatDate(props.Person.naissance)}</td>
               <td className="text-center">{props.Person.cin}</td>
               <td className="text-center">{props.Person.metier}</td>
-              <td className="text-center">{props.Person.zone_affecte}</td>
+              <td className="text-center">. . .</td>
             </tr>
     )
 }

@@ -15,6 +15,10 @@ import { MuiTelInput, isValidPhoneNumber } from 'mui-tel-input';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from "../../components/Alert/Alert";
 import { AiFillCaretDown,AiFillCaretUp } from 'react-icons/ai'
+import { Skeleton } from "@mui/material";
+import Fade from '@mui/material/Fade';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 export default function Fournisseur() {
     const code_four = useRef();
@@ -27,9 +31,10 @@ export default function Fournisseur() {
     const [fours, setFours] = useState();
     const [clickedFour, setClickedFour] = useState(0);
     const [editValues, setEditValues] = useState();
-    const [tel, setTel] = useState('')
+    const [tel, setTel] = useState('');
     const [isTelValid, setIsTelValid] = useState(false);
     const [openAlert, setOpenAlert] = useState([false, false, false, false]);
+    const [loading, setLoading] = useState(false);
 
 
     const handleCloseAlert = (event, reason) => {
@@ -51,6 +56,7 @@ export default function Fournisseur() {
       fetchFours();
     }, [user._id]);
     const userFournisseur= async (e)=>{
+      setLoading(true);
       if (isTelValid){
         var id = new ObjectId();
         const fournisseur = {_id: id.toString(), user:user._id,code_four:code_four.current.value, raison_soc:raison_soc.current.value,ville:ville.current.value,pays:pays.current.value,tel:tel,mail:mail.current.value}
@@ -67,8 +73,10 @@ export default function Fournisseur() {
       } else {
         setOpenAlert([false, true, false, false]);
       }
+      setLoading(false);
     }
     const editFournisseur= async (e)=>{
+      setLoading(true);
       if (Object.keys(editValues).every(x=>editValues[x] !== '')){
         if(isTelValid) {
           try{
@@ -96,8 +104,10 @@ export default function Fournisseur() {
       } else {
         setOpenAlert([false, false, true, false]);
       }
+      setLoading(false);
     }
     const deleteFournisseur= async (e)=>{
+        setLoading(true);
         try{
             await axios.delete("http://localhost:5000/api/fournisseur/" + editValues._id);
             setClickedFour(0);
@@ -107,6 +117,7 @@ export default function Fournisseur() {
               const deletedArray = prevArray.filter(x=>x._id !== editValues._id);
               return deletedArray;
             })
+            setLoading(false);
         }catch(err){
             console.log(err)        
         }
@@ -141,6 +152,18 @@ export default function Fournisseur() {
               
               
               <div className="row">
+                <Box sx={{ height: 40 }}>
+                  <Fade
+                    className="loading"
+                    in={loading}
+                    style={{
+                      transitionDelay: loading ? '800ms' : '0ms',
+                    }}
+                    unmountOnExit
+                  >
+                    <CircularProgress />
+                  </Fade>
+                </Box>
                 <div className=" col-9 col-sm-12 col-md-5 col-lg-6 d-flex b justify-content-center align-items-center row">
                   <h1>Liste des Fournisseurs</h1>
                   {fournisseurs.length!==0 && (
@@ -157,7 +180,18 @@ export default function Fournisseur() {
                       </tr>
                     </thead>
                     <tbody>
-                      {fournisseurs}
+                      {fours !== undefined 
+                        ? fournisseurs
+                        : <tr className="sortable">
+                            <td className="text-center"><Skeleton animation="wave" /></td>
+                            <td className="text-center"><Skeleton animation="wave" /></td>
+                            <td className="text-center"><Skeleton animation="wave" /></td>
+                            <td className="text-center"><Skeleton animation="wave" /></td>
+                            <td className="text-center"><Skeleton animation="wave" /></td>
+                            <td className="text-center"><Skeleton animation="wave" /></td>
+                            <td className="text-center"><Skeleton animation="wave" /></td>
+                          </tr>
+                      }
                     </tbody>
                   </table>
                 )}

@@ -7,6 +7,9 @@ import { AuthContext } from "../../Context/authContext";
 import "./Organism.css"
 import { MuiTelInput, isValidPhoneNumber } from 'mui-tel-input'
 import { Typography } from "@mui/material";
+import Fade from '@mui/material/Fade';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 export default function Organism(props) {
     const name = useRef();
@@ -232,6 +235,18 @@ export default function Organism(props) {
         )
         )
      }else{
-        return null
-     }
+        return(
+            <Box sx={{ height: 40 }}>
+                <Fade
+                    className="loading"
+                    in={true}
+                    style={{
+                    transitionDelay: '800ms',
+                    }}
+                    unmountOnExit
+                >
+                    <CircularProgress />
+                </Fade>
+            </Box>
+     )}
 }

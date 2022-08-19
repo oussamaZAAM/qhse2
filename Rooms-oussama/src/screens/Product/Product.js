@@ -9,6 +9,9 @@ import { AiFillCamera, AiOutlineCloudUpload,AiFillCaretDown,AiFillCaretUp } from
 import { BiTrash } from 'react-icons/bi'
 import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
 import AnimatedPage from '../AnimatedPage';
+import Fade from '@mui/material/Fade';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 const Product = (props) => {
     const [product, setProduct] = useState();
@@ -39,6 +42,7 @@ const Product = (props) => {
         lipide:"",
         editCount: 0,
     })
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     function handleImagePage(event, value) {
         setImagePage(value);
@@ -53,6 +57,7 @@ const Product = (props) => {
         setEditValues({...editValues, userEtiquettes: {...editValues.userEtiquettes, [event.target.name]: event.target.value}})
     }
     const handleEdit = async() => {
+        setLoading(true);
         setEditValues({...editValues, editCount: editValues.editCount+1})
         try{
             await axios.put("http://localhost:5000/api/product/" + props.productId, {...editValues, editCount: editValues.editCount+1})
@@ -60,8 +65,10 @@ const Product = (props) => {
             console.log(err);
         }
         setIsEdit(false)
+        setLoading(false);
     }
     const handleDelete= async (e)=>{
+        setLoading(true);
         e.preventDefault();
         try{
             await axios.delete("http://localhost:5000/api/product/" + props.productId);
@@ -69,8 +76,10 @@ const Product = (props) => {
         }catch(err){
             console.log(err)      
         }
+        setLoading(false);
     }
     const handleUpload = async (e) => {
+        setLoading(true);
         const pic=e.target.files[0]; //Initialiser "pic" avec l'image telecharger depuis la machine
         // setFile(e.target.files[0])
         const data = new FormData(); //Initialiser "data" par une Forme de donnes
@@ -85,6 +94,7 @@ const Product = (props) => {
         // setPicture(fileName)
         setPicture(prev=>[...prev, fileName])
         setProduct({...product, photos: [...picture,fileName]});
+        setLoading(false);
     }
     const handleDownload= async (e) => {
         switch(e.target.id){
@@ -96,6 +106,7 @@ const Product = (props) => {
         
     }
     const handleUploadFile = async (e) => {
+        setLoading(true);
         const pic=e.target.files[0]; //Initialiser "pic" avec l'image telecharger depuis la machine
         // setFile(e.target.files[0])
         const data = new FormData(); //Initialiser "data" par une Forme de donnes
@@ -114,6 +125,7 @@ const Product = (props) => {
             case "fds":
                 setEditValues({...product, fds: fileName});     
         }
+        setLoading(false);
         
     }
     function deleteImage(imageId) {
@@ -206,6 +218,18 @@ const Product = (props) => {
         
         <p className="text-center">Numéro du produit : {thisProductIndex+1}</p>
         <div className="row">
+            <Box sx={{ height: 40 }}>
+                <Fade
+                className="loading"
+                in={loading}
+                style={{
+                    transitionDelay: loading ? '800ms' : '0ms',
+                }}
+                unmountOnExit
+                >
+                    <CircularProgress />
+                </Fade>
+            </Box>
             <div className="col-sm-11 col-md-5 col-lg-5 text-center center-image d-flex flex-column">
                 {picture.length!==0 
                     ? 

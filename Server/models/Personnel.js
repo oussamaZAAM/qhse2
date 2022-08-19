@@ -21,10 +21,6 @@ const PersonnelSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    zone_affecte: {
-        type: String,
-        required: true,
-    },
     photo: {
         type: String,
     }

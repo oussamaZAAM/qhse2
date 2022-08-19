@@ -1,4 +1,4 @@
-import { Alert, Snackbar } from '@mui/material';
+import { Alert, BottomNavigation, BottomNavigationAction, Snackbar } from '@mui/material';
 import axios from 'axios';
 import { ObjectId } from 'bson';
 import React, { useContext, useEffect, useRef, useState } from 'react'
@@ -8,6 +8,9 @@ import { BiUpload } from 'react-icons/bi';
 import { IoMdCloseCircle } from 'react-icons/io';
 import Equipement from '../../components/Equipement/Equipement';
 import { AuthContext } from '../../Context/authContext';
+import Fade from '@mui/material/Fade';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 export const Equipements = () => {
     const libelle = useRef();
@@ -19,10 +22,12 @@ export const Equipements = () => {
     const batiment = useRef();
     const { user, org } = useContext(AuthContext);
 
+    const [value, setValue] = useState(0);
     const [equips, setEquips] = useState();
     const [clickedEq, setClickedEq] = useState(0);
     const [editValues, setEditValues] = useState();
     const [openAlert, setOpenAlert] = useState([false, false, false]);
+    const [loading, setLoading] = useState(false);
 
     const handleCloseAlert = (event, reason) => {
         if (reason === 'clickaway') {
@@ -36,6 +41,7 @@ export const Equipements = () => {
     }
 
     const handleUploadFile = async (e) => {
+        setLoading(true);
         const pic=e.target.files[0];
         const data = new FormData();
         const fileName = Date.now() + pic.name;
@@ -45,9 +51,10 @@ export const Equipements = () => {
             await axios.post("http://localhost:5000/api/upload/file", data);
         } catch (err) {};
         setEditValues({...editValues, [e.target.id]: fileName});
-
+        setLoading(false);
     }
     const submitForm = async (e)=>{
+        setLoading(true);
         var id = new ObjectId();
         const equipement = {
             _id: id.toString(),
@@ -72,8 +79,10 @@ export const Equipements = () => {
         } else {
             setOpenAlert([false, false, true]);
         }
+        setLoading(false);
     }
     const editEquips = async () => {
+        setLoading(true);
         if (Object.keys(editValues).every(x=>editValues[x] !== '')){
             try{
                 await axios.put("http://localhost:5000/api/equipement/" + editValues._id, editValues);
@@ -95,8 +104,10 @@ export const Equipements = () => {
         } else {
             setOpenAlert([false, false, true]);
         }
+        setLoading(false);
     }
     const deleteEquips = async () => {
+        setLoading(true);
         try{
             await axios.delete("http://localhost:5000/api/equipement/" + editValues._id);
             setClickedEq(0);
@@ -108,6 +119,7 @@ export const Equipements = () => {
         }catch(err){
             console.log(err)        
         }
+        setLoading(false);
     }
     useEffect(()=>{
         const fetchEquips = async() => {
@@ -139,8 +151,20 @@ export const Equipements = () => {
                 
 
                 <div className="row">
+                    <Box sx={{ height: 40 }}>
+                    <Fade
+                        className="loading"
+                        in={loading}
+                        style={{
+                        transitionDelay: loading ? '800ms' : '0ms',
+                        }}
+                        unmountOnExit
+                    >
+                        <CircularProgress />
+                    </Fade>
+                    </Box>
                     <div className=" col-9 col-sm-12 col-md-5 col-lg-6 d-flex b justify-content-center align-items-center row">
-                        <h1>Liste des Equipements <small>{equipements.length === 0 && " : Vide"}</small></h1>
+                        <h1>Liste des {value === 0 ? "Equipements" : value === 1 ? "Materiels" : "Logistiques"} <small>{equipements.length === 0 && " : Vide"}</small></h1>
                         {equipements.length !== 0 &&
                             <table className="table table-striped table-hover">
                             <thead>
@@ -169,14 +193,14 @@ export const Equipements = () => {
                             <input className="form-control m-2" placeholder="Numéro d'Inventaire" ref={num_inventaire} />
                             <input className="form-control m-2" placeholder="Zone" ref={zone} />
                             <div className="form-control m-2 d-flex align-items-center">
-                                <input readOnly={true} className="form-control m-2" value={editValues && editValues.fiche_technique.slice(13)} placeholder="Fiche Technique" ref={fiche_technique} />
+                                <input readOnly={true} className="form-control m-2" value={editValues && editValues.fiche_technique} placeholder="Fiche Technique" ref={fiche_technique} />
                                 <label variant="contained" component="label" >
                                     <input hidden type="file" id="fiche_technique" onChange={(e) => handleUploadFile(e)} />
                                     <BiUpload style={{cursor: 'pointer', marginLeft:"10px"}} size={20}/>
                                 </label>
                             </div>
                             <div className="form-control m-2 d-flex align-items-center">
-                                <input readOnly={true} className="form-control m-2" value={editValues && editValues.fds.slice(13)} placeholder="FDS" ref={fds} />
+                                <input readOnly={true} className="form-control m-2" value={editValues && editValues.fds} placeholder="FDS" ref={fds} />
                                 <label variant="contained" component="label" >
                                     <input hidden type="file" id="fds" onChange={(e) => handleUploadFile(e)} />
                                     <BiUpload style={{cursor: 'pointer', marginLeft:"10px"}} size={20}/>
@@ -279,6 +303,20 @@ export const Equipements = () => {
                         </Alert>
                     </Snackbar>
                     }
+                </div>
+                <div className='container w-100 d-flex flex-column align-items-center navigation'>
+                    <BottomNavigation
+                        showLabels
+                        value={value}
+                        onChange={(event, newValue) => {
+                            setValue(newValue);
+                            handleCloseAlert();
+                        }}
+                    >
+                        <BottomNavigationAction label="Equipements"  />
+                        <BottomNavigationAction label="Matériels"  />
+                        <BottomNavigationAction label="Logistiques"  />
+                    </BottomNavigation>
                 </div>
             </div>
         </main>

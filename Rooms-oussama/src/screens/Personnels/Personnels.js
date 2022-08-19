@@ -6,8 +6,11 @@ import { FaTimes } from 'react-icons/fa';
 import { AuthContext } from '../../Context/authContext';
 import Personnels from '../../components/Personnels/Personnel';
 import { ObjectId } from 'bson';
-import { Alert, Box, Skeleton, Snackbar } from '@mui/material'
+import { Alert, Skeleton, Snackbar } from '@mui/material'
 import './Personnels.css'
+import Fade from '@mui/material/Fade';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 const Personnel = () => {
   const nom = useRef();
@@ -15,7 +18,6 @@ const Personnel = () => {
   const naissance = useRef();
   const cin = useRef();
   const metier = useRef();
-  const zone_affecte = useRef();
   const photo = useRef();
   
   const { user } = useContext(AuthContext);
@@ -23,6 +25,7 @@ const Personnel = () => {
   const [persons, setPersons] = useState();
   const [picture, setPicture] = useState('');
   const [openAlert, setOpenAlert] = useState([false, false]);
+  const [loading, setLoading] = useState(false);
 
   const handleCloseAlert = (event, reason) => {
     if (reason === 'clickaway') {
@@ -46,6 +49,7 @@ const Personnel = () => {
     setPicture('')
   }
   const submitPersonnel = async() => {
+    setLoading(true);
     try{
       const generatedId = ObjectId();
       const personnel = {
@@ -55,7 +59,6 @@ const Personnel = () => {
           naissance: naissance.current.value, 
           cin: cin.current.value,
           metier: metier.current.value,
-          zone_affecte: zone_affecte.current.value,
       }
       if (Object.keys(personnel).every(x=>personnel[x] !== '')){
         const personnel2 = {...personnel, photo: picture};
@@ -68,6 +71,7 @@ const Personnel = () => {
     } catch (err) {
       console.log(err)
     }
+    setLoading(false);
   }
   useEffect(() => {
     const fetchPersons = async () => {
@@ -95,6 +99,18 @@ const Personnel = () => {
           
            
             <div className="row">
+                <Box sx={{ height: 40 }}>
+                  <Fade
+                    className="loading"
+                    in={loading}
+                    style={{
+                      transitionDelay: loading ? '800ms' : '0ms',
+                    }}
+                    unmountOnExit
+                  >
+                    <CircularProgress />
+                  </Fade>
+                </Box>
                 <div className=" col-9 col-sm-12 col-md-5 col-lg-6 d-flex b justify-content-center align-items-center row">
                   <h1>Liste des Personnels</h1>
                   <table className="table table-striped table-hover">
@@ -151,7 +167,6 @@ const Personnel = () => {
                         <input className="form-control m-2" type="date" placeholder="Date de Naissance" ref={naissance} />
                         <input className="form-control m-2" placeholder="CIN" ref={cin} />
                         <input className="form-control m-2" placeholder="Métier" ref={metier} />
-                        <input className="form-control m-2" placeholder="Zone affecté" ref={zone_affecte} />
                         <div className="d-flex justify-content-end m-2">
                         <Button className="bg-prime" onClick={submitPersonnel}>Enregister</Button>
                         </div>

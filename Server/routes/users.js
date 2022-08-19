@@ -1,6 +1,6 @@
 import { Router as _Router } from 'express';
 const userRouter = _Router();
-import User from '../models/User.js'
+import User from '../models/user.js'
 import bcrypt from "bcrypt" //Sert a rendre les mots de passe crypte dans la base des donnees.
 
 //Les fonctions qu'on executera lorsqu'on accedera a un url dans le fichier ./routes/users.js

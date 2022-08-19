@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../../Context/authContext';
 import 'bootstrap/dist/css/bootstrap.css';
+import { Skeleton } from '@mui/material';
 
 export default function OrganismPage() {
     const [orgs, setOrgs] = useState();
@@ -33,12 +34,10 @@ export default function OrganismPage() {
            
         )
     })
-    if(orgs!==undefined){
     return(
         <div className='container-fluid logo'>
             <div className=' justify-content-center pb-10 pt-7'>
                 <div className='row organisms-grid'>
-                  {organisms.length!==0 && (
                   <div className='col-auto col-sm-auto col-md-auto'>
                   <table className="table table-striped table-hover">
                     <thead>
@@ -49,10 +48,18 @@ export default function OrganismPage() {
                       </tr>
                     </thead>
                     <tbody>
-                      {organisms}
+                      {orgs!==undefined
+                      ? organisms.length !== 0 
+                        ? organisms
+                        : <h3>Liste Vide!</h3>
+                      : <tr>
+                          <th scope="col-4"><Skeleton animation="wave" /></th>
+                          <th scope="col-4"><Skeleton animation="wave" /></th>
+                          <th scope="col-4"><Skeleton animation="wave" /></th>
+                        </tr>}
                     </tbody>
                   </table>
-                  </div>)}
+                  </div>
                   <div className='col-auto col-sm-auto col-md-auto col-lg-auto mt-2'>
                   <Link to="../new-organism">
                       <AiOutlinePlus size={50} style={{borderRadius: "9px", border: "3px solid"}}/>
@@ -62,7 +69,4 @@ export default function OrganismPage() {
             </div>
         </div>
     )
-}else{
-    return null
-}
 }
