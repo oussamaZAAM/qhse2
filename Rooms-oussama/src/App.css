@@ -146,6 +146,7 @@
   background-color: rgba(245, 240, 187,0.5);
   color:rgb(115, 169, 173);
   float: left;
+  text-align: center
 }
 
 .menu-content ul {
