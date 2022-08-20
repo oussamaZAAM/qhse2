@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import './Zone.css'
 import { AuthContext } from '../../Context/authContext';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AiFillCaretUp } from 'react-icons/ai';
 // import { Button } from 'react-bootstrap';
 import { BiDownload } from 'react-icons/bi';
@@ -13,6 +13,7 @@ import Alert from "../../components/Alert/Alert";
 import Fade from '@mui/material/Fade';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import "./Zone.css"
 
 const Zone = (props) => {
     const [zone, setZone] = useState();
@@ -63,7 +64,11 @@ const Zone = (props) => {
         }
         fetchZone();
     }, [props.zoneId])
-    const transformedPersonnel = zone && zone.equipe.map(x=>persons[allIds.indexOf(x)].nom+' '+persons[allIds.indexOf(x)].prenom);
+    const transformedPersonnel = zone && zone.equipe.map((x, index)=><Link 
+        className='link' 
+        to={"/personnel/" + persons[allIds.indexOf(x)]._id}>
+            <b>{(index === 0) ? "  " : " - "} {persons[allIds.indexOf(x)].nom+' '+persons[allIds.indexOf(x)].prenom}</b>
+        </Link>);
     return zone !== undefined ? (
         <main className="container">
             <div className="container">
@@ -114,11 +119,11 @@ const Zone = (props) => {
                             </div>}
                             <div className="d-block w-100 m-1">
                                 <h6 className="m-2">Responsable :</h6>
-                                {persons !== undefined && <b>{persons[allIds.indexOf(zone.responsable)].nom+' '+persons[allIds.indexOf(zone.responsable)].prenom}</b>}
+                                {persons !== undefined && <Link className="link" to={"/personnel/"+persons[allIds.indexOf(zone.responsable)]._id}><b>{persons[allIds.indexOf(zone.responsable)].nom+' '+persons[allIds.indexOf(zone.responsable)].prenom}</b></Link>}
                             </div>
                             <div className="d-block w-100 m-1">
                                 <h6 className="m-2">Equipe :</h6>
-                                <b>{transformedPersonnel.join(' - ')}</b>
+                                {transformedPersonnel}
                             </div>
                             {zone.type !== 'zone' &&
                             <div className="d-block w-100 m-1">

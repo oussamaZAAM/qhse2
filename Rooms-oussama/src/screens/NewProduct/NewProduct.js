@@ -304,6 +304,7 @@ export default function NewProduct() {
                 value={org.name}
                 name='org'
                 InputLabelProps={{ shrink: true }}
+                disabled={true}
             />
             </Box>
             <hr/>
@@ -408,7 +409,7 @@ export default function NewProduct() {
                 helperText="Entrer des entiers."
                 onChange={handleChange}
                 />)} */}
-            <div className='d-flex w-50 justify-content-between align-items-center'>
+            <div className='d-flex w-100 justify-content-center align-items-center'>
                 <TextField
                     hiddenLabel
                     id="filled-hidden-label-small"

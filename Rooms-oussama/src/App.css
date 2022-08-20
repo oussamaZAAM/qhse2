@@ -50,7 +50,10 @@
   overflow: hidden;
 }
 
-
+.container1{
+  position: sticky;
+  top: 0;
+}
 
 
 

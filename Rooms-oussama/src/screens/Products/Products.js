@@ -8,7 +8,7 @@ import { AuthContext } from '../../Context/authContext';
 import 'bootstrap/dist/css/bootstrap.css';
 import { FaFilter, FaSort } from 'react-icons/fa';
 import { IoMdArrowDropupCircle, IoMdArrowDropdownCircle, IoMdArrowDropup, IoMdArrowDropdown } from 'react-icons/io';
-import { Chip, MenuItem, Skeleton, Slider, TextField } from '@mui/material';
+import { Chip, Fab, MenuItem, Skeleton, Slider, TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 
 export default function Products() {
@@ -306,7 +306,9 @@ export default function Products() {
                   </>}
                 <div className='d-flex  justify-content-center align-items-center'>
                   <Link className="text-center m-2" to="../new-product">
-                        <AiOutlinePlus size={50} style={{borderRadius: "9px", border: "3px solid"}}/>
+                        <Fab color="primary" aria-label="add">
+                          <AiOutlinePlus size={20}/>
+                        </Fab>
                   </Link>
                 </div>
               </div>
