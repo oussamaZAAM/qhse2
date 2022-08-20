@@ -18,6 +18,9 @@ const EquipementSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    type_materiel: {
+        type: String,
+    },
     code: {
         type: String,
         required: true,
