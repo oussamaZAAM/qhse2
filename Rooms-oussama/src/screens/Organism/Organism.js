@@ -134,15 +134,15 @@ export default function Organism(props) {
             !isEdit ? <main className="bg-white" >
                 <div className="container">
                 <div className=" row">
-                    <div className="col-12"> 
-                        <h1 className="text-prime pb-5">{!lastValues.name ? editValues.name : lastValues.name}</h1>
+                    <div className="col-12 center"> 
+                        <h1 className="text-prime pb-5 ">{!lastValues.name ? editValues.name : lastValues.name}</h1>
                             <div className="m-2" >Sites : <b>{!lastValues.site_num ? editValues.site_num : lastValues.site_num}</b></div>
                             <div className=" m-2">Date de création : <b>{!lastValues.creation_date ? formatDate(editValues.creation_date) : formatDate(lastValues.creation_date)}</b></div>
                             <div className=" m-2">Domaine : <b>{!lastValues.domaines ? editValues.domaines : lastValues.domaines}</b></div>
                             <div className=" m-2">Téléphone : <b>{!lastValues.tel ? editValues.tel : lastValues.tel}</b></div>
                             <div className=" m-2">Adresse : <b>{!lastValues.Adresse ? editValues.Adresse : lastValues.Adresse}</b></div>
                             <div className=" m-2">Localisation : <b>{!lastValues.Carte ? editValues.Carte : lastValues.Carte}</b></div>
-                            <div className="d-flex justify-content-end m-2">
+                            <div className="mt-5">
                             <Button className="bg-prime" onClick={editOrg}>Modifier</Button>
                             <Button className="bg-danger" onClick={delOrg} >Supprimer</Button>
                             <Button href="../products" >Liste des produits</Button>
