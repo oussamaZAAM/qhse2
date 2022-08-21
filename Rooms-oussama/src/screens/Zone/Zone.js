@@ -7,7 +7,7 @@ import { AiFillCaretUp } from 'react-icons/ai';
 // import { Button } from 'react-bootstrap';
 import { BiDownload } from 'react-icons/bi';
 // import { Alert, Snackbar } from '@mui/material';
-import { Button } from '@mui/material';
+import { Button, Tooltip } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from "../../components/Alert/Alert";
 import Fade from '@mui/material/Fade';
@@ -48,6 +48,16 @@ const Zone = (props) => {
         }
         setLoading(false);
     }
+    const deleteThisResponsable = async(id) => {
+        await axios.put("http://localhost:5000/api/zone/" + props.zoneId, {...zone, responsable: ""});
+        setZone({...zone, responsable: ""});
+    }
+
+    const deleteThisEquipe = async(id) => {
+        const deletedEquipe = zone.equipe.filter(x => x !== id)
+        await axios.put("http://localhost:5000/api/zone/" + props.zoneId, {...zone, equipe: deletedEquipe});
+        setZone({...zone, equipe: deletedEquipe});
+    }
     const handleDownload = async(e) => {
         await axios.get("http://localhost:5000/api/download/"+zone.flux[e.target.id]);
     }
@@ -64,11 +74,20 @@ const Zone = (props) => {
         }
         fetchZone();
     }, [props.zoneId])
-    const transformedPersonnel = zone && zone.equipe.map((x, index)=><Link 
-        className='link' 
-        to={"/personnel/" + persons[allIds.indexOf(x)]._id}>
-            <b>{(index === 0) ? "  " : " - "} {persons[allIds.indexOf(x)].nom+' '+persons[allIds.indexOf(x)].prenom}</b>
-        </Link>);
+    const transformedPersonnel = zone && zone.equipe.map((x, index)=>{
+        if (allIds.includes(x)){
+            return (
+                <Link className='link' to={"/personnel/" + persons[allIds.indexOf(x)]._id}>
+                    <b>{(index === 0) ? "  " : " - "} {persons[allIds.indexOf(x)].nom+' '+persons[allIds.indexOf(x)].prenom}</b>
+                </Link>
+            )
+        } else {
+            return (
+                <Tooltip title="Double Click pour supprimer ce personnel Définitivement !">
+                    <b className="text-danger" onDoubleClick={()=>deleteThisEquipe(x)}>Le personnel qui a été Affecté est Supprimé !</b>
+                </Tooltip>
+            )
+        }})
     return zone !== undefined ? (
         <main className="container">
             <div className="container">
@@ -119,11 +138,20 @@ const Zone = (props) => {
                             </div>}
                             <div className="d-block w-100 m-1">
                                 <h6 className="m-2">Responsable :</h6>
-                                {persons !== undefined && <Link className="link" to={"/personnel/"+persons[allIds.indexOf(zone.responsable)]._id}><b>{persons[allIds.indexOf(zone.responsable)].nom+' '+persons[allIds.indexOf(zone.responsable)].prenom}</b></Link>}
+                                {persons !== undefined && zone.responsable!=="" 
+                                  ? allIds.includes(zone.responsable)
+                                    ? <Link className="link" to={"/personnel/"+persons[allIds.indexOf(zone.responsable)]._id}><b>{persons[allIds.indexOf(zone.responsable)].nom+' '+persons[allIds.indexOf(zone.responsable)].prenom}</b></Link>
+                                    : <Tooltip title="Double Click pour supprimer ce personnel Définitivement !">
+                                        <b className="text-danger pointer" onDoubleClick={deleteThisResponsable}>Le personnel qui a été Affecté est Supprimé !</b>
+                                    </Tooltip>
+                                  : <b>Le personnel qui a été Affecté est Supprimé !</b>
+                                }
                             </div>
                             <div className="d-block w-100 m-1">
                                 <h6 className="m-2">Equipe :</h6>
-                                {transformedPersonnel}
+                                {transformedPersonnel.length!==0
+                                ? transformedPersonnel
+                                : <b>Le(s) personnel(s) qui a(ont) été Affecté est(sont) Supprimé(s) !</b>}
                             </div>
                             {zone.type !== 'zone' &&
                             <div className="d-block w-100 m-1">

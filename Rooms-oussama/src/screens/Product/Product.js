@@ -21,6 +21,7 @@ const Product = (props) => {
     const [picture, setPicture] = useState('');
     const [isEdit, setIsEdit] = useState(props.isEdit==="isEdit");
     const { org } = useContext(AuthContext)
+    const [error404, setError404] = useState(false); 
     const [editValues, setEditValues] = useState({
         name: "",
         photos: "",
@@ -152,29 +153,33 @@ const Product = (props) => {
         const fetchProducts = async() => {
             const res = await axios.get("http://localhost:5000/api/product/"+props.productId);
             setProduct(res.data);
-            setEditValues({
-                name: res.data.name,
-                photos: res.data.photos,
-                shifelife: res.data.shifelife,
-                shife_time: res.data.shife_time,
-                fiche_technique: res.data.fiche_technique,
-                fds:res.data.fds,
-                emballage:res.data.emballage,
-                grammage:res.data.grammage,
-                type_client:res.data.type_client,
-                creation_date:res.data.creation_date,
-                agrement:res.data.agrement,
-                autorisation:res.data.autorisation,
-                site:res.data.site,
-                org: res.data.organism,
-                energie:res.data.energie,
-                proteine:res.data.proteine,
-                carbs:res.data.carbs,
-                lipide:res.data.lipide,
-                userEtiquettes:res.data.userEtiquettes,
-                editCount:res.data.editCount,
-            })
-            setPicture(res.data.photos)
+            if (res.data !== null) {
+                setEditValues({
+                    name: res.data.name,
+                    photos: res.data.photos,
+                    shifelife: res.data.shifelife,
+                    shife_time: res.data.shife_time,
+                    fiche_technique: res.data.fiche_technique,
+                    fds:res.data.fds,
+                    emballage:res.data.emballage,
+                    grammage:res.data.grammage,
+                    type_client:res.data.type_client,
+                    creation_date:res.data.creation_date,
+                    agrement:res.data.agrement,
+                    autorisation:res.data.autorisation,
+                    site:res.data.site,
+                    org: res.data.organism,
+                    energie:res.data.energie,
+                    proteine:res.data.proteine,
+                    carbs:res.data.carbs,
+                    lipide:res.data.lipide,
+                    userEtiquettes:res.data.userEtiquettes,
+                    editCount:res.data.editCount,
+                })
+                setPicture(res.data.photos)
+            } else {
+                setError404(true);
+            }
         }
         fetchProducts();
         const fetchOrgProducts = async() => {
@@ -212,7 +217,8 @@ const Product = (props) => {
     })
   const thisProductIndex = orgProducts && orgProducts.findIndex(x=> x._id === props.productId)
   return (
-    product && 
+    !error404
+    ? product && 
     <AnimatedPage>
     <div className="container">
         
@@ -510,6 +516,7 @@ const Product = (props) => {
         </div>)}
     </div>
     </AnimatedPage>
+    : <h1>HHHHHHHHHHHH</h1>
   )
 }
 
