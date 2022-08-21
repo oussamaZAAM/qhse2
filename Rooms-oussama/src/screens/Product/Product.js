@@ -516,7 +516,10 @@ const Product = (props) => {
         </div>)}
     </div>
     </AnimatedPage>
-    : <h1>HHHHHHHHHHHH</h1>
+    : <div className="text-center d-flex flex-column justify-content-center align-items-center">
+        <h3 className="m-3">Le produit est supprimé ou n'existe pas !</h3>
+        <img src='https://i.ibb.co/G3V62Xt/image-2022-08-21-210432788.png' className='m-5 image404' />
+    </div>
   )
 }
 
