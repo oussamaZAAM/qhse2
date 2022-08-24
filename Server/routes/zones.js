@@ -70,6 +70,28 @@ ZoneRouter.get('/includes/:personId', async (req, res) => {
     }
 })
 
+ZoneRouter.put("/:zoneId", async (req, res) => {
+    try {
+        const updatedZone = await Zone.findByIdAndUpdate({_id: req.params.zoneId},{
+            _id: req.body._id,
+            type: req.body.type,
+            libelle: req.body.libelle,
+            code: req.body.code,
+            ordre: req.body.ordre,
+            superficie: req.body.superficie,
+            nbr_niveau: req.body.nbr_niveau,
+            responsable: req.body.responsable,
+            equipe: req.body.equipe,
+            atex: req.body.atex,
+            flux: req.body.flux,
+            organism: req.body.organism
+        });
+        res.status(200).json("Zone Equipe / Responsable has been settled");
+    } catch (err) {
+        res.status(500).json(err.message);
+    }
+})
+
 ZoneRouter.delete("/:zoneId", async(req, res) => {
     try{
         await Zone.findByIdAndDelete({_id: req.params.zoneId});

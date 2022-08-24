@@ -23,6 +23,7 @@ import Zones from "./screens/Zones/Zones"
 import Test from "./screens/Test"
 import Zone from "./screens/Zone/Zone"
 import { Equipements } from "./screens/Equipements/Equipements"
+import ErrorPage from "./screens/ErrorPage"
 export default function App() {
 
   const {user, org} = useContext(AuthContext);
@@ -108,6 +109,7 @@ export default function App() {
              <Route path="/zones/:id" element={org?<HandleZone />:(user?<Organisms />:<Login />)} />
              <Route path="/equipements" element={org?<Equipements />:(user?<Organisms />:<Login />)} />
              <Route path="/test" element={org?<Test />:(user?<Organisms />:<Login />)} />
+             <Route path="*" element={<ErrorPage />} />
            {/* </Route> */}
          </Routes>
      
@@ -138,6 +140,7 @@ export default function App() {
              <Route path="/zones/:id" element={org?<HandleZone />:(user?<Organisms />:<Login />)} />
              <Route path="/equipements" element={org?<Equipements />:(user?<Organisms />:<Login />)} />
              <Route path="/test" element={org?<Test />:(user?<Organisms />:<Login />)} />
+             <Route path="*" element={<ErrorPage />} />
            {/* </Route> */}
          </Routes>
            }

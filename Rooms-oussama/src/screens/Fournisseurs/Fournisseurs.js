@@ -206,7 +206,7 @@ export default function Fournisseur() {
                         <input className="form-control m-2" placeholder="Ville" ref={ville} />
                         <div className='form-control m-2 d-flex flex-column justify-content-center align-items-end'>
                           <MuiTelInput label='Téléphone' value={tel} onChange={handleChangeTel} />
-                          <Typography>Téléphone Valide ? {isTelValid
+                          <Typography>Téléphone Valide ? {isTelValid 
                              ? <b className='text-success'>Oui</b>
                              : <b className='text-danger'>Non</b>}
                           </Typography>
@@ -259,8 +259,8 @@ export default function Fournisseur() {
                           onChange={handleChange}
                           ref={ville} 
                         />
-                        <div className='d-flex flex-column justify-content-center align-items-end'>
-                          <MuiTelInput value={tel} onChange={handleChangeTel} />
+                        <div className='form-control m-2 d-flex flex-column justify-content-center align-items-end'>
+                          <MuiTelInput label="Téléphone" value={tel} onChange={handleChangeTel} />
                           <Typography>Téléphone Valide ? {isTelValid
                              ? <b className='text-success'>Oui</b>
                              : <b className='text-danger'>Non</b>}

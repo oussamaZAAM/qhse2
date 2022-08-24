@@ -802,8 +802,9 @@ const Zones = () => {
             }
             
             
-            <div className='container w-100 d-flex flex-column align-items-center navigation'>
+            <div className='container d-flex flex-column align-items-center navigation-div'>
                 <BottomNavigation
+                    className="navigation"
                     showLabels
                     value={value}
                     onChange={(event, newValue) => {

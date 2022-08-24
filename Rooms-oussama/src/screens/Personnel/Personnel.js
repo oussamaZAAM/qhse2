@@ -166,7 +166,15 @@ const Personnel = (props) => {
                 }
             >
                 {allPersonnel 
-                    ? <Avatar sx={{width: '150px', height: '150px'}} className="profile-photo" src={"http://localhost:5000/images/"+picture[thisProductIndex]} />
+                    // ? <Avatar sx={{width: '150px', height: '150px'}} className="profile-photo" src={"http://localhost:5000/images/"+picture[thisProductIndex]} />
+                    ? <div className="thumbnail">
+                        <Avatar sx={{width: '150px', height: '150px'}} className="profile-photo" src={"http://localhost:5000/images/"+picture[thisProductIndex]} />
+                        <span>
+                            <img width={500} src={"http://localhost:5000/images/"+picture[thisProductIndex]} />
+                            <br />
+                            {allPersonnel[thisProductIndex].nom + ' ' + allPersonnel[thisProductIndex].prenom}
+                        </span>
+                    </div>
                     : <Skeleton animation='wave' variant="circular" sx={{width: '150px', height: '150px'}} />
                 }
             </Badge>

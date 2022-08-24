@@ -1,4 +1,4 @@
-import { Alert, BottomNavigation, BottomNavigationAction, Snackbar } from '@mui/material';
+import { Alert, BottomNavigation, BottomNavigationAction, MenuItem, Snackbar, TextField } from '@mui/material';
 import axios from 'axios';
 import { ObjectId } from 'bson';
 import React, { useContext, useEffect, useRef, useState } from 'react'
@@ -28,6 +28,7 @@ export const Equipements = () => {
     const [editValues, setEditValues] = useState();
     const [openAlert, setOpenAlert] = useState([false, false, false]);
     const [loading, setLoading] = useState(false);
+    const [zones, setZones] = useState();
 
     const handleCloseAlert = (event, reason) => {
         if (reason === 'clickaway') {
@@ -98,6 +99,7 @@ export const Equipements = () => {
                 });
                 setClickedEq(0);
                 setOpenAlert([false, true, false]);
+                setEditValues();
             }catch(err){
                 console.log(err)        
             }
@@ -116,6 +118,7 @@ export const Equipements = () => {
               return deletedArray;
             })
             setOpenAlert([true, false, false]);
+            setEditValues();
         }catch(err){
             console.log(err)        
         }
@@ -127,13 +130,18 @@ export const Equipements = () => {
             setEquips(res.data);
         }
         fetchEquips();
+        const fetchZones = async() => {
+            const res = await axios.get("http://localhost:5000/api/zone/z/" + org._id);
+            setZones(res.data);
+        }
+        fetchZones();
     }, [])
 
     function handleClick(num) {
         setClickedEq(num);
         setEditValues(equips[num-1])
     }
-
+    const selectZones = zones && zones.map(zone => <MenuItem value={zone.code}>{zone.code}</MenuItem>);
     const equipements = equips!==undefined && equips.map((x, i)=>{
         return(
             <Equipement 
@@ -191,7 +199,18 @@ export const Equipements = () => {
                             <input className="form-control m-2" placeholder="Libelle Equipement" ref={libelle}/>
                             <input className="form-control m-2" placeholder="Code Equipement" ref={code} />
                             <input className="form-control m-2" placeholder="Numéro d'Inventaire" ref={num_inventaire} />
-                            <input className="form-control m-2" placeholder="Zone" ref={zone} />
+                            <TextField 
+                                className="form-control m-2 form-select"
+                                id="outlined-basic"
+                                label="Zone"
+                                variant="outlined"
+                                select
+                                aria-label="Default select example"
+                                ref={zone}
+                            >   
+                                <MenuItem selected>Choisir une zone</MenuItem>
+                                {selectZones}
+                            </TextField>
                             <div className="form-control m-2 d-flex align-items-center">
                                 <input readOnly={true} className="form-control m-2" value={editValues && editValues.fiche_technique} placeholder="Fiche Technique" ref={fiche_technique} />
                                 <label variant="contained" component="label" >
@@ -215,7 +234,7 @@ export const Equipements = () => {
                     : 
                     <div className="col-9 col-sm-12 col-md-4 col-lg-3 register-a" style={{maxWidth: "fit-content"}}> 
                         <div className="d-flex justify-content-center m-2">
-                        <IoMdCloseCircle className="fournisseur-close" color="red" size={30} onClick={()=>setClickedEq(0)}/>
+                        <IoMdCloseCircle className="fournisseur-close" color="red" size={30} onClick={()=>setClickedEq(0) && setEditValues()}/>
                         </div>
                         <h1 className="text-prime pb-5">Equipement numéro: {clickedEq}</h1>
                         <form className="form-group">
@@ -243,14 +262,19 @@ export const Equipements = () => {
                                 onChange={handleChange}
                                 ref={num_inventaire} 
                             />
-                            <input 
-                                className="form-control m-2" 
-                                placeholder="Zone"
-                                value={editValues.zone}
+                            <TextField 
+                                className="form-control m-2 form-select"
+                                id="outlined-basic"
+                                label="Zone"
+                                variant="outlined"
+                                select
                                 name='zone'
                                 onChange={handleChange}
-                                ref={zone} 
-                            />
+                                aria-label="Default select example"
+                                value={editValues.zone}
+                            >
+                                {selectZones}
+                            </TextField>
                             <div className="form-control m-2 d-flex align-items-center">
                                 <input readOnly={true} className="form-control m-2" value={editValues && editValues.fiche_technique.slice(13)} placeholder="Fiche Technique" ref={fiche_technique} />
                                 <label variant="contained" component="label" >
@@ -304,8 +328,9 @@ export const Equipements = () => {
                     </Snackbar>
                     }
                 </div>
-                <div className='container w-100 d-flex flex-column align-items-center navigation'>
+                <div className='container d-flex flex-column align-items-center navigation-div'>
                     <BottomNavigation
+                        className='navigation'
                         showLabels
                         value={value}
                         onChange={(event, newValue) => {
