@@ -13,6 +13,7 @@ import path from "path";
 import {fileURLToPath} from 'url';
 import ZoneRouter from "./routes/zones.js";
 import EquipementRouter from "./routes/Equipements.js";
+import fs from "fs"
 
 const __filename = fileURLToPath(import.meta.url);
 //__dirname sert a donne le path au root en dependant sur la machine locale dont on execute ce code.
@@ -57,13 +58,14 @@ const storageFile = multer.diskStorage({
     }
   });
   app.get('/api/download/:id', async (req, res) => {
-    try {
-      res.sendFile(path.join(__dirname, "public/files", req.params.id));
-    } catch (error) {
-      res.status(400).send('Error while downloading file. Try again later.');
-    }
+      const filePath = path.join(__dirname, "public/files", req.params.id)
+      const stream = fs.createReadStream(filePath);
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'inline; filename="'+req.params.id.slice(13)+'"');
+
+    stream.pipe(res);
   });
-app.use("/images", express.static(path.join(__dirname, "public/images")));//pour donner l'acces aux images apartir du backend.
+app.use("/images", express.static(path.join(__dirname, "public/images")));
 app.use("/api/user", userRouter);
 app.use("/api/organism", OrganismRouter);
 app.use("/api/fournisseur", FournisseurRouter);
@@ -77,4 +79,3 @@ const PORT = process.env.PORT || 5000;
 
 mongoose.connect(CONNECTION_URL, {useNewUrlParser: true, useUnifiedTopology: true}).then(()=> app.listen(PORT, ()=> console.log(`Server running on port ${PORT}`))).catch((error) => console.log(error.message));
 
-// mongoose.set('useFindAndModify', false);
