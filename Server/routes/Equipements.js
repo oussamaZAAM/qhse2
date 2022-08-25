@@ -53,20 +53,16 @@ EquipementRouter.put("/:equipmentId", async (req, res) => {
     }
 })
 
-EquipementRouter.put("/relatedTo/:zoneId", async(req, res) => {
+EquipementRouter.get("/relatedTo/:zoneId", async(req, res) => {
     try {
         const wantedZone = await Zone.findOne({_id: req.params.zoneId});
-        const oldEquips = await Equipement.findOne({zone: wantedZone});
-        const editEquips = await Equipement.findOneAndUpdate({zone: wantedZone},
-            { $set: oldEquips },
-            {zone: ''},
-            callback
-        )
-        res.status(200).json("Equipement had been updated");
+        const oldEquips = await Equipement.find({zone: wantedZone.code});
+        res.status(200).json(oldEquips);
     } catch (err) {
         res.status(500).json(err);
     }
 })
+
 
 EquipementRouter.get("/all/:userId", async (req, res) => {
     try {

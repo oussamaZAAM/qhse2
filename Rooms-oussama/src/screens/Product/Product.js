@@ -1,4 +1,4 @@
-import { Pagination, TextField } from '@mui/material';
+import { MenuItem, Pagination, TextField } from '@mui/material';
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap';
@@ -45,7 +45,9 @@ const Product = (props) => {
     })
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    console.log(product)
+    const [zones, setZones] = useState();
+    const [batiments, setBatiments] = useState();
+
     function handleImagePage(event, value) {
         setImagePage(value);
     }
@@ -198,6 +200,16 @@ const Product = (props) => {
             setProductOrganism(res.data)
         }
         fetchMyOrg();
+        const fetchZones = async() => {
+            const res = await axios.get("http://localhost:5000/api/zone/z/" + org._id);
+            setZones(res.data);
+        }
+        fetchZones();
+        const fetchBatiments = async() => {
+            const res = await axios.get("http://localhost:5000/api/zone/b/" + org._id);
+            setBatiments(res.data);
+        }
+        fetchBatiments();
     },[props.productId])
     const mappedUserEtiquettes = editValues.userEtiquettes && Object.keys(editValues.userEtiquettes).map((key,value)=>{
         return (
@@ -221,6 +233,10 @@ const Product = (props) => {
             </div>
         )
     })
+  const selectZones = zones && zones.map(zone => <MenuItem value={zone.code}>{zone.code+" (zone)"}</MenuItem>);
+  const selectBatiments = batiments && batiments.map(batiment => <MenuItem value={batiment.code}>{batiment.code+" (bâtiment)"}</MenuItem>);
+  const allSites = selectZones && selectBatiments && selectZones.concat(selectBatiments)
+ 
   const thisProductIndex = orgProducts && orgProducts.findIndex(x=> x._id === props.productId)
   return (
     !error404
@@ -423,7 +439,7 @@ const Product = (props) => {
                             </div>
                             <div className='d-flex justify-content-start'>
                                 <h5 className='p-3'>Site de production: </h5>
-                                <TextField
+                                {/* <TextField
                                     hiddenLabel
                                     className="col-12 col-sm-6 col-md-4 col-lg-4"
                                     id="filled-hidden-label-normal"
@@ -431,7 +447,19 @@ const Product = (props) => {
                                     name='site'
                                     variant="filled"
                                     onChange={handleChange}
-                                />
+                                /> */}
+                                <TextField 
+                                    className="col-12 col-sm-6 col-md-4 col-lg-4"
+                                    id="filled-hidden-label-normal"
+                                    label="Zone"
+                                    variant="filled"
+                                    select
+                                    value={editValues.site}
+                                    name='site'
+                                    onChange={handleChange}
+                                >   
+                                    {allSites}
+                                </TextField>
                             </div>
                             <div className='d-flex justify-content-start'>
                                 <h5 className='p-3'>Organisme: </h5>

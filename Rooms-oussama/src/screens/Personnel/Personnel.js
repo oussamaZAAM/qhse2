@@ -6,7 +6,7 @@ import './Personnel.css';
 import { BsUpload } from 'react-icons/bs'
 import Badge from '@mui/material/Badge';
 import Avatar from '@mui/material/Avatar';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/authContext';
 import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
 import { AiFillCaretUp } from 'react-icons/ai';
@@ -135,7 +135,7 @@ const Personnel = (props) => {
     }
     allPersonnel && fetchAffectedZones();
   },[user._id, thisProductIndex]);
-  const zoneCodes = affectedZones.length!==0 ? affectedZones.map(zone => zone.code).join(' - ') : "Pas affecté !"
+  const zoneCodes = affectedZones.length!==0 ? affectedZones.map(zone => <Link className='link m-1' to={'/zones/'+zone._id}>{zone.code}</Link>): "Pas affecté !"
   return (
     <main>
         <Box sx={{ height: 40 }}>
@@ -230,9 +230,15 @@ const Personnel = (props) => {
                 {allPersonnel
                 ? <TextField 
                     className='col-11 col-sm-10 col-md-5 col-lg-3 m-2'
-                    value={zoneCodes}
+                    value=''
+                    readOnly={true}
                     label="Zone affecté"
                     InputLabelProps={{shrink: true}}
+                    InputProps={{
+                        endAdornment: (
+                            zoneCodes
+                          ),
+                    }}
                 />
                 : <Skeleton className='col-11 col-sm-10 col-md-5 col-lg-3 m-2' animation="wave" height={50} />}
             </div>
