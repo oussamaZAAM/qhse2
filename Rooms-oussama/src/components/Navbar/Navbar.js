@@ -25,7 +25,7 @@ export default function Navbar(props) {
 
 
         <nav className="navbar navbar-expand-lg navbar-light justify-content-between">
-  <a className="navbar-brand" href="../main"><img src="http://localhost:5000/images/logo1.jpeg" style={{maxHeight:"70px", marginTop:"20px", marginLeft:"20px", paddingBottom:"20px"}}/></a>
+  <a className="navbar-brand" href="/main"><img src="http://localhost:5000/images/logo1.jpeg" style={{maxHeight:"70px", marginTop:"20px", marginLeft:"20px", paddingBottom:"20px"}}/></a>
   
 
     {(user!==null && user!==undefined) && 

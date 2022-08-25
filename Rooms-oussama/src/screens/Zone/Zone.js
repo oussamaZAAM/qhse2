@@ -39,6 +39,7 @@ const Zone = (props) => {
             if (window.confirm("Etes-vous sûr que vous voulez Supprimer ?")){
                 setOpenAlert([false, true]);
                 await axios.delete("http://localhost:5000/api/zone/" + props.zoneId);
+                await axios.put("http://localhost:5000/api/equipement/relatedTo" + props.zoneId,{});
                 navigate("../zones")
             } else {
                 setOpenAlert([true, false]);

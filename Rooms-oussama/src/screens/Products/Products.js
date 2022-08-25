@@ -163,11 +163,11 @@ export default function Products() {
           <div className="wrapper">
             <div className="container">
               <div className='d-flex justify-content-end align-items-center p-3'>
-                <div className="sort-div" onClick={toggleSort}>
+                <div className="sort-div mx-1" onClick={toggleSort}>
                     <FaSort className='m-2'/>
                     <span className='m-2'>Sort by</span>
                 </div>
-                <div className="filter-div" onClick={toggleFilter}>
+                <div className="filter-div mx-1" onClick={toggleFilter}>
                   <FaFilter className='m-2'/>
                   <span className='m-2'>Filter</span>
                 </div>

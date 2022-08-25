@@ -45,6 +45,7 @@ const Product = (props) => {
     })
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    console.log(product)
     function handleImagePage(event, value) {
         setImagePage(value);
     }
@@ -67,13 +68,18 @@ const Product = (props) => {
         }
         setIsEdit(false)
         setLoading(false);
+        setProduct({...editValues, editCount: editValues.editCount+1})
+    }
+    const handleCancel = async() =>{
+        setEditValues(product);
+        setIsEdit(false);
     }
     const handleDelete= async (e)=>{
         setLoading(true);
         e.preventDefault();
         try{
             await axios.delete("http://localhost:5000/api/product/" + props.productId);
-            navigate("../../main")
+            navigate("/products")
         }catch(err){
             console.log(err)      
         }
@@ -94,7 +100,7 @@ const Product = (props) => {
         } catch (err) {}
         // setPicture(fileName)
         setPicture(prev=>[...prev, fileName])
-        setProduct({...product, photos: [...picture,fileName]});
+        setEditValues({...editValues, photos: [...picture,fileName]});
         setLoading(false);
     }
     const handleDownload= async (e) => {
@@ -443,7 +449,6 @@ const Product = (props) => {
                             <h4 className='text-center col-12 col-sm-6 col-md-4 col-lg-4 etiquettes'>Etiquettes</h4>
                             <div className='d-flex justify-content-start'>
                                 <h5 className='p-3'>Valeur Energétique: </h5>
-                                {console.log(editValues)}
                                 <TextField
                                     hiddenLabel
                                     className="col-12 col-sm-6 col-md-4 col-lg-4"
@@ -511,8 +516,9 @@ const Product = (props) => {
             </div>
             {orgProducts && thisProductIndex !== orgProducts.length-1 ? <FaArrowCircleRight className='pointer' size={20} onClick={navigateRight}/> : <FaArrowCircleRight color='gray' size={20} />}
         </div>)
-        :(<div className="container text-center products-btn">
-            <Button className='btn btn-primary m-2 enregistrer' onClick={handleEdit}>Enregistrer</Button>
+        :(<div className="d-flex justify-content-center align-items-center">
+            <Button className='btn-warning m-2' onClick={handleCancel}>Annuler</Button>
+            <Button className='btn-primary m-2' onClick={handleEdit}>Enregistrer</Button>
         </div>)}
     </div>
     </AnimatedPage>

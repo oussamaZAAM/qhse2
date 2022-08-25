@@ -3,6 +3,7 @@ import { Router as _Router } from 'express';
 const EquipementRouter = _Router();
 
 import Equipement from '../models/Equipement.js';
+import Zone from '../models/Zone.js';
 
 EquipementRouter.post("/create", async (req, res) => {
     const newEquipement = new Equipement({
@@ -49,6 +50,21 @@ EquipementRouter.put("/:equipmentId", async (req, res) => {
         res.status(200).json("Equipement had been updated");
     } catch (err) {
       res.status(500).json(err);
+    }
+})
+
+EquipementRouter.put("/relatedTo/:zoneId", async(req, res) => {
+    try {
+        const wantedZone = await Zone.findOne({_id: req.params.zoneId});
+        const oldEquips = await Equipement.findOne({zone: wantedZone});
+        const editEquips = await Equipement.findOneAndUpdate({zone: wantedZone},
+            { $set: oldEquips },
+            {zone: ''},
+            callback
+        )
+        res.status(200).json("Equipement had been updated");
+    } catch (err) {
+        res.status(500).json(err);
     }
 })
 

@@ -170,7 +170,7 @@ const Personnel = (props) => {
                     ? <div className="thumbnail">
                         <Avatar sx={{width: '150px', height: '150px'}} className="profile-photo" src={"http://localhost:5000/images/"+picture[thisProductIndex]} />
                         <span>
-                            <img width={500} src={"http://localhost:5000/images/"+picture[thisProductIndex]} />
+                            <img src={"http://localhost:5000/images/"+picture[thisProductIndex]} />
                             <br />
                             {allPersonnel[thisProductIndex].nom + ' ' + allPersonnel[thisProductIndex].prenom}
                         </span>
