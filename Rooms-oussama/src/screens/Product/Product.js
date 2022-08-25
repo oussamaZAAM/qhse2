@@ -109,6 +109,7 @@ const Product = (props) => {
         switch(e.target.id){
             case "fiche_tech":
                 await axios.get("http://localhost:5000/api/download/"+editValues.fiche_technique);
+                break
             case "fds":
                 await axios.get("http://localhost:5000/api/download/"+editValues.fds);
         }
