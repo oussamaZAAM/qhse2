@@ -34,11 +34,12 @@ export default function App() {
     )
   }
   function HandleRaw() {
-    let {id} = useParams();
+    console.log(useParams())
+    let {name} = useParams();
     let {isEdit} = useParams();
 
     return (
-      <Raw ProductId={id} isEdit={isEdit}/> 
+      <Raw ProductId={name} isEdit={isEdit}/> 
     )
   }
   function HandlePersonnel() {
