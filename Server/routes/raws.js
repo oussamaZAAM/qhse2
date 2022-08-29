@@ -48,7 +48,8 @@ RawRouter.get('/:prodId', async (req, res) => {
 
 RawRouter.put('/:prodId', async (req, res) => {
   try {
-      const updatedProduct = await Raw.findOne({_id:req.params.prodId}, {
+    console.log(req.body.userEtiquettes)
+      const updatedProduct = await Raw.findOneAndUpdate({name:req.params.prodId}, {
         name: req.body.name,
         product: req.body.product,
         photos: req.body.photos,
@@ -63,7 +64,7 @@ RawRouter.put('/:prodId', async (req, res) => {
         userEtiquettes: req.body.userEtiquettes,
         editCount: req.body.editCount,
       });
-      await updatedProduct.save(function(){});
+      
       res.status(200).json("Product has been updated");
     } catch (err) {
       res.status(500).json(err);

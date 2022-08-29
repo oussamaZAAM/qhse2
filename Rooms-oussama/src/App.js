@@ -39,7 +39,7 @@ export default function App() {
     let {isEdit} = useParams();
 
     return (
-      <Raw ProductId={name} isEdit={isEdit}/> 
+      <Raw productId={name} isEdit={isEdit}/> 
     )
   }
   function HandlePersonnel() {

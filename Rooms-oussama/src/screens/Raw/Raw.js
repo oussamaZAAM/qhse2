@@ -137,7 +137,7 @@ const Product = (props) => {
     
     useEffect(() => {
         const fetchProducts = async() => {
-            const res = await axios.get("http://localhost:5000/api/raw/"+props.ProductId);
+            const res = await axios.get("http://localhost:5000/api/raw/"+props.productId);
             setProduct(res.data);
             setEditValues({
                 name: res.data.name,
@@ -248,7 +248,7 @@ const Product = (props) => {
                                     hiddenLabel
                                     className="col-12 col-sm-6 col-md-4 col-lg-4"
                                     id="filled-hidden-label-normal"
-                                    value={(editValues.prod).slice(13)}
+                                    value={(editValues.fds).slice(13)}
                                     name='fiche_tech'
                                     variant="filled"
                                     onChange={handleChange}
@@ -309,7 +309,6 @@ const Product = (props) => {
                             <h4 className='text-center col-12 col-sm-6 col-md-4 col-lg-4 etiquettes'>Etiquettes</h4>
                             <div className='d-flex justify-content-start'>
                                 <h5 className='p-3'>Valeur Energétique: </h5>
-                                {console.log(editValues)}
                                 <TextField
                                     hiddenLabel
                                     className="col-12 col-sm-6 col-md-4 col-lg-4"
