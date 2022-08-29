@@ -1,13 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import "./NewProduct.css";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { Button, Pagination } from '@mui/material';
+import { Button, MenuItem, Pagination } from '@mui/material';
 import { AiFillCamera,AiOutlineCloudUpload } from 'react-icons/ai'
 import { FaCheckCircle,FaTimes } from 'react-icons/fa'
 import { AuthContext } from "../../Context/authContext";
 import axios from 'axios';
-import {useNavigate} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 
 export default function NewProduct() {
     const navigate = useNavigate();
@@ -18,6 +18,8 @@ export default function NewProduct() {
     const [newEtiquettesData, setNewEtiquettesData] = useState({});
     const [other, setOther] = useState(false);
     const { org } = useContext(AuthContext);
+    const [zones, setZones] = useState();
+    const [batiments, setBatiments] = useState();
 
   const [product, setProduct] = useState({
     name: "",
@@ -137,6 +139,8 @@ export default function NewProduct() {
     function handleNewEtiquettes(e) {
         setNewEtiquettesData({...newEtiquettesData, [e.target.name]: e.target.value})
     }
+    const selectZones = zones && zones.map(zone => <MenuItem value={zone.code}>{zone.code+" (zone)"}</MenuItem>);
+    const selectBatiments = batiments && batiments.map(batiment => <MenuItem value={batiment.code}>{batiment.code+" (bâtiment)"}</MenuItem>);
     const newEtiquettesText = newEtiquettes.map(x=>{
         return (
             <TextField
@@ -149,6 +153,20 @@ export default function NewProduct() {
             />
         )
     })
+
+    useEffect(()=>{
+        const fetchZones = async() => {
+            const res = await axios.get("http://localhost:5000/api/zone/z/" + org._id);
+            setZones(res.data);
+        }
+        fetchZones();
+        const fetchBatiments = async() => {
+            const res = await axios.get("http://localhost:5000/api/zone/b/" + org._id);
+            setBatiments(res.data);
+        }
+        fetchBatiments();
+    }, [])
+    const allSites = selectZones && selectBatiments && selectZones.concat(selectBatiments)
   return (
     <main className="container">
         <div className="row text-center"><h1 className='text-center'>Nouveau Produit</h1></div>
@@ -289,14 +307,19 @@ export default function NewProduct() {
                 onChange={handleChange}
                 multiline
             />
-            <TextField
-                className="col-12 col-sm-6 col-md-4 col-lg-4"
-                id="outlined-name"
-                label="Site de production"
+            <TextField 
+                className="form-control m-2"
+                id="outlined-textarea"
+                label="Zone"
+                variant="outlined"
+                select
                 value={product.site}
                 name='site'
                 onChange={handleChange}
-            />
+            >   
+                <MenuItem selected>Choisir une Zone / Bâtiment</MenuItem>
+                {allSites}
+            </TextField>
             <TextField
                 className="col-12 col-sm-6 col-md-4 col-lg-4"
                 id="outlined-name"

@@ -780,23 +780,33 @@ const Zones = () => {
                     <div className='d-flex justify-content-center m-3'><Button className="btn btn-success" onClick={saveBatiment}>Enregistrer</Button></div>
                     <div className='text-center'>
                         <h1>Tableaux des Batiments</h1>
-                        {batiments && batiments.length !==0 
-                        ? <table className="table table-striped table-hover">
+                        <table className="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th className="text-center" scope="col-4">Numéro</th>
-                                <th className="text-center" scope="col-4">Code</th>
-                                <th className="text-center" scope="col-4">Ordre</th>
-                                <th className="text-center" scope="col-4">Superficie</th>
-                                <th className="text-center" scope="col-4">Responsable</th>
-                                <th className="text-center" scope="col-4">Equipe</th>
+                                {batiments && workBatiments.length!==0 &&
+                                    <><th className="text-center" scope="col-4">Numéro</th>
+                                    <th className="text-center" scope="col-4">Code</th>
+                                    <th className="text-center" scope="col-4">Ordre</th>
+                                    <th className="text-center" scope="col-4">Superficie</th>
+                                    <th className="text-center" scope="col-4">Responsable</th>
+                                    <th className="text-center" scope="col-4">Equipe</th></>}
                             </tr>
                         </thead>
                         <tbody>
-                            {workBatiments}
+                            {batiments !== undefined 
+                                ?   batiments.length !==0 
+                                    ?   workBatiments
+                                    :   <b>Liste Vide</b>
+                                    : <tr className="sortable">
+                                        <td className="text-center"><Skeleton animation="wave" /></td>
+                                        <td className="text-center"><Skeleton animation="wave" /></td>
+                                        <td className="text-center"><Skeleton animation="wave" /></td>
+                                        <td className="text-center"><Skeleton animation="wave" /></td>
+                                        <td className="text-center"><Skeleton animation="wave" /></td>
+                                        <td className="text-center"><Skeleton animation="wave" /></td>
+                                    </tr>}
                         </tbody>
                         </table>
-                        :<div className="container text-center mt-5"><h3>Tableau Vide!</h3></div>}
                     </div>
                 </div>
             }

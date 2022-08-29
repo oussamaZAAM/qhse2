@@ -11,6 +11,7 @@ import { AuthContext } from '../../Context/authContext';
 import Fade from '@mui/material/Fade';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import { Link } from 'react-router-dom';
 
 export const Equipements = () => {
     const libelle = useRef();
@@ -141,7 +142,7 @@ export const Equipements = () => {
         setClickedEq(num);
         setEditValues(equips[num-1])
     }
-    const selectZones = zones && zones.map(zone => <MenuItem value={zone.code}>{zone.code}</MenuItem>);
+    const selectZones = zones && zones.map(zone => <MenuItem value={zone.code}><Link className='link' to={"/zones/"+zone._id}>{zone.code}</Link></MenuItem>);
     const equipements = equips!==undefined && equips.map((x, i)=>{
         return(
             <Equipement 
@@ -200,7 +201,7 @@ export const Equipements = () => {
                             <input className="form-control m-2" placeholder="Code Equipement" ref={code} />
                             <input className="form-control m-2" placeholder="Numéro d'Inventaire" ref={num_inventaire} />
                             <TextField 
-                                className="form-control m-2 form-select"
+                                className="form-control m-2"
                                 id="outlined-basic"
                                 label="Zone"
                                 variant="outlined"
@@ -263,7 +264,7 @@ export const Equipements = () => {
                                 ref={num_inventaire} 
                             />
                             <TextField 
-                                className="form-control m-2 form-select"
+                                className="form-control m-2"
                                 id="outlined-basic"
                                 label="Zone"
                                 variant="outlined"

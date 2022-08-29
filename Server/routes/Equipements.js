@@ -3,6 +3,7 @@ import { Router as _Router } from 'express';
 const EquipementRouter = _Router();
 
 import Equipement from '../models/Equipement.js';
+import Zone from '../models/Zone.js';
 
 EquipementRouter.post("/create", async (req, res) => {
     const newEquipement = new Equipement({
@@ -51,6 +52,17 @@ EquipementRouter.put("/:equipmentId", async (req, res) => {
       res.status(500).json(err);
     }
 })
+
+EquipementRouter.get("/relatedTo/:zoneId", async(req, res) => {
+    try {
+        const wantedZone = await Zone.findOne({_id: req.params.zoneId});
+        const oldEquips = await Equipement.find({zone: wantedZone.code});
+        res.status(200).json(oldEquips);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
 
 EquipementRouter.get("/all/:userId", async (req, res) => {
     try {

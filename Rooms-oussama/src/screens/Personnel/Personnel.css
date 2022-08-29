@@ -17,6 +17,7 @@
 .thumbnail {
   position: relative;
   z-index: 0;
+  border-radius: 50%;
 }
 
 .thumbnail:hover {
@@ -26,10 +27,9 @@
 
 .thumbnail span {
   /*CSS for enlarged image*/
-  position: absolute;
+  position: fixed;
   background-color: lightyellow;
   padding: 5px;
-  left: -1000px;
   border: 1px dashed gray;
   visibility: hidden;
   color: black;
@@ -40,6 +40,7 @@
   /*CSS for enlarged image*/
   border-width: 0;
   padding: 2px;
+  width: 600px;
 }
 
 .thumbnail:hover span {
@@ -47,4 +48,14 @@
   visibility: visible;
   top: 0;
   left: 60px; /*position where enlarged image should offset horizontally */
+} 
+@media screen and (max-width: 768px) {
+  .thumbnail span img{
+    width: 450px;
+  }
+}
+@media screen and (max-width: 524px) {
+  .thumbnail span img{
+    width: 350px;
+  }
 }
