@@ -156,12 +156,13 @@ export const Equipements = () => {
     const editEquips = async () => {
         setLoading(true);
         if(value === 0){
+            const index = equips.findIndex(x => x._id === editValues._id);
             if (Object.keys(editValues).every(x=>editValues[x] !== '')){
                 try{
                     await axios.put("http://localhost:5000/api/equipement/" + editValues._id, editValues);
                     setEquips(prevEquips=>{
                     const newEquip = prevEquips.map(x=>{
-                        if (prevEquips.indexOf(x) === clickedEq - 1){
+                        if (prevEquips.indexOf(x) === index){
                         return editValues;
                         } else {
                         return x;
@@ -180,12 +181,13 @@ export const Equipements = () => {
             }
         } else {
             if (value === 1 ){
+                const index = equips.findIndex(x => x._id === editValuesMat._id);
                 if (Object.keys(editValuesMat).every(x=>editValuesMat[x] !== '')){
                     try{
                         await axios.put("http://localhost:5000/api/equipement/" + editValuesMat._id, editValuesMat);
                         setEquips(prevEquips=>{
                         const newEquip = prevEquips.map(x=>{
-                            if (prevEquips.indexOf(x) === clickedEq - 1){
+                            if (prevEquips.indexOf(x) === index){
                             return editValuesMat;
                             } else {
                             return x;
@@ -203,12 +205,13 @@ export const Equipements = () => {
                     setOpenAlert([false, false, true]);
                 }
             } else {
+                const index = equips.findIndex(x => x._id === editValuesLog._id);
                 if (Object.keys(editValuesLog).every(x=>editValuesLog[x] !== '')){
                     try{
                         await axios.put("http://localhost:5000/api/equipement/" + editValuesLog._id, editValuesLog);
                         setEquips(prevEquips=>{
                         const newEquip = prevEquips.map(x=>{
-                            if (prevEquips.indexOf(x) === clickedEq - 1){
+                            if (prevEquips.indexOf(x) === index){
                             return editValuesLog;
                             } else {
                             return x;
@@ -333,7 +336,6 @@ export const Equipements = () => {
             />
         )
     })
-    console.log(equips)
 
     return (
         <main className="background  new-organism-main" >
