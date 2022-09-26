@@ -17,6 +17,7 @@ import { Table } from '@mantine/core';
 import Fournisseurs from '../../components/Fournisseurs/Fournisseurs.js';
 import { Skeleton } from "@mui/material";
 import Personnels from '../../components/Personnels/Personnel';
+import Zone from '../../components/Zone/Zone';
 
 export default function Organism(props) {
     const autoplay = useRef(Autoplay({ delay: 2000 }));
@@ -28,6 +29,7 @@ export default function Organism(props) {
     const [prods, setProds] = useState();
     const [fours, setFours] = useState();
     const [raws, setRaws] = useState();
+    const [zones, setZones] = useState();
     const [persons, setPersons] = useState();
     const [isEdit, setIsEdit] = useState(false);
     const [editValues, setEditValues] = useState({
@@ -165,6 +167,11 @@ export default function Organism(props) {
             }
           };
           fetchPersons();
+          const fetchZones = async() => {
+            const res = await axios.get("http://localhost:5000/api/zone/z/" + org._id);
+            setZones(res.data)
+        }
+        fetchZones();
     }, [props.orgId]);
     const fournisseurs = fours!==undefined && fours.map((x, i)=>{
         if(i===3) {
@@ -186,6 +193,18 @@ export default function Organism(props) {
             key={x._id}
             id={x._id}
             Person={x}
+            dashBoard={true}
+          />
+        )
+      });
+      const workZones = zones !== undefined && zones.map((x, i) =>{
+        return(
+          <Zone
+            num={i+1}
+            key={x._id}
+            id={x._id}
+            zone={x}
+            persons={persons}
             dashBoard={true}
           />
         )
@@ -300,7 +319,30 @@ export default function Organism(props) {
                     </tbody>
                         </Table>
                       </div>
-                      <div className="item5">5</div>
+                      <div className="item5">
+                      <Table>
+                        <thead>
+                      <tr>
+                        <th className="text-center" scope="col-4">Code</th>
+                        <th className="text-center" scope="col-4">Ordre</th>
+                        <th className="text-center" scope="col-4">Superficie</th>
+                        <th className="text-center" scope="col-4">Responsable</th>
+                      </tr>
+                    </thead>
+                   <tbody>
+                    {zones 
+                      ? workZones.length!==0
+                        ? workZones
+                        : <h3>Vide!</h3>
+                      : <tr className="sortable">
+                          <td className="text-center"><Skeleton animation="wave" /></td>
+                          <td className="text-center"><Skeleton animation="wave" /></td>
+                          <td className="text-center"><Skeleton animation="wave" /></td>
+                          <td className="text-center"><Skeleton animation="wave" /></td>
+                        </tr>}
+                    </tbody>
+                        </Table>
+                      </div>
                       <div className="item6">6</div>
                      
                 </div>

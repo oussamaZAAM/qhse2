@@ -14,15 +14,9 @@ PersonnelRouter.post('/create', async (req, res)=>{
         cin: req.body.cin,
         metier: req.body.metier,
         photo: req.body.photo,
-
     })
     
     const cuser = await newPersonnel.save(function(){});  
-    const updatedZone = await Zone.findOneAndUpdate({code: req.body.zone},{
-        
-        equipe: req.body._id,
-        
-    });
     res.status(201).json(cuser);
 })
 
@@ -44,9 +38,7 @@ PersonnelRouter.put('/:personId', async (req, res)=>{
             cin: req.body.cin,
             metier: req.body.metier,
             photo: req.body.photo,
-
         });
-        
         res.status(200).json("Personnel had been updated");
     } catch(err) {
         res.status(500).json(err);

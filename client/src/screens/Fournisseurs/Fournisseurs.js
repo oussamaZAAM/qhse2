@@ -147,11 +147,11 @@ export default function Fournisseur() {
         )
     })
     return(
-        <main className="background vertical-center new-organism-main" >
-            <div className="container rounded">
+        <main className="background  new-organism-main" >
+            <div className="container rounded ">
               
               
-              <div className="row">
+              <div className="row vertical-center">
                 <Box sx={{ height: 40 }}>
                   <Fade
                     className="loading"

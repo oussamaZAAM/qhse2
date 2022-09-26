@@ -21,7 +21,6 @@ EquipementRouter.post("/create", async (req, res) => {
     });
     
     const createdEquipement = await newEquipement.save();
-    
     res.status(201).json(createdEquipement);
 })
 
