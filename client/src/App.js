@@ -75,23 +75,7 @@ export default function App() {
       {org && user?
        <section className="section1">
   
-       <span class="container1">
-         <span class="checkbox-container">
-           <input class="checkbox-trigger" type="checkbox"  />
-           <span class="menu-content">
-               <ul>
-                 <li onClick={()=>navigate("/")}>Tableau de bord</li>
-                 <li onClick={()=>navigate("/products")}>Produits</li>
-                 <li onClick={()=>navigate("/raw-recap")}>Matieres Premieres</li>
-                 <li onClick={()=>navigate("/fournisseurs")}>Fournisseurs</li>
-                 <li onClick={()=>navigate("/personnel")}>Personnels</li>
-                 <li onClick={()=>navigate("/zones")}>Batiments / Zones</li>
-                 <li onClick={()=>navigate("/equipements")}>Equipements</li>
-               </ul>
-             <span class="hamburger-menu"></span>
-           </span>
-         </span>
-       </span>
+      
            <Routes>
            {/* <Route path="/" element={<Layout />}> */}
              <Route path="/" element={org?<HandleOrganism/>:(user?<Organisms />:<Main />)} />

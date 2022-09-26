@@ -23,7 +23,23 @@ export default function Navbar(props) {
     return(
         <div style={{backgroundColor:"#F5F0BB"}}>
 
-
+<span class="container1">
+         <span class="checkbox-container">
+           <input class="checkbox-trigger" type="checkbox"  />
+           <span class="menu-content">
+               <ul>
+                 <li onClick={()=>navigate("/")}>Tableau de bord</li>
+                 <li onClick={()=>navigate("/products")}>Produits</li>
+                 <li onClick={()=>navigate("/raw-recap")}>Matieres Premieres</li>
+                 <li onClick={()=>navigate("/fournisseurs")}>Fournisseurs</li>
+                 <li onClick={()=>navigate("/personnel")}>Personnels</li>
+                 <li onClick={()=>navigate("/zones")}>Batiments / Zones</li>
+                 <li onClick={()=>navigate("/equipements")}>Equipements</li>
+               </ul>
+             <span class="hamburger-menu"></span>
+           </span>
+         </span>
+       </span>
         <nav className="navbar navbar-expand-lg navbar-light justify-content-between">
   <a className="navbar-brand" href="/main"><img src="http://localhost:5000/images/logo1.jpeg" style={{maxHeight:"70px", marginTop:"20px", marginLeft:"20px", paddingBottom:"20px"}}/></a>
   

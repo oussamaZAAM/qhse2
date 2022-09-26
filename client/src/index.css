@@ -39,6 +39,7 @@ code {
 
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 .login-card{
   background: rgba(0, 0, 0, 0.29);
