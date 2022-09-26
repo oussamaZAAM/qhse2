@@ -12,6 +12,8 @@ import Fade from '@mui/material/Fade';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import { Link } from 'react-router-dom';
+import Material from '../../components/Equipement/Material';
+import Logistic from '../../components/Equipement/Logistic';
 
 export const Equipements = () => {
     const libelle = useRef();
@@ -21,6 +23,8 @@ export const Equipements = () => {
     const fiche_technique = useRef();
     const fds = useRef();
     const batiment = useRef();
+    const affection = useRef();
+    const type_materiel = useRef();
     const { user, org } = useContext(AuthContext);
 
     const [value, setValue] = useState(0);
@@ -55,7 +59,7 @@ export const Equipements = () => {
         setEditValues({...editValues, [e.target.id]: fileName});
         setLoading(false);
     }
-    const submitForm = async (e)=>{
+    const submitFormEq = async (e)=>{
         setLoading(true);
         var id = new ObjectId();
         const equipement = {
@@ -72,8 +76,63 @@ export const Equipements = () => {
         }
         if (Object.keys(equipement).every(x=>equipement[x] !== '')){
             try{
-                await axios.post("http://localhost:5000/api/equipement/create", equipement);
+                await axios.post("http://localhost:5000/api/equipement/createEq", equipement);
                 setEquips(prevArray=>[...prevArray, equipement]);
+                setOpenAlert([false, true, false]);
+            }catch(err){
+                console.log(err)
+            }
+        } else {
+            setOpenAlert([false, false, true]);
+        }
+        setLoading(false);
+    }
+    const submitFormMat = async (e)=>{
+        setLoading(true);
+        var id = new ObjectId();
+        const material = {
+            _id: id.toString(),
+            user:user._id, organism: org._id,
+            type: 'mat',
+            libelle:libelle.current.value,
+            type_materiel:type_materiel.current.value,
+            code:code.current.value,
+            num_inventaire:num_inventaire.current.value,
+            fiche_technique:editValues.fiche_technique, 
+            fds:editValues.fds, 
+            affection:batiment.current.value
+        }
+        if (Object.keys(material).every(x=>material[x] !== '')){
+            try{
+                await axios.post("http://localhost:5000/api/equipement/createMat", material);
+                setEquips(prevArray=>[...prevArray, material]);
+                setOpenAlert([false, true, false]);
+            }catch(err){
+                console.log(err)
+            }
+        } else {
+            setOpenAlert([false, false, true]);
+        }
+        setLoading(false);
+    }
+    const submitFormLog = async (e)=>{
+        setLoading(true);
+        var id = new ObjectId();
+        const logistic = {
+            _id: id.toString(),
+            user:user._id, organism: org._id,
+            type: 'log',
+            libelle:libelle.current.value,
+            code:code.current.value,
+            num_inventaire:num_inventaire.current.value,
+            fiche_technique:editValues.fiche_technique, 
+            fds:editValues.fds, 
+            affection:batiment.current.value
+        }
+        if (Object.keys(logistic).every(x=>logistic[x] !== '')){
+            try{
+                await axios.post("http://localhost:5000/api/equipement/createLog", logistic);
+                setEquips(prevArray=>[...prevArray, logistic]);
                 setOpenAlert([false, true, false]);
             }catch(err){
                 console.log(err)
@@ -143,9 +202,32 @@ export const Equipements = () => {
         setEditValues(equips[num-1])
     }
     const selectZones = zones && zones.map(zone => <MenuItem value={zone.code}><Link className='link' to={"/zones/"+zone._id}>{zone.code}</Link></MenuItem>);
-    const equipements = equips!==undefined && equips.map((x, i)=>{
+    const equipementsFilter = equips && equips.filter(x => x.type === 'eq');
+    const materialsFilter = equips && equips.filter(x => x.type === 'mat');
+    const logisticsFilter = equips && equips.filter(x => x.type === 'log');
+    const equipements = equipementsFilter!==undefined && equipementsFilter.map((x, i)=>{
         return(
             <Equipement 
+              num={i+1}
+              key={x._id}
+              equipId={x}
+              handleClick={handleClick}
+            />
+        )
+    })
+    const materials = materialsFilter!==undefined && materialsFilter.map((x, i)=>{
+        return(
+            <Material 
+              num={i+1}
+              key={x._id}
+              equipId={x}
+              handleClick={handleClick}
+            />
+        )
+    })
+    const logistics =logisticsFilter!==undefined &&logisticsFilter.map((x, i)=>{
+        return(
+            <Logistic 
               num={i+1}
               key={x._id}
               equipId={x}
@@ -174,7 +256,7 @@ export const Equipements = () => {
                     </Box>
                     <div className=" col-9 col-sm-12 col-md-5 col-lg-6 d-flex b justify-content-center align-items-center row">
                         <h1>Liste des {value === 0 ? "Equipements" : value === 1 ? "Materiels" : "Logistiques"} <small>{equipements.length === 0 && " : Vide"}</small></h1>
-                        {equipements.length !== 0 &&
+                        {equipements.length !== 0 && value === 0 &&
                             <table className="table table-striped table-hover">
                             <thead>
                             <tr>
@@ -192,15 +274,53 @@ export const Equipements = () => {
                                 {equipements}
                             </tbody>
                         </table>}
+                        {/* --------------------------------------------------------------------------------------------------------------- */}
+                        {materials.length !== 0 && value === 1 &&
+                            <table className="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th className="text-center" scope="col-4">Numéro</th>
+                                <th className="text-center" scope="col-4">Libelle</th>
+                                <th className="text-center" scope="col-4">Type de materiel</th>
+                                <th className="text-center" scope="col-4">Code</th>
+                                <th className="text-center" scope="col-4">Numéro d'Inventaire</th>
+                                <th className="text-center" scope="col-4">Fiche Technique</th>
+                                <th className="text-center" scope="col-4">FDS</th>
+                                <th className="text-center" scope="col-4 ">Affection</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {materials}
+                            </tbody>
+                        </table>}
+                        {/* --------------------------------------------------------------------------------------------------------------- */}
+                        {logistics.length !== 0 && value === 2 &&
+                            <table className="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th className="text-center" scope="col-4">Numéro</th>
+                                <th className="text-center" scope="col-4">Libelle</th>
+                                <th className="text-center" scope="col-4">Code</th>
+                                <th className="text-center" scope="col-4">Numéro d'Inventaire</th>
+                                <th className="text-center" scope="col-4">Fiche Technique</th>
+                                <th className="text-center" scope="col-4">FDS</th>
+                                <th className="text-center" scope="col-4 ">Affection</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {logistics}
+                            </tbody>
+                        </table>}
                     </div>
                     {clickedEq === 0 
                     ? <div className="col-9 col-sm-12 col-md-4 col-lg-3 register-a" style={{maxWidth: "fit-content"}}>
                         <h1 className="text-prime pb-5">Ajouter un Equipement</h1>
                         <form className="form-group">
                             <input className="form-control m-2" placeholder="Libelle Equipement" ref={libelle}/>
+                            {value === 1 && <input className="form-control m-2" placeholder='Type de materiel' ref={type_materiel}/>}
                             <input className="form-control m-2" placeholder="Code Equipement" ref={code} />
                             <input className="form-control m-2" placeholder="Numéro d'Inventaire" ref={num_inventaire} />
-                            <TextField 
+                            {value === 0 && <TextField 
                                 className="form-control m-2"
                                 id="outlined-basic"
                                 label="Zone"
@@ -211,7 +331,7 @@ export const Equipements = () => {
                             >   
                                 <MenuItem selected>Choisir une zone</MenuItem>
                                 {selectZones}
-                            </TextField>
+                            </TextField>}
                             <div className="form-control m-2 d-flex align-items-center">
                                 <input readOnly={true} className="form-control m-2" value={editValues && editValues.fiche_technique} placeholder="Fiche Technique" ref={fiche_technique} />
                                 <label variant="contained" component="label" >
@@ -226,9 +346,14 @@ export const Equipements = () => {
                                     <BiUpload style={{cursor: 'pointer', marginLeft:"10px"}} size={20}/>
                                 </label>
                             </div>
-                            <input className="form-control m-2" placeholder="Bâtiment" ref={batiment} />
+                            {value === 0 
+                                ? <input className="form-control m-2" placeholder="Bâtiment" ref={batiment} />
+                                : <input className="form-control m-2" placeholder="Affection" ref={affection} />
+                            }
                             <div className="d-flex justify-content-end m-2">
-                                <Button className="bg-prime" onClick={submitForm} >Enregister</Button>
+                                <Button 
+                                    className="bg-prime" 
+                                    onClick={value === 0 ? submitFormEq : value === 1 ? submitFormMat : submitFormLog} >Enregister</Button>
                             </div>
                         </form>
                     </div>
