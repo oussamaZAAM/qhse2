@@ -1,0 +1,52 @@
+.etiquettes{
+    margin: 2.5%;
+    font-size: 1.8em;
+    font-weight: 700;
+}
+.enregistrer{
+    margin-left: -100px !important;
+}
+.center-image{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.wrapped-btn{
+    position: absolute;
+    display: none;
+}
+.wrapping-image:hover + .wrapped-btn{
+    display: block;
+}
+.wrapped-btn:hover{
+    display: block;
+}
+.wrapping-image:hover{
+    filter: brightness(75%);
+}
+.delete-product-div{
+    z-index: 100;
+    display: flex;
+    justify-content: flex-end;
+    padding: 3px;
+}
+.delete-product-div:hover{
+    cursor: pointer;
+   background-color: red;
+   border-radius: 30px;
+   color: white;
+}
+.product-scroll{
+    height: 25rem;
+    overflow-y: scroll;
+}
+.pointer:hover{
+    cursor: pointer;
+}
+.modifer{
+    width: 10px;
+}
+.small{
+    height: 40px;
+    width: 200px;
+}

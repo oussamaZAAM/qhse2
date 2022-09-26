@@ -1,0 +1,171 @@
+/* 
+.organism-component{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    max-height: 250px;
+    max-width: 200px;
+    width: fit-content;
+    overflow: hidden;
+  }
+  .organisms-grid{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .organism-img{
+    margin: 20px;
+    border-radius: 9px;
+    max-height: 150px;
+  }
+  .organism-title{
+    width: 175px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
+  }
+  .sortable {
+    cursor: pointer;
+} */
+body{
+
+  background: #eee;
+}
+
+
+.wrapper{
+
+  margin-top: 30px;
+}
+
+.card1{
+  background-color: white;
+  border:1px solid #eee;
+  cursor: pointer;
+}
+
+
+.weight{
+
+  margin-top: -65px; 
+  transition: all 0.5s;  
+}
+
+.weight small{
+
+  color: #e2dede;
+}
+
+.buttons {
+  padding: 10px;
+  background-color: #d6d4d44f;
+  border-radius: 4px;
+  position: relative;
+  margin-top: 7px;
+  opacity: 0;
+  transition: all 0.8s;
+}
+
+.dot {
+  height: 14px;
+  width: 14px;
+  background-color: green;
+  border-radius: 50%;
+  position: absolute;
+  left: 27%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 8px;
+  color: #fff;
+  opacity: 0;
+}
+
+.cart-button {
+  height: 48px;
+}
+
+.cart-button:focus {
+  box-shadow: none
+}
+
+.cart {
+  position: relative;
+  height: 48px !important;
+  width: 50px;
+  margin-right: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  padding: 11px;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: 1s ease-in-out;
+  overflow: hidden;
+
+}
+
+.cart-button.clicked span.dot {
+  animation: item 0.3s ease-in forwards
+}
+
+@keyframes item {
+  0% {
+      opacity: 1;
+      top: 30%;
+      left: 30%
+  }
+
+  25% {
+      opacity: 1;
+      left: 26%;
+      top: 0%
+  }
+
+  50% {
+      opacity: 1;
+      left: 23%;
+      top: -22%
+  }
+
+  75% {
+      opacity: 1;
+      left: 19%;
+      top: -18%
+  }
+
+  100% {
+      opacity: 1;
+      left: 14%;
+      top: 28%
+  }
+}
+
+
+
+.card1:hover .buttons{
+
+  opacity: 1;
+}
+
+
+.card1:hover .weight{
+
+   margin-top: 10px;
+}
+
+.card1:hover{
+  transform: scale(1.04);
+  z-index: 2;
+  overflow: hidden;
+}
+.card1{
+  min-width: fit-content;
+}
+.img-height{
+  height: 100px;
+  object-fit: contain;
+}

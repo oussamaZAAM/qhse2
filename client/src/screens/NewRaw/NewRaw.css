@@ -1,0 +1,17 @@
+.yellow-btn{
+    background-color: #F5F0BB;
+}
+.image-wrap {
+    display: flex;
+    align-items: flex-start;
+}
+.close {
+   margin-left: -2vh;
+}
+.close:hover {
+   cursor: pointer;
+   background-color: red;
+   border-radius: 30px;
+   color: white;
+   padding: 3px;
+}

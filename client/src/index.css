@@ -1,0 +1,79 @@
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.register-a{
+  margin-left: 25%;
+}
+.text-prime{
+  color: rgb(115, 169, 173) !important;
+}
+.bg-prime{
+  background-color: #73A9AD !important;
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+.jumbotron {
+  height: 100%;
+  background: linear-gradient(90deg, #F5F0BB 50%, #FFFFFF 50%);
+}
+@media screen and (max-width: 768px) {
+  .jumbotron{
+    background: rgb(245, 240, 187);
+  }
+}
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
+.login-card{
+  background: rgba(0, 0, 0, 0.29);
+  mix-blend-mode: multiply;
+  box-shadow: -3px 6px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+  display: grid;
+  grid-gap: 10px; /* size of the line between cells */
+  grid-template-columns: 1.5fr 1fr;
+  grid-template-rows: minmax(min-content, max-content);
+  margin: 10rem; 
+  padding: 20px;
+}
+
+
+
+::-webkit-scrollbar {
+  width: 10px;
+
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #b0b0b0;
+  background-clip: padding-box;
+  border: 0.05em solid #eeeeee;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: white;
+  border-radius: 10px;
+}
+
+@media screen and (max-width: 280px) {
+  .logo-img {
+    width: 100px;
+  }
+}
