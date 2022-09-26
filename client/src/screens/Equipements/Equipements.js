@@ -84,7 +84,6 @@ export const Equipements = () => {
             fds:editValues.fds, 
             affection:batiment.current.value
         }
-        console.log(equipement)
         if (Object.keys(equipement).every(x=>equipement[x] !== '')){
             try{
                 await axios.post("http://localhost:5000/api/equipement/createEq", equipement);
