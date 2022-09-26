@@ -23,6 +23,9 @@ const PersonnelSchema = new mongoose.Schema({
     },
     photo: {
         type: String,
+    },
+    zone: {
+        type:String
     }
 })
 

@@ -18,6 +18,7 @@ import Fournisseurs from '../../components/Fournisseurs/Fournisseurs.js';
 import { Skeleton } from "@mui/material";
 import Personnels from '../../components/Personnels/Personnel';
 import Zone from '../../components/Zone/Zone';
+import Equipement from '../../components/Equipement/Equipement';
 
 export default function Organism(props) {
     const autoplay = useRef(Autoplay({ delay: 2000 }));
@@ -28,6 +29,7 @@ export default function Organism(props) {
     const [org1, setOrg] = useState();
     const [prods, setProds] = useState();
     const [fours, setFours] = useState();
+    const [equips, setEquips] = useState();
     const [raws, setRaws] = useState();
     const [zones, setZones] = useState();
     const [persons, setPersons] = useState();
@@ -71,6 +73,8 @@ export default function Organism(props) {
     function editValuesFunc(name, value) {
         setEditValues({...editValues, [name]: value})
     }
+    const equipementsFilter = equips && equips.filter(x => x.type === 'eq');
+
     function formatDate(date) {
         var d = new Date(date),
             month = '' + (d.getMonth() + 1),
@@ -172,6 +176,11 @@ export default function Organism(props) {
             setZones(res.data)
         }
         fetchZones();
+        const fetchEquips = async() => {
+          const res = await axios.get("http://localhost:5000/api/equipement/all/" + user._id);
+          setEquips(res.data);
+      }
+      fetchEquips();
     }, [props.orgId]);
     const fournisseurs = fours!==undefined && fours.map((x, i)=>{
         if(i===3) {
@@ -209,6 +218,16 @@ export default function Organism(props) {
           />
         )
       });
+      const equipements = equipementsFilter!==undefined && equipementsFilter.map((x, i)=>{
+        return(
+            <Equipement 
+              num={i+1}
+              key={x._id}
+              equipId={x}
+              dashBoard={true}
+            />
+        )
+    })
     if(org1!==undefined && prods !== undefined && raws !== undefined){
         return(
             !isEdit ? <div className="grid-container" >
@@ -243,15 +262,25 @@ export default function Organism(props) {
       onMouseLeave={autoplay.current.reset}
       style={{clear: "both"}}
     >
-        
+        {prods[0]!==undefined &&
       <Carousel.Slide>
         {prods[0].title}
         <Image style={{cursor:"pointer"}} onClick={()=> navigate("/product/"+prods[0]._id)} src={"http://localhost:5000/images/"+prods[0].photos[0]} />
       </Carousel.Slide>
+
+        }
+         {prods[1]!==undefined &&
       <Carousel.Slide>
         {prods[1].title}
         <Image style={{cursor:"pointer"}} onClick={()=> navigate("/product/"+prods[1]._id)} src={"http://localhost:5000/images/"+prods[1].photos[0]} />
       </Carousel.Slide>
+    }
+     {prods[2]!==undefined &&
+      <Carousel.Slide>
+        {prods[2].title}
+        <Image style={{cursor:"pointer"}} onClick={()=> navigate("/product/"+prods[2]._id)} src={"http://localhost:5000/images/"+prods[2].photos[0]} />
+      </Carousel.Slide>
+    }
     </Carousel>
                       </div>
                       <div onClick={()=>navigate("/products")} className="itemC text-prime" style={{textAlign:"right", paddingRight:"10px"}}>
@@ -315,7 +344,7 @@ export default function Organism(props) {
                       </div>
                       </div>
                       <div className="item4 bg-white1 grid-container3">
-                      <div className="itemA text-prime"><h2>Les personnels:</h2></div>
+                      <div className="itemA text-prime"><h2 onClick={()=>navigate("../../personnel")}>Les personnels:</h2></div>
                       <div className="itemB">
                         <Table>
                         <thead>
@@ -340,12 +369,12 @@ export default function Organism(props) {
                     </tbody>
                         </Table>
                       </div>
-                      <div className="itemC text-prime" style={{textAlign:"right", paddingRight:"10px"}}>
+                      <div onClick={()=>navigate("../../personnel")} className="itemC text-prime" style={{textAlign:"right", paddingRight:"10px"}}>
                         Plus d'information...
                       </div>
                       </div>
                       <div className="item5 bg-white1 grid-container3">
-                        <div className="itemA text-prime"><h2>Les zones:</h2></div>
+                        <div className="itemA text-prime"><h2 onClick={()=>navigate("../../zones")}>Les zones:</h2></div>
                       <div className="itemB">
                       <Table>
                         <thead>
@@ -370,12 +399,35 @@ export default function Organism(props) {
                     </tbody>
                         </Table>
                         </div>
-                        <div className="itemC text-prime" style={{textAlign:"right", paddingRight:"10px"}}>
+                        <div onClick={()=>navigate("../../zones")} className="itemC text-prime" style={{textAlign:"right", paddingRight:"10px"}}>
+                        Plus d'information...
+                      </div>
+                     </div>
+                      <div className="item6 bg-white1 grid-container3">
+                        <div className="itemA text-prime"><h2 onClick={()=>navigate("../../equipements")}>Les equipements:</h2></div>
+                      <div className="itemB">
+                      <Table>
+                      <thead>
+                            <tr>
+                                <th className="text-center" scope="col-4">Libelle</th>
+                                <th className="text-center" scope="col-4">Code</th>
+                                <th className="text-center" scope="col-4">Numéro d'Inventaire</th>
+                                <th className="text-center" scope="col-4">Zone</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {equipements}
+                            </tbody>
+                        </Table>
+                        </div>
+                        <div onClick={()=>navigate("../../equipements")} className="itemC text-prime" style={{textAlign:"right", paddingRight:"10px"}}>
                         Plus d'information...
                       </div>
                      </div>
                 </div>
-            </div>
+                </div>
+            
+            
         : (
             <div className="container justify-content-center">
                 <h3 className="text-prime p-3">Modification . . .</h3>

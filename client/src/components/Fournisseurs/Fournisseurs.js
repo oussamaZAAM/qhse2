@@ -2,7 +2,6 @@
 import React, { useRef, useContext, useState, useEffect } from "react";
 import './Fournisseurs.css'
 import {useNavigate} from "react-router-dom"
-import { AuthContext } from "../../Context/authContext";
 
 
 export default function Fournisseurs(props) {
@@ -11,7 +10,7 @@ export default function Fournisseurs(props) {
 
     if(props.dashBoard===true){
       return(
-        <tr className="sortable" onClick={()=>navigate("/fournisseurs")}>
+        <tr className="sortable" onClick={()=>navigate("../../fournisseurs")}>
           <td className="text-center">{props.fourId.code_four}</td>
           <td className="text-center">{props.fourId.raison_soc}</td>
           <td className="text-center">{props.fourId.pays}</td>

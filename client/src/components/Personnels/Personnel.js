@@ -24,7 +24,7 @@ export default function Personnels(props) {
 
     if(props.dashBoard===true){
     return(
-            <tr className="sortable" onClick={()=>navigate("/personnel/"+props.Person._id)}>
+            <tr className="sortable" onClick={()=>navigate("../../personnel/"+props.Person._id)}>
               <td className="text-center">{props.Person.nom}</td>
               <td className="text-center">{props.Person.prenom}</td>
               <td className="text-center">{props.Person.metier}</td>

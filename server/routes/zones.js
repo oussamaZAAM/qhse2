@@ -1,5 +1,6 @@
 import { Router as _Router } from 'express';
 import Zone from '../models/Zone.js';
+import Personnel from '../models/Personnel.js';
 
 const ZoneRouter = _Router();
 
@@ -16,6 +17,14 @@ ZoneRouter.post("/createZone", async(req, res) => {
         organism: req.body.organism
     })
     const createdZone = await newZone.save(function (){});
+    const updatedPersonnel = await Personnel.findByIdAndUpdate({_id:req.body.responsable}, {
+       zone: req.body.code
+    });
+    for(let i=0;req.body.equipe.length>i;i++){
+    const updatedPersonnel = await Personnel.findByIdAndUpdate({_id:req.body.equipe[i]}, {
+       zone: req.body.code
+    });
+}
     res.status(200).send(createdZone);
 })
 ZoneRouter.post("/createBatiment", async(req, res) => {
@@ -86,15 +95,34 @@ ZoneRouter.put("/:zoneId", async (req, res) => {
             flux: req.body.flux,
             organism: req.body.organism
         });
+        const createdZone = await newZone.save(function (){});
+    const updatedPersonnel = await Personnel.findByIdAndUpdate({_id:req.body.responsable}, {
+       zone: req.body.code
+    });
+    for(let i=0;req.body.equipe.length>i;i++){
+    const updatedPersonnel = await Personnel.findByIdAndUpdate({_id:req.body.equipe[i]}, {
+       zone: req.body.code
+    });
+}
         res.status(200).json("Zone Equipe / Responsable has been settled");
     } catch (err) {
         res.status(500).json(err.message);
     }
 })
 
-ZoneRouter.delete("/:zoneId", async(req, res) => {
+ZoneRouter.put("/d/:zoneId", async(req, res) => {
+    console.log("ayoub")
     try{
         await Zone.findByIdAndDelete({_id: req.params.zoneId});
+        console.log(req.body)
+    const updatedPersonnel = await Personnel.findByIdAndUpdate({_id:req.body.responsable}, {
+       zone: ""
+    });
+    for(let i=0;req.body.equipe.length>i;i++){
+    const updatedPersonnel = await Personnel.findByIdAndUpdate({_id:req.body.equipe[i]}, {
+       zone: ""
+    });
+}
         res.status(200).json("Zone/Batiment deleted successfully");
     } catch(err){
         res.status(500).json(err.message);

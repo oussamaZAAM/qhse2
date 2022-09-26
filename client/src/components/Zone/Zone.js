@@ -10,7 +10,7 @@ export default function Zone(props) {
     const allIds = props.persons && props.persons.map(x=>x._id);
     if(props.dashBoard===true){
     return(
-            <tr className="sortable" onClick={handleNavigate}>
+            <tr className="sortable" onClick={()=>navigate("../../../fournisseurs/"+props.id)}>
               <td className="text-center">{props.zone.code}</td>
               <td className="text-center">{props.zone.ordre}</td>
               <td className="text-center">{props.zone.superficie}</td>
