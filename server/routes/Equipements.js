@@ -5,7 +5,7 @@ const EquipementRouter = _Router();
 import Equipement from '../models/Equipement.js';
 import Zone from '../models/Zone.js';
 
-EquipementRouter.post("/createEq", async (req, res) => {
+EquipementRouter.post("/create", async (req, res) => {
     const newEquipement = new Equipement({
         _id: req.body._id,
         type: req.body.type,
@@ -21,44 +21,6 @@ EquipementRouter.post("/createEq", async (req, res) => {
     });
     
     const createdEquipement = await newEquipement.save();
-    
-    res.status(201).json(createdEquipement);
-})
-EquipementRouter.post("/createMat", async (req, res) => {
-    const newEquipement = new Equipement({
-        _id: req.body._id,
-        type: req.body.type,
-        user: req.body.user,
-        organism: req.body.organism,
-        libelle: req.body.libelle,
-        type_materiel: req.body.type_materiel,
-        code: req.body.code,
-        num_inventaire: req.body.num_inventaire,
-        fiche_technique: req.body.fiche_technique,
-        fds: req.body.fds,
-        affection: req.body.affection,
-    });
-    
-    const createdEquipement = await newEquipement.save();
-    
-    res.status(201).json(createdEquipement);
-})
-EquipementRouter.post("/createLog", async (req, res) => {
-    const newEquipement = new Equipement({
-        _id: req.body._id,
-        type: req.body.type,
-        user: req.body.user,
-        organism: req.body.organism,
-        libelle: req.body.libelle,
-        code: req.body.code,
-        num_inventaire: req.body.num_inventaire,
-        fiche_technique: req.body.fiche_technique,
-        fds: req.body.fds,
-        affection: req.body.affection,
-    });
-    
-    const createdEquipement = await newEquipement.save();
-    
     res.status(201).json(createdEquipement);
 })
 
@@ -122,4 +84,4 @@ EquipementRouter.delete("/:equipmentId", async (req, res) => {
 })
 
 
-export default EquipementRouter; 
+export default EquipementRouter;

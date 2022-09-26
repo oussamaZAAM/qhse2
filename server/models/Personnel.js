@@ -23,10 +23,7 @@ const PersonnelSchema = new mongoose.Schema({
     },
     photo: {
         type: String,
-    },
-    zone: {
-        type: String
-      }
+    }
 })
 
 const Personnel = mongoose.model('Personnel', PersonnelSchema);

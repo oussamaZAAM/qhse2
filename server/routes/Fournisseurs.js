@@ -15,10 +15,9 @@ FournisseurRouter.post('/create', async (req, res) => {
                     ville: req.body.ville,
                     tel: req.body.tel,
                     pays: req.body.pays,
-                    mail: req.body.mail,
+                    mail: req.body.mail
                 });
                 const cuser = await newFournisseur.save();  
-               
                 res.status(201).json(cuser);
                
 
@@ -33,7 +32,7 @@ FournisseurRouter.put("/:fourId", async (req, res) => {
         ville: req.body.ville,
         pays: req.body.pays,
         tel: req.body.tel,
-        mail: req.body.mail,
+        mail: req.body.mail
     });
     res.status(200).json("Fournisseur had been updated");
   } catch (err) {

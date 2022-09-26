@@ -31,8 +31,7 @@ const FournisseurSchema = new mongoose.Schema({
   mail: {
     type: String,
     required: true
-  },
-  
+  }
 });
 
 const Fournisseur = mongoose.model('Fournisseur', FournisseurSchema);
