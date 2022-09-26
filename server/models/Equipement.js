@@ -18,7 +18,7 @@ const EquipementSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    type_materiel: {
+    type_material: {
         type: String,
     },
     code: {
@@ -30,7 +30,7 @@ const EquipementSchema = new mongoose.Schema({
         required: true,
     },
     zone: {
-        type: String,
+        type: String, 
     },
     fiche_technique: {
         type: String,

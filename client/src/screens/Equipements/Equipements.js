@@ -19,21 +19,23 @@ export const Equipements = () => {
     const libelle = useRef();
     const code = useRef();
     const num_inventaire = useRef();
-    const zone = useRef();
     const fiche_technique = useRef();
     const fds = useRef();
     const batiment = useRef();
     const affection = useRef();
-    const type_materiel = useRef();
+    const type_material = useRef();
     const { user, org } = useContext(AuthContext);
 
     const [value, setValue] = useState(0);
     const [equips, setEquips] = useState();
     const [clickedEq, setClickedEq] = useState(0);
     const [editValues, setEditValues] = useState();
+    const [editValuesMat, setEditValuesMat] = useState();
+    const [editValuesLog, setEditValuesLog] = useState();
     const [openAlert, setOpenAlert] = useState([false, false, false]);
     const [loading, setLoading] = useState(false);
     const [zones, setZones] = useState();
+    const [zone, setZone] = useState();
 
     const handleCloseAlert = (event, reason) => {
         if (reason === 'clickaway') {
@@ -44,6 +46,12 @@ export const Equipements = () => {
     
     function handleChange(e) {
         setEditValues({...editValues, [e.target.name]: e.target.value});
+    }
+    function handleChangeMat(e) {
+        setEditValuesMat({...editValuesMat, [e.target.name]: e.target.value});
+    }
+    function handleChangeLog(e) {
+        setEditValuesLog({...editValuesLog, [e.target.name]: e.target.value});
     }
 
     const handleUploadFile = async (e) => {
@@ -56,7 +64,9 @@ export const Equipements = () => {
         try {
             await axios.post("http://localhost:5000/api/upload/file", data);
         } catch (err) {};
-        setEditValues({...editValues, [e.target.id]: fileName});
+        value ===0 
+         ? setEditValues({...editValues, [e.target.id]: fileName})
+         : value ===1 ? setEditValuesMat({...editValuesMat, [e.target.id]: fileName}) : setEditValuesLog({...editValuesLog, [e.target.id]: fileName});
         setLoading(false);
     }
     const submitFormEq = async (e)=>{
@@ -69,11 +79,12 @@ export const Equipements = () => {
             libelle:libelle.current.value,
             code:code.current.value,
             num_inventaire:num_inventaire.current.value,
-            zone:zone.current.value, 
+            zone:zone,
             fiche_technique:editValues.fiche_technique, 
             fds:editValues.fds, 
             affection:batiment.current.value
         }
+        console.log(equipement)
         if (Object.keys(equipement).every(x=>equipement[x] !== '')){
             try{
                 await axios.post("http://localhost:5000/api/equipement/createEq", equipement);
@@ -95,12 +106,12 @@ export const Equipements = () => {
             user:user._id, organism: org._id,
             type: 'mat',
             libelle:libelle.current.value,
-            type_materiel:type_materiel.current.value,
+            type_material:type_material.current.value,
             code:code.current.value,
             num_inventaire:num_inventaire.current.value,
-            fiche_technique:editValues.fiche_technique, 
-            fds:editValues.fds, 
-            affection:batiment.current.value
+            fiche_technique:editValuesMat.fiche_technique, 
+            fds:editValuesMat.fds, 
+            affection:affection.current.value
         }
         if (Object.keys(material).every(x=>material[x] !== '')){
             try{
@@ -125,9 +136,9 @@ export const Equipements = () => {
             libelle:libelle.current.value,
             code:code.current.value,
             num_inventaire:num_inventaire.current.value,
-            fiche_technique:editValues.fiche_technique, 
-            fds:editValues.fds, 
-            affection:batiment.current.value
+            fiche_technique:editValuesLog.fiche_technique, 
+            fds:editValuesLog.fds, 
+            affection:affection.current.value
         }
         if (Object.keys(logistic).every(x=>logistic[x] !== '')){
             try{
@@ -144,43 +155,125 @@ export const Equipements = () => {
     }
     const editEquips = async () => {
         setLoading(true);
-        if (Object.keys(editValues).every(x=>editValues[x] !== '')){
-            try{
-                await axios.put("http://localhost:5000/api/equipement/" + editValues._id, editValues);
-                setEquips(prevEquips=>{
-                const newEquip = prevEquips.map(x=>{
-                    if (prevEquips.indexOf(x) === clickedEq - 1){
-                    return editValues;
-                    } else {
-                    return x;
-                    }
-                })
-                return newEquip;
-                });
-                setClickedEq(0);
-                setOpenAlert([false, true, false]);
-                setEditValues();
-            }catch(err){
-                console.log(err)        
+        if(value === 0){
+            if (Object.keys(editValues).every(x=>editValues[x] !== '')){
+                try{
+                    await axios.put("http://localhost:5000/api/equipement/" + editValues._id, editValues);
+                    setEquips(prevEquips=>{
+                    const newEquip = prevEquips.map(x=>{
+                        if (prevEquips.indexOf(x) === clickedEq - 1){
+                        return editValues;
+                        } else {
+                        return x;
+                        }
+                    })
+                    return newEquip;
+                    });
+                    setClickedEq(0);
+                    setOpenAlert([false, true, false]);
+                    setEditValues();
+                }catch(err){
+                    console.log(err)        
+                }
+            } else {
+                setOpenAlert([false, false, true]);
             }
         } else {
-            setOpenAlert([false, false, true]);
+            if (value === 1 ){
+                if (Object.keys(editValuesMat).every(x=>editValuesMat[x] !== '')){
+                    try{
+                        await axios.put("http://localhost:5000/api/equipement/" + editValuesMat._id, editValuesMat);
+                        setEquips(prevEquips=>{
+                        const newEquip = prevEquips.map(x=>{
+                            if (prevEquips.indexOf(x) === clickedEq - 1){
+                            return editValuesMat;
+                            } else {
+                            return x;
+                            }
+                        })
+                        return newEquip;
+                        });
+                        setClickedEq(0);
+                        setOpenAlert([false, true, false]);
+                        setEditValuesMat();
+                    }catch(err){
+                        console.log(err)        
+                    }
+                } else {
+                    setOpenAlert([false, false, true]);
+                }
+            } else {
+                if (Object.keys(editValuesLog).every(x=>editValuesLog[x] !== '')){
+                    try{
+                        await axios.put("http://localhost:5000/api/equipement/" + editValuesLog._id, editValuesLog);
+                        setEquips(prevEquips=>{
+                        const newEquip = prevEquips.map(x=>{
+                            if (prevEquips.indexOf(x) === clickedEq - 1){
+                            return editValuesLog;
+                            } else {
+                            return x;
+                            }
+                        })
+                        return newEquip;
+                        });
+                        setClickedEq(0);
+                        setOpenAlert([false, true, false]);
+                        setEditValuesLog();
+                    }catch(err){
+                        console.log(err)        
+                    }
+                } else {
+                    setOpenAlert([false, false, true]);
+                }
+            }
         }
         setLoading(false);
     }
     const deleteEquips = async () => {
         setLoading(true);
-        try{
-            await axios.delete("http://localhost:5000/api/equipement/" + editValues._id);
-            setClickedEq(0);
-            setEquips(prevArray=>{
-              const deletedArray = prevArray.filter(x=>x._id !== editValues._id);
-              return deletedArray;
-            })
-            setOpenAlert([true, false, false]);
-            setEditValues();
-        }catch(err){
-            console.log(err)        
+        if (value === 0 ){
+            try{
+                await axios.delete("http://localhost:5000/api/equipement/" + editValues._id);
+                setClickedEq(0);
+                setEquips(prevArray=>{
+                  const deletedArray = prevArray.filter(x=>x._id !== editValues._id);
+                  return deletedArray;
+                })
+                setOpenAlert([true, false, false]);
+                setEditValues();
+                setEditValuesMat();
+                setEditValuesLog();
+            }catch(err){
+                console.log(err)        
+            }
+        } else {
+            if ( value === 1 ){
+                try{
+                    await axios.delete("http://localhost:5000/api/equipement/" + editValuesMat._id);
+                    setClickedEq(0);
+                    setEquips(prevArray=>{
+                      const deletedArray = prevArray.filter(x=>x._id !== editValuesMat._id);
+                      return deletedArray;
+                    })
+                    setOpenAlert([true, false, false]);
+                    setEditValuesMat();
+                }catch(err){
+                    console.log(err)        
+                }
+            } else {
+                try{
+                    await axios.delete("http://localhost:5000/api/equipement/" + editValuesLog._id);
+                    setClickedEq(0);
+                    setEquips(prevArray=>{
+                      const deletedArray = prevArray.filter(x=>x._id !== editValuesLog._id);
+                      return deletedArray;
+                    })
+                    setOpenAlert([true, false, false]);
+                    setEditValuesLog();
+                }catch(err){
+                    console.log(err)        
+                }
+            }
         }
         setLoading(false);
     }
@@ -197,14 +290,19 @@ export const Equipements = () => {
         fetchZones();
     }, [])
 
-    function handleClick(num) {
-        setClickedEq(num);
-        setEditValues(equips[num-1])
-    }
     const selectZones = zones && zones.map(zone => <MenuItem value={zone.code}><Link className='link' to={"/zones/"+zone._id}>{zone.code}</Link></MenuItem>);
     const equipementsFilter = equips && equips.filter(x => x.type === 'eq');
     const materialsFilter = equips && equips.filter(x => x.type === 'mat');
     const logisticsFilter = equips && equips.filter(x => x.type === 'log');
+
+    function handleClick(num) {
+        setClickedEq(num);
+        value === 0
+            ? setEditValues(equipementsFilter[num-1])
+            : value === 1 
+                ? setEditValuesMat(materialsFilter[num-1])
+                : setEditValuesLog(logisticsFilter[num-1])
+    }
     const equipements = equipementsFilter!==undefined && equipementsFilter.map((x, i)=>{
         return(
             <Equipement 
@@ -235,6 +333,7 @@ export const Equipements = () => {
             />
         )
     })
+    console.log(equips)
 
     return (
         <main className="background  new-organism-main" >
@@ -317,7 +416,7 @@ export const Equipements = () => {
                         <h1 className="text-prime pb-5">Ajouter un Equipement</h1>
                         <form className="form-group">
                             <input className="form-control m-2" placeholder="Libelle Equipement" ref={libelle}/>
-                            {value === 1 && <input className="form-control m-2" placeholder='Type de materiel' ref={type_materiel}/>}
+                            {value === 1 && <input className="form-control m-2" placeholder='Type de materiel' ref={type_material}/>}
                             <input className="form-control m-2" placeholder="Code Equipement" ref={code} />
                             <input className="form-control m-2" placeholder="Numéro d'Inventaire" ref={num_inventaire} />
                             {value === 0 && <TextField 
@@ -327,20 +426,28 @@ export const Equipements = () => {
                                 variant="outlined"
                                 select
                                 aria-label="Default select example"
-                                ref={zone}
+                                onChange={(e)=>setZone(e.target.value)}
                             >   
                                 <MenuItem selected>Choisir une zone</MenuItem>
                                 {selectZones}
                             </TextField>}
                             <div className="form-control m-2 d-flex align-items-center">
-                                <input readOnly={true} className="form-control m-2" value={editValues && editValues.fiche_technique} placeholder="Fiche Technique" ref={fiche_technique} />
+                                {value ===0
+                                 ? <input readOnly={true} className="form-control m-2" value={editValues && editValues.fiche_technique} placeholder="Fiche Technique" ref={fiche_technique} />
+                                 : value ===1 
+                                  ? <input readOnly={true} className="form-control m-2" value={editValuesMat && editValuesMat.fiche_technique} placeholder="Fiche Technique" ref={fiche_technique} />
+                                  : <input readOnly={true} className="form-control m-2" value={editValuesLog && editValuesLog.fiche_technique} placeholder="Fiche Technique" ref={fiche_technique} />}
                                 <label variant="contained" component="label" >
                                     <input hidden type="file" id="fiche_technique" onChange={(e) => handleUploadFile(e)} />
                                     <BiUpload style={{cursor: 'pointer', marginLeft:"10px"}} size={20}/>
                                 </label>
                             </div>
                             <div className="form-control m-2 d-flex align-items-center">
-                                <input readOnly={true} className="form-control m-2" value={editValues && editValues.fds} placeholder="FDS" ref={fds} />
+                                {value ===0 
+                                 ? <input readOnly={true} className="form-control m-2" value={editValues && editValues.fds} placeholder="FDS" ref={fds} />
+                                 : value ===1
+                                  ? <input readOnly={true} className="form-control m-2" value={editValuesMat && editValuesMat.fds} placeholder="FDS" ref={fds} />
+                                  : <input readOnly={true} className="form-control m-2" value={editValuesLog && editValuesLog.fds} placeholder="FDS" ref={fds} />}
                                 <label variant="contained" component="label" >
                                     <input hidden type="file" id="fds" onChange={(e) => handleUploadFile(e)} />
                                     <BiUpload style={{cursor: 'pointer', marginLeft:"10px"}} size={20}/>
@@ -358,7 +465,7 @@ export const Equipements = () => {
                         </form>
                     </div>
                     : 
-                    <div className="col-9 col-sm-12 col-md-4 col-lg-3 register-a" style={{maxWidth: "fit-content"}}> 
+                    value === 0 ? (<div className="col-9 col-sm-12 col-md-4 col-lg-3 register-a" style={{maxWidth: "fit-content"}}> 
                         <div className="d-flex justify-content-center m-2">
                         <IoMdCloseCircle className="fournisseur-close" color="red" size={30} onClick={()=>setClickedEq(0) && setEditValues()}/>
                         </div>
@@ -430,7 +537,138 @@ export const Equipements = () => {
                                 </div>
                             </div>
                         </form>
+                    </div>)
+
+                    : value === 1 ? (<div className="col-9 col-sm-12 col-md-4 col-lg-3 register-a" style={{maxWidth: "fit-content"}}> 
+                        <div className="d-flex justify-content-center m-2">
+                        <IoMdCloseCircle className="fournisseur-close" color="red" size={30} onClick={()=>setClickedEq(0) && setEditValuesMat()}/>
+                        </div>
+                        <h1 className="text-prime pb-5">Equipement numéro: {clickedEq}</h1>
+                        <form className="form-group">
+                            <input 
+                                className="form-control m-2" 
+                                placeholder="Libelle Equipement"
+                                value={editValuesMat.libelle}
+                                name='libelle'
+                                onChange={handleChangeMat}
+                                ref={libelle} 
+                            />
+                            <input 
+                                className="form-control m-2" 
+                                placeholder="Type de Materiel"
+                                value={editValuesMat.type_material}
+                                name='type_material'
+                                onChange={handleChangeMat}
+                                ref={type_material} 
+                            />
+                            <input 
+                                className="form-control m-2" 
+                                placeholder="Code Equipement" 
+                                value={editValuesMat.code}
+                                name='code'
+                                onChange={handleChangeMat}
+                                ref={code}
+                            />
+                            <input 
+                                className="form-control m-2" 
+                                placeholder="Numero d'Inventaire"
+                                value={editValuesMat.num_inventaire}
+                                name='num_inventaire'
+                                onChange={handleChangeMat}
+                                ref={num_inventaire} 
+                            />
+                            <div className="form-control m-2 d-flex align-items-center">
+                                <input readOnly={true} className="form-control m-2" value={editValuesMat && editValuesMat.fiche_technique.slice(13)} placeholder="Fiche Technique" ref={fiche_technique} />
+                                <label variant="contained" component="label" >
+                                    <input hidden type="file" id="fiche_technique" onChange={(e) => handleUploadFile(e)} />
+                                    <BiUpload style={{cursor: 'pointer', marginLeft:"10px"}} size={20}/>
+                                </label>
+                            </div>
+                            <div className="form-control m-2 d-flex align-items-center">
+                                <input readOnly={true} className="form-control m-2" value={editValuesMat && editValuesMat.fds.slice(13)} placeholder="FDS" ref={fds} />
+                                <label variant="contained" component="label" >
+                                    <input hidden type="file" id="fds" onChange={(e) => handleUploadFile(e)} />
+                                    <BiUpload style={{cursor: 'pointer', marginLeft:"10px"}} size={20}/>
+                                </label>
+                            </div>
+                            <input 
+                                className="form-control m-2" 
+                                placeholder="Bâtiment"
+                                value={editValuesMat.affection}
+                                name='affection'
+                                onChange={handleChangeMat}
+                                ref={batiment} 
+                            />
+                            <div className="d-flex justify-content-end m-2">
+                                <div className="d-flex justify-content-center align-items-center">
+                                    <Button className="bg-prime mx-2" onClick={editEquips} >Modifier</Button>
+                                    <Button className="bg-danger" onClick={deleteEquips} >Supprimer</Button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>)
+                    : (
+                        <div className="col-9 col-sm-12 col-md-4 col-lg-3 register-a" style={{maxWidth: "fit-content"}}> 
+                        <div className="d-flex justify-content-center m-2">
+                        <IoMdCloseCircle className="fournisseur-close" color="red" size={30} onClick={()=>setClickedEq(0) && setEditValuesLog()}/>
+                        </div>
+                        <h1 className="text-prime pb-5">Equipement numéro: {clickedEq}</h1>
+                        <form className="form-group">
+                            <input 
+                                className="form-control m-2" 
+                                placeholder="Libelle Equipement"
+                                value={editValuesLog.libelle}
+                                name='libelle'
+                                onChange={handleChangeLog}
+                                ref={libelle} 
+                            />
+                            <input 
+                                className="form-control m-2" 
+                                placeholder="Code Equipement" 
+                                value={editValuesLog.code}
+                                name='code'
+                                onChange={handleChangeLog}
+                                ref={code}
+                            />
+                            <input 
+                                className="form-control m-2" 
+                                placeholder="Numero d'Inventaire"
+                                value={editValuesLog.num_inventaire}
+                                name='num_inventaire'
+                                onChange={handleChangeLog}
+                                ref={num_inventaire} 
+                            />
+                            <div className="form-control m-2 d-flex align-items-center">
+                                <input readOnly={true} className="form-control m-2" value={editValuesLog && editValuesLog.fiche_technique.slice(13)} placeholder="Fiche Technique" ref={fiche_technique} />
+                                <label variant="contained" component="label" >
+                                    <input hidden type="file" id="fiche_technique" onChange={(e) => handleUploadFile(e)} />
+                                    <BiUpload style={{cursor: 'pointer', marginLeft:"10px"}} size={20}/>
+                                </label>
+                            </div>
+                            <div className="form-control m-2 d-flex align-items-center">
+                                <input readOnly={true} className="form-control m-2" value={editValuesLog && editValuesLog.fds.slice(13)} placeholder="FDS" ref={fds} />
+                                <label variant="contained" component="label" >
+                                    <input hidden type="file" id="fds" onChange={(e) => handleUploadFile(e)} />
+                                    <BiUpload style={{cursor: 'pointer', marginLeft:"10px"}} size={20}/>
+                                </label>
+                            </div>
+                            <input 
+                                className="form-control m-2" 
+                                placeholder="Bâtiment"
+                                value={editValuesLog.affection}
+                                name='affection'
+                                onChange={handleChangeLog}
+                                ref={batiment} 
+                            />
+                            <div className="d-flex justify-content-end m-2">
+                                <div className="d-flex justify-content-center align-items-center">
+                                    <Button className="bg-prime mx-2" onClick={editEquips} >Modifier</Button>
+                                    <Button className="bg-danger" onClick={deleteEquips} >Supprimer</Button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
+                    )
                     }
                     {openAlert[0] && 
                     <Snackbar sx={{width: '35%'}} open={true} autoHideDuration={2000} onClose={handleCloseAlert}>
@@ -460,6 +698,7 @@ export const Equipements = () => {
                         showLabels
                         value={value}
                         onChange={(event, newValue) => {
+                            value !== newValue && setClickedEq(0);
                             setValue(newValue);
                             handleCloseAlert();
                         }}

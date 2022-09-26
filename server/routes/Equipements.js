@@ -31,7 +31,7 @@ EquipementRouter.post("/createMat", async (req, res) => {
         user: req.body.user,
         organism: req.body.organism,
         libelle: req.body.libelle,
-        type_materiel: req.body.type_materiel,
+        type_material: req.body.type_material,
         code: req.body.code,
         num_inventaire: req.body.num_inventaire,
         fiche_technique: req.body.fiche_technique,
