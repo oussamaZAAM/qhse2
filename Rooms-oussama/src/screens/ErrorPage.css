@@ -1,0 +1,9 @@
+
+.image404{
+    width: 500px;
+}
+@media only screen and (max-width: 1050px){
+    .image404{
+        width: 350px;
+    }
+}

@@ -1,0 +1,27 @@
+.pos1{
+    position: relative;
+  top: -100px;
+  right: 0px;
+}
+.pos2{
+    position: relative;
+  top: -100px;
+  right: -50px;
+}
+body{
+    background-color: #F5F0BB;
+}
+.c2a{
+    background-color: rgb(115, 169, 173);
+    color: #F5F0BB;
+    border-radius: 10px;
+    border-color: rgb(115, 169, 173);
+    padding: 10px;
+    
+}
+
+.c2a:hover{
+    background-color: #F5F0BB ;
+    color: rgb(115, 169, 173);
+}
+

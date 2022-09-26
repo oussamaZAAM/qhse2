@@ -1,0 +1,34 @@
+.container-fluid{
+    background-color: #F5F0BB;
+  }
+.pb-10{
+  padding-bottom: 15.5%;
+}
+.pt-7{
+  padding-top: 10%;
+}
+.logo{
+  height: 90vh;
+}
+.sort-div:hover{
+  cursor: pointer;
+  background-color: #0d6efd;
+  color: white;
+  border-radius: 10px;
+}
+.filter-div:hover{
+  cursor: pointer;
+  background-color: #6610f2;
+  color: white;
+  border-radius: 10px;
+}
+.sort-filter{
+  width: 100%;
+}
+.sort{
+  width: 100%;
+}
+.filter{
+  width: 100%;
+  border: 1px solid #6610f2 !important;
+}

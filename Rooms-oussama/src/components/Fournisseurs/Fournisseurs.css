@@ -1,0 +1,31 @@
+
+.organism-component{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    max-height: 250px;
+    max-width: 200px;
+    width: fit-content;
+    overflow: hidden;
+  }
+  .organisms-grid{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .organism-img{
+    margin: 20px;
+    border-radius: 9px;
+    max-height: 150px;
+  }
+  .organism-title{
+    width: 175px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
+  }
+  .sortable {
+    cursor: pointer;
+}
