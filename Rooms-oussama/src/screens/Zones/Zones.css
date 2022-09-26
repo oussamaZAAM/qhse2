@@ -1,9 +1,0 @@
-.navigation-div{
-    max-width: fit-content;
-}
-
-.navigation{
-    position: sticky;
-    bottom: 0;
-    z-index: 999;
-}
