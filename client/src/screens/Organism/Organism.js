@@ -213,7 +213,7 @@ export default function Organism(props) {
         return(
             !isEdit ? <div className="grid-container" >
                 
-                <div className="container bg-white grid-item1 center">
+                <div className="container bg-white1 grid-item1 center">
                     
                         <h1 className="text-prime pb-5 ">{!lastValues.name ? editValues.name : lastValues.name}</h1>
                             <div className="m-2" >Sites : <b>{!lastValues.site_num ? editValues.site_num : lastValues.site_num}</b></div>
@@ -228,9 +228,11 @@ export default function Organism(props) {
                             </div>
                         
                 </div>
-                <div className="container bg-white grid-item2 grid-container2">
-                      <div className="item1">
-                      
+                <div className="container grid-item2 grid-container2">
+                <div className="item1 bg-white1 grid-container3">
+                        <div className="itemA text-prime"><h2 onClick={()=>navigate("/products")}>Les produits:</h2></div>
+                      <div className="itemB">
+                     
                       <Carousel
       sx={{ maxWidth: 320 }}
       mx="auto"
@@ -239,19 +241,26 @@ export default function Organism(props) {
       plugins={[autoplay.current]}
       onMouseEnter={autoplay.current.stop}
       onMouseLeave={autoplay.current.reset}
+      style={{clear: "both"}}
     >
         
       <Carousel.Slide>
         {prods[0].title}
-        <Image onClick={()=> navigate("/product/"+prods[0]._id)} src={"http://localhost:5000/images/"+prods[0].photos[0]} />
+        <Image style={{cursor:"pointer"}} onClick={()=> navigate("/product/"+prods[0]._id)} src={"http://localhost:5000/images/"+prods[0].photos[0]} />
       </Carousel.Slide>
       <Carousel.Slide>
         {prods[1].title}
-        <Image onClick={()=> navigate("/product/"+prods[1]._id)} src={"http://localhost:5000/images/"+prods[1].photos[0]} />
+        <Image style={{cursor:"pointer"}} onClick={()=> navigate("/product/"+prods[1]._id)} src={"http://localhost:5000/images/"+prods[1].photos[0]} />
       </Carousel.Slide>
     </Carousel>
                       </div>
-                      <div className="item2">
+                      <div onClick={()=>navigate("/products")} className="itemC text-prime" style={{textAlign:"right", paddingRight:"10px"}}>
+                        Plus d'information...
+                      </div>
+                      </div>
+                      <div className="item2 bg-white1 grid-container3">
+                        <div className="itemA text-prime"><h2 onClick={()=>navigate("/raw-recap")}>Les matieres premieres:</h2></div>
+                      <div className="itemB">
                       <Carousel
       sx={{ maxWidth: 320 }}
       mx="auto"
@@ -264,15 +273,21 @@ export default function Organism(props) {
         
       <Carousel.Slide>
         {raws[0].title}
-        <Image onClick={()=> navigate("/product/"+raws[0]._id)} src={"http://localhost:5000/images/"+raws[0].photos[0]} />
+        <Image style={{cursor:"pointer"}} onClick={()=> navigate("/product/"+raws[0]._id)} src={"http://localhost:5000/images/"+raws[0].photos[0]} />
       </Carousel.Slide>
       <Carousel.Slide>
         {raws[1].title}
-        <Image onClick={()=> navigate("/product/"+raws[1]._id)} src={"http://localhost:5000/images/"+raws[1].photos[0]} />
+        <Image style={{cursor:"pointer"}} onClick={()=> navigate("/product/"+raws[1]._id)} src={"http://localhost:5000/images/"+raws[1].photos[0]} />
       </Carousel.Slide>
     </Carousel>
                       </div>
-                      <div className="item3">
+                      <div onClick={()=>navigate("/raw-recap")} className="itemC text-prime" style={{textAlign:"right", paddingRight:"10px", }}>
+                        Plus d'information...
+                      </div>
+                      </div>
+                      <div className="item3 bg-white1 grid-container3">
+                        <div className="itemA text-prime"><h2 onClick={()=>navigate("/fournisseurs")}>Les fournisseurs:</h2></div>
+                      <div className="itemB">
                         <Table striped highlightOnHover>
                         <thead>
                       <tr>
@@ -295,7 +310,13 @@ export default function Organism(props) {
                     </tbody>
                         </Table>
                       </div>
-                      <div className="item4">
+                      <div onClick={()=>navigate("/fournisseurs")} className="itemC text-prime" style={{textAlign:"right", paddingRight:"10px"}}>
+                        Plus d'information...
+                      </div>
+                      </div>
+                      <div className="item4 bg-white1 grid-container3">
+                      <div className="itemA text-prime"><h2>Les personnels:</h2></div>
+                      <div className="itemB">
                         <Table>
                         <thead>
                       <tr>
@@ -319,7 +340,13 @@ export default function Organism(props) {
                     </tbody>
                         </Table>
                       </div>
-                      <div className="item5">
+                      <div className="itemC text-prime" style={{textAlign:"right", paddingRight:"10px"}}>
+                        Plus d'information...
+                      </div>
+                      </div>
+                      <div className="item5 bg-white1 grid-container3">
+                        <div className="itemA text-prime"><h2>Les zones:</h2></div>
+                      <div className="itemB">
                       <Table>
                         <thead>
                       <tr>
@@ -342,9 +369,11 @@ export default function Organism(props) {
                         </tr>}
                     </tbody>
                         </Table>
+                        </div>
+                        <div className="itemC text-prime" style={{textAlign:"right", paddingRight:"10px"}}>
+                        Plus d'information...
                       </div>
-                      <div className="item6">6</div>
-                     
+                     </div>
                 </div>
             </div>
         : (

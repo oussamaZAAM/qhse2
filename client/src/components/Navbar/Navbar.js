@@ -23,7 +23,10 @@ export default function Navbar(props) {
     return(
         <div style={{backgroundColor:"#F5F0BB"}}>
 
-<span class="container1">
+
+        <nav className="navbar navbar-expand-lg navbar-light justify-content-between">
+       <div className="navbar-brand">
+  <span class="container1 nav-item">
          <span class="checkbox-container">
            <input class="checkbox-trigger" type="checkbox"  />
            <span class="menu-content">
@@ -40,8 +43,10 @@ export default function Navbar(props) {
            </span>
          </span>
        </span>
-        <nav className="navbar navbar-expand-lg navbar-light justify-content-between">
-  <a className="navbar-brand" href="/main"><img src="http://localhost:5000/images/logo1.jpeg" style={{maxHeight:"70px", marginTop:"20px", marginLeft:"20px", paddingBottom:"20px"}}/></a>
+  <a  href="/main">
+    <img src="http://localhost:5000/images/logo1.jpeg" style={{maxHeight:"70px", marginTop:"20px", marginLeft:"20px", paddingBottom:"20px"}}/>
+  </a>
+  </div>
   
 
     {(user!==null && user!==undefined) && 
